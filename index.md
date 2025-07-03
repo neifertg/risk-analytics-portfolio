@@ -1,5 +1,20 @@
-<!-- Add this at the very top or bottom of index.md -->
+<!-- Add this at the very top of index.md -->
 <button id="toggle-dark" style="position:fixed;top:1rem;right:1rem;z-index:1000;">🌙 Toggle Dark Mode</button>
+<style>
+body.dark-mode {
+  background: #181a1b !important;
+  color: #e8e6e3 !important;
+}
+body.dark-mode a { color: #8ab4f8 !important; }
+body.dark-mode h1, body.dark-mode h2, body.dark-mode h3,
+body.dark-mode h4, body.dark-mode h5, body.dark-mode h6 { color: #fff !important; }
+body.dark-mode blockquote {
+  border-left: 4px solid #444;
+  color: #b0b0b0;
+  background: #232526;
+}
+body.dark-mode hr { border-color: #333; }
+</style>
 <script>
   const btn = document.getElementById('toggle-dark');
   const setMode = (on) => {
@@ -10,6 +25,8 @@
   // On load
   if (localStorage.getItem('darkMode')) setMode(true);
 </script>
+
+
 
 ---
 layout: home

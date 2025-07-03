@@ -1,3 +1,16 @@
+<!-- Add this at the very top or bottom of index.md -->
+<button id="toggle-dark" style="position:fixed;top:1rem;right:1rem;z-index:1000;">🌙 Toggle Dark Mode</button>
+<script>
+  const btn = document.getElementById('toggle-dark');
+  const setMode = (on) => {
+    document.body.classList.toggle('dark-mode', on);
+    localStorage.setItem('darkMode', on ? '1' : '');
+  };
+  btn.onclick = () => setMode(!document.body.classList.contains('dark-mode'));
+  // On load
+  if (localStorage.getItem('darkMode')) setMode(true);
+</script>
+
 ---
 layout: home
 title: "Risk & Audit Analytics Portfolio"

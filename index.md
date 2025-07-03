@@ -12,15 +12,15 @@ I specialize in applying advanced analytics, machine learning, and automation to
 
 ## 🔍 Featured Projects
 
-### [Privilege Access Monitoring (R Shiny)](/projects/privileged-access-monitoring)
+### [Privilege Access Monitoring (R Shiny)](/projects/privileged-access-monitoring.md)
 - Role-based user access audits
 - Outlier detection & visualizations
 
-### [Misclassified Incident Risk (NLP + XGBoost)](/projects/incident-risk-nlp)
+### [Misclassified Incident Risk (NLP + XGBoost)](/projects/incident-risk-nlp.md)
 - Natural language processing of service tickets
 - ML classification of high-risk mislabels
 
-### [Duplicate Vendor Payment Checker (Python + SQL)](/projects/duplicate-vendor-checker)
+### [Duplicate Vendor Payment Checker (Python + SQL)](/projects/duplicate-vendor-checker.md)
 - Entity resolution and fuzzy logic
 - Transaction sampling for audit fieldwork
 

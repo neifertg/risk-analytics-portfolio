@@ -35,54 +35,25 @@ description: "Data-driven internal audit, risk analytics, and automation project
 
 # Welcome to My Risk & Audit Analytics Portfolio
 
-I specialize in applying advanced analytics, machine learning, and automation to internal audit, enterprise risk, and governance challenges. My work bridges the gap between compliance objectives and cutting-edge data science.
+I work in internal audit data analytics and am building toward applying
+advanced analytics, machine learning, and automation to internal audit,
+enterprise risk, and governance challenges. This site tracks real, working
+projects as they ship — nothing here is a mockup or a hypothetical.
 
 ---
 
-## 🔍 Featured Projects
+## 🔍 Projects
 
-### [Privilege Access Monitoring (R Shiny)](/projects/privileged-access-monitoring.md)
-- Role-based user access audits
-- Outlier detection & visualizations
-
-### [Misclassified Incident Risk (NLP + XGBoost)](/projects/incident-risk-nlp.md)
-- Natural language processing of service tickets
-- ML classification of high-risk mislabels
-
-### [Duplicate Vendor Payment Checker (Python + SQL)](/projects/duplicate-vendor-checker.md)
-- Entity resolution and fuzzy logic
-- Transaction sampling for audit fieldwork
-
-### [Model Bias Detection (SHAP + Governance Alerts)](/projects/model-bias-detection)
-- Interpretability tools for audit of machine learning models
-- Alerts for control effectiveness
+Nothing published yet. The first project — a retrieval-augmented question
+answering assistant grounded in public audit-standards documentation — is
+in progress. Check back soon.
 
 ---
 
-## 🧠 Advanced Techniques
+## 📄 Contact
 
-- [Text Analytics & NLP for Risk](/techniques/nlp-risk)
-- [Outlier Detection Methods](/techniques/outlier-detection)
-- [Benford’s Law & Distribution Analysis](/techniques/benfords-law)
-- [Fuzzy Matching & Entity Resolution](/techniques/fuzzy-matching)
-- [Continuous Monitoring Pipelines](/techniques/monitoring)
-
----
-
-## 📖 Recent Blog Posts
-
-- *[How NLP Is Revolutionizing Internal Audit Logs](/blog/nlp-audit-logs)*
-- *[Top 5 SQL Techniques for Audit Sampling](/blog/sql-audit-sampling)*
-- *[Designing a Risk Analytics Function from Scratch](/blog/building-risk-analytics)*
-
----
-
-## 📄 Resume + Contact
-
-- [View Resume (PDF)](/assets/GSN_resume.pdf)
-- [LinkedIn](https://www.linkedin.com/in/gsethneifert)
-- [Email](mailto:sethneifert@example.com)
-- [GitHub](https://github.com/yourusername)
+- [GitHub](https://github.com/neifertg)
+- [Email](mailto:gsneifert@gmail.com)
 
 ---
 

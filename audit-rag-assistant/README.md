@@ -126,14 +126,23 @@ app/.venv/Scripts/pip install -r app/requirements.txt   # Windows; app/.venv/bin
 app/.venv/Scripts/streamlit run app/app.py
 ```
 
-## Deploying the live demo
+## Live demo
 
-Prepared for [Streamlit Community Cloud](https://streamlit.io/cloud)
-(free): point it at this repo, `audit-rag-assistant/app/app.py` as the
-entry point, `audit-rag-assistant/app/requirements.txt` for Python
-dependencies, and add `anthropic_api_key` / `voyage_api_key` in that app's
-Secrets manager — `app.py` forwards them into the Node subprocess's
-environment as `ANTHROPIC_API_KEY`/`VOYAGE_API_KEY`.
+**[84abkcnqvptyedbbssztx8.streamlit.app](https://84abkcnqvptyedbbssztx8.streamlit.app/)**
+— deployed on [Streamlit Community Cloud](https://streamlit.io/cloud)
+(free tier), verified working 2026-08-04 with a real cited, grounded
+answer (not just a smoke test): "what's tested in Phase 2 of the SOX 404
+walkthrough?" returned a correctly-sourced answer citing the SOX 404
+walkthrough document, confirming both the Voyage embedding call and the
+Anthropic generation call work end-to-end in the deployed environment,
+not just locally.
+
+Deployed by pointing Streamlit Cloud at this repo,
+`audit-rag-assistant/app/app.py` as the entry point,
+`audit-rag-assistant/app/requirements.txt` for Python dependencies, and
+adding `anthropic_api_key` / `voyage_api_key` in that app's Secrets
+manager — `app.py` forwards them into the Node subprocess's environment
+as `ANTHROPIC_API_KEY`/`VOYAGE_API_KEY`.
 
 Three things make the deployed environment work without running the full
 local setup:
@@ -151,9 +160,3 @@ local setup:
   branch — since Cloud always has the env vars set, that branch never
   runs there, so the deployed app needs no `npm install` step at all.
 
-**Caveat, stated plainly**: this is prepared but not verified against an
-actual Streamlit Cloud deployment — that requires logging into
-share.streamlit.io with your own GitHub account, which isn't something
-that can be done on your behalf. If `packages.txt`'s Node install doesn't
-work the way documented above, the fallback is running the app locally
-(`streamlit run app/app.py`) as a recorded demo instead of a live one.

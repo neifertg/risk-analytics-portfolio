@@ -56,7 +56,7 @@ section whose own opening sentence diluted its embedding), both
 root-caused and fixed — see the project README.
 
 [Source & write-up](https://github.com/neifertg/risk-analytics-portfolio/tree/main/audit-rag-assistant)
-&middot; Live demo: not yet deployed
+&middot; [Live demo](https://84abkcnqvptyedbbssztx8.streamlit.app/)
 
 ### Benford's Law Analyzer
 

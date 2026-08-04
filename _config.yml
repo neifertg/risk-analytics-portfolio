@@ -26,3 +26,11 @@ exclude:
   - benfords-law-analyzer/README.md
   - benfords-law-analyzer/requirements.txt
   - benfords-law-analyzer/.gitignore
+  - duplicate-vendor-payment-checker/.venv
+  - duplicate-vendor-payment-checker/data
+  - duplicate-vendor-payment-checker/output
+  - duplicate-vendor-payment-checker/generate_ledger.py
+  - duplicate-vendor-payment-checker/check.py
+  - duplicate-vendor-payment-checker/README.md
+  - duplicate-vendor-payment-checker/requirements.txt
+  - duplicate-vendor-payment-checker/.gitignore

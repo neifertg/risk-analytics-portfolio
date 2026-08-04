@@ -90,6 +90,7 @@ a hidden flaw.
 ## 📄 Contact
 
 - [GitHub](https://github.com/neifertg)
+- [LinkedIn](https://www.linkedin.com/in/g-seth-neifert-7668b6b6/)
 - [Email](mailto:gsneifert@gmail.com)
 
 ---

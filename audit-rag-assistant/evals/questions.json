@@ -1,0 +1,57 @@
+[
+  {
+    "id": "two-stage-sampling",
+    "question": "Why does the audit sampling methodology use a two-stage approach?",
+    "expectedNoteIds": ["audit-sampling-methodology"],
+    "mustNotCite": ["sox-404-key-controls-walkthrough"],
+    "expectedKeywords": ["stratif"]
+  },
+  {
+    "id": "out-of-scope-tax-deadline",
+    "question": "What does this corpus say about individual income tax filing deadlines?",
+    "expectedNoteIds": [],
+    "expectGuardrail": true
+  },
+  {
+    "id": "sox-walkthrough-phase2",
+    "question": "What's tested in Phase 2 of the SOX 404 key controls walkthrough?",
+    "expectedNoteIds": ["sox-404-key-controls-walkthrough"],
+    "expectedKeywords": ["operating effectiveness"]
+  },
+  {
+    "id": "vendor-fraud-indicator",
+    "question": "What's a specific fraud indicator to flag during new vendor setup testing?",
+    "expectedNoteIds": ["vendor-master-data-control-testing"],
+    "expectedKeywords": ["employee"]
+  },
+  {
+    "id": "expense-split-transaction",
+    "question": "How is split-transaction abuse detected in expense reimbursement testing?",
+    "expectedNoteIds": ["expense-reimbursement-testing"],
+    "expectedKeywords": ["threshold"]
+  },
+  {
+    "id": "it-access-termination",
+    "question": "How quickly should system access be removed after an employee is terminated?",
+    "expectedNoteIds": ["it-user-access-review"],
+    "expectedKeywords": ["24", "hour", "window"]
+  },
+  {
+    "id": "revenue-cutoff-timing",
+    "question": "Why is revenue cutoff testing timed around period-end?",
+    "expectedNoteIds": ["revenue-recognition-testing"],
+    "expectedKeywords": ["cluster", "period-end"]
+  },
+  {
+    "id": "sod-conflict-testing",
+    "question": "How are segregation-of-duties conflicts tested against actual system access?",
+    "expectedNoteIds": ["segregation-of-duties-review"],
+    "expectedKeywords": ["conflict matrix"]
+  },
+  {
+    "id": "journal-entry-risk-criteria",
+    "question": "What risk criteria are used to select journal entries for testing?",
+    "expectedNoteIds": ["journal-entry-testing"],
+    "expectedKeywords": ["round-dollar", "weekend", "same user"]
+  }
+]

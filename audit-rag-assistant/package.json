@@ -1,0 +1,17 @@
+{
+  "name": "audit-rag-assistant",
+  "version": "1.0.0",
+  "private": true,
+  "description": "RAG assistant over a synthetic internal-audit procedures corpus — flagship project for the Risk & Audit Analytics Portfolio.",
+  "type": "module",
+  "scripts": {
+    "ingest": "node scripts/ingest.mjs",
+    "search": "node scripts/search.mjs",
+    "ask": "node scripts/answer.mjs",
+    "eval": "node scripts/eval.mjs"
+  },
+  "devDependencies": {
+    "gray-matter": "^4.0.3",
+    "js-yaml": "^4.1.0"
+  }
+}

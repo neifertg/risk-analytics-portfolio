@@ -1,0 +1,8 @@
+node_modules/
+logs/
+app/.venv/
+
+# index/store.json IS committed here, unlike Seth_Wiki: this corpus is a
+# small, fixed ~12-doc demo (not a growing personal wiki), and a Streamlit
+# Cloud deployment can't run `npm run ingest` itself — committing the
+# pre-built embeddings is what lets the deployed app work at all.

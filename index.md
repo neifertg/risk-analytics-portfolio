@@ -44,9 +44,19 @@ projects as they ship — nothing here is a mockup or a hypothetical.
 
 ## 🔍 Projects
 
-Nothing published yet. The first project — a retrieval-augmented question
-answering assistant grounded in public audit-standards documentation — is
-in progress. Check back soon.
+### Audit Procedures RAG Assistant
+
+A retrieval-augmented question-answering assistant grounded in a
+synthetic internal-audit procedures corpus — two-stage retrieval, a
+groundedness guardrail that declines to answer rather than guess, and
+full query logging. Includes a real debugging story: two retrieval bugs
+found live by actually running the eval suite against real embeddings
+(boilerplate cross-reference sections winning on title overlap, and a
+section whose own opening sentence diluted its embedding), both
+root-caused and fixed — see the project README.
+
+[Source & write-up](https://github.com/neifertg/risk-analytics-portfolio/tree/main/audit-rag-assistant)
+&middot; Live demo: not yet deployed
 
 ---
 

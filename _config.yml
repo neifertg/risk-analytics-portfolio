@@ -1,3 +1,22 @@
 title: Risk & Audit Analytics Portfolio
 theme: jekyll-theme-minimal
 markdown: kramdown
+
+# audit-rag-assistant/ is a runnable Node/Python project living alongside
+# this Jekyll site, not site content — exclude its build artifacts so a
+# GitHub Pages build doesn't try to process/copy them. The project's own
+# corpus/scripts/app/README files are plain markdown and Jekyll will just
+# render them as pages if not excluded too, which isn't the intent here.
+exclude:
+  - audit-rag-assistant/node_modules
+  - audit-rag-assistant/index
+  - audit-rag-assistant/logs
+  - audit-rag-assistant/app/.venv
+  - audit-rag-assistant/corpus
+  - audit-rag-assistant/scripts
+  - audit-rag-assistant/evals
+  - audit-rag-assistant/app
+  - audit-rag-assistant/README.md
+  - audit-rag-assistant/package.json
+  - audit-rag-assistant/package-lock.json
+  - audit-rag-assistant/.gitignore

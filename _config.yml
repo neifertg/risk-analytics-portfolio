@@ -20,3 +20,9 @@ exclude:
   - audit-rag-assistant/package.json
   - audit-rag-assistant/package-lock.json
   - audit-rag-assistant/.gitignore
+  - benfords-law-analyzer/.venv
+  - benfords-law-analyzer/output
+  - benfords-law-analyzer/analyze.py
+  - benfords-law-analyzer/README.md
+  - benfords-law-analyzer/requirements.txt
+  - benfords-law-analyzer/.gitignore

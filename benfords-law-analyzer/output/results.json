@@ -1,0 +1,33 @@
+{
+  "concept": "us-gaap:Assets",
+  "period": "CY2023Q4I",
+  "n_filers_total": 6428,
+  "n_positive_values_analyzed": 6395,
+  "n_excluded_non_positive": 33,
+  "observed_frequency": {
+    "1": 0.30586,
+    "2": 0.17529,
+    "3": 0.11884,
+    "4": 0.09898,
+    "5": 0.08038,
+    "6": 0.06521,
+    "7": 0.06349,
+    "8": 0.04519,
+    "9": 0.04676
+  },
+  "expected_frequency": {
+    "1": 0.30103,
+    "2": 0.17609,
+    "3": 0.12494,
+    "4": 0.09691,
+    "5": 0.07918,
+    "6": 0.06695,
+    "7": 0.05799,
+    "8": 0.05115,
+    "9": 0.04576
+  },
+  "chi_square_statistic": 11.021,
+  "chi_square_p_value": 0.20052,
+  "mad": 0.00324,
+  "nigrini_conformity": "Close conformity"
+}

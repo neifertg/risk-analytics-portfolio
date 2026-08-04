@@ -58,6 +58,19 @@ root-caused and fixed — see the project README.
 [Source & write-up](https://github.com/neifertg/risk-analytics-portfolio/tree/main/audit-rag-assistant)
 &middot; Live demo: not yet deployed
 
+### Benford's Law Analyzer
+
+Checks whether real, public financial-statement data conforms to
+Benford's Law's expected leading-digit distribution — a classic
+forensic-accounting screening technique. Run against ~6,400 real US
+public companies' reported total assets (SEC EDGAR XBRL Frames API, no
+synthetic data): chi-square p=0.20, Nigrini MAD=0.00324 (close
+conformity) — the expected result for a healthy market-wide aggregate,
+and a validated baseline for applying the same method to a narrower,
+single-entity population where a deviation would actually be meaningful.
+
+[Source, chart & real output](https://github.com/neifertg/risk-analytics-portfolio/tree/main/benfords-law-analyzer)
+
 ---
 
 ## 📄 Contact

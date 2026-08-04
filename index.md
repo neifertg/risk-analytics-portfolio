@@ -71,6 +71,20 @@ single-entity population where a deviation would actually be meaningful.
 
 [Source, chart & real output](https://github.com/neifertg/risk-analytics-portfolio/tree/main/benfords-law-analyzer)
 
+### Duplicate Vendor Payment Checker
+
+Flags potential duplicate AP payments using four named, real audit
+techniques (exact duplicates, threshold-avoidance "split" payments,
+fuzzy-matched vendor-master duplicates, and lower-confidence review
+candidates) rather than one opaque similarity score. Run against a
+seeded synthetic ledger (919 payments, ground truth kept separate from
+the detector's input): 98% recall, 100% precision — including one
+honestly-reported miss where a vendor-name variant fell just short of
+the fuzzy-match threshold, a real precision/recall tradeoff rather than
+a hidden flaw.
+
+[Source, findings & real output](https://github.com/neifertg/risk-analytics-portfolio/tree/main/duplicate-vendor-payment-checker)
+
 ---
 
 ## 📄 Contact

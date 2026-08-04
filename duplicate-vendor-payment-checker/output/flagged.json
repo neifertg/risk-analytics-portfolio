@@ -1,0 +1,569 @@
+{
+  "records_scanned": 919,
+  "flags_by_type": {
+    "exact_duplicate": 15,
+    "threshold_split": 12,
+    "vendor_master_duplicate": 9,
+    "review_candidate": 16
+  },
+  "total_flags": 52,
+  "scoring_against_seeded_ground_truth": {
+    "seed_groups_total": 52,
+    "seed_groups_caught": 51,
+    "recall": 0.981,
+    "per_type": {
+      "exact_duplicate": {
+        "seeded": 15,
+        "caught": 15,
+        "recall": 1.0
+      },
+      "threshold_split": {
+        "seeded": 12,
+        "caught": 12,
+        "recall": 1.0
+      },
+      "vendor_master_duplicate": {
+        "seeded": 10,
+        "caught": 9,
+        "recall": 0.9
+      },
+      "round_trip_near_duplicate": {
+        "seeded": 15,
+        "caught": 15,
+        "recall": 1.0
+      }
+    },
+    "total_flags_raised": 52,
+    "false_positive_flag_count": 0,
+    "false_positive_flags": [],
+    "precision": 1.0
+  },
+  "flags": [
+    {
+      "flag_type": "exact_duplicate",
+      "confidence": "duplicate",
+      "vendor_name": "Beacon Maintenance Corp",
+      "payment_ids": [
+        "PMT-00010",
+        "PMT-00857"
+      ],
+      "detail": "Same vendor, invoice INV-001-90611, amount 367.62 paid 2 times."
+    },
+    {
+      "flag_type": "exact_duplicate",
+      "confidence": "duplicate",
+      "vendor_name": "Cascade Office Solutions",
+      "payment_ids": [
+        "PMT-00732",
+        "PMT-00854"
+      ],
+      "detail": "Same vendor, invoice INV-007-52003, amount 743.27 paid 2 times."
+    },
+    {
+      "flag_type": "exact_duplicate",
+      "confidence": "duplicate",
+      "vendor_name": "Cobalt Utilities",
+      "payment_ids": [
+        "PMT-00428",
+        "PMT-00851"
+      ],
+      "detail": "Same vendor, invoice INV-012-38447, amount 2256.48 paid 2 times."
+    },
+    {
+      "flag_type": "exact_duplicate",
+      "confidence": "duplicate",
+      "vendor_name": "Crestview Legal Services",
+      "payment_ids": [
+        "PMT-00254",
+        "PMT-00865"
+      ],
+      "detail": "Same vendor, invoice INV-014-58539, amount 1077.51 paid 2 times."
+    },
+    {
+      "flag_type": "exact_duplicate",
+      "confidence": "duplicate",
+      "vendor_name": "Harbor Office Solutions",
+      "payment_ids": [
+        "PMT-00656",
+        "PMT-00863"
+      ],
+      "detail": "Same vendor, invoice INV-019-78993, amount 2786.82 paid 2 times."
+    },
+    {
+      "flag_type": "exact_duplicate",
+      "confidence": "duplicate",
+      "vendor_name": "Ironclad Staffing Solutions",
+      "payment_ids": [
+        "PMT-00620",
+        "PMT-00852"
+      ],
+      "detail": "Same vendor, invoice INV-023-89830, amount 1481.66 paid 2 times."
+    },
+    {
+      "flag_type": "exact_duplicate",
+      "confidence": "duplicate",
+      "vendor_name": "Lumen Cleaning Services",
+      "payment_ids": [
+        "PMT-00584",
+        "PMT-00858"
+      ],
+      "detail": "Same vendor, invoice INV-025-13446, amount 532.75 paid 2 times."
+    },
+    {
+      "flag_type": "exact_duplicate",
+      "confidence": "duplicate",
+      "vendor_name": "Lumen Maintenance Corp",
+      "payment_ids": [
+        "PMT-00343",
+        "PMT-00856"
+      ],
+      "detail": "Same vendor, invoice INV-026-32920, amount 349.3 paid 2 times."
+    },
+    {
+      "flag_type": "exact_duplicate",
+      "confidence": "duplicate",
+      "vendor_name": "Pinehurst Security Systems",
+      "payment_ids": [
+        "PMT-00510",
+        "PMT-00861"
+      ],
+      "detail": "Same vendor, invoice INV-036-69287, amount 585.03 paid 2 times."
+    },
+    {
+      "flag_type": "exact_duplicate",
+      "confidence": "duplicate",
+      "vendor_name": "Silverline Office Solutions",
+      "payment_ids": [
+        "PMT-00725",
+        "PMT-00859"
+      ],
+      "detail": "Same vendor, invoice INV-040-64613, amount 2763.63 paid 2 times."
+    },
+    {
+      "flag_type": "exact_duplicate",
+      "confidence": "duplicate",
+      "vendor_name": "Silverline Utilities",
+      "payment_ids": [
+        "PMT-00015",
+        "PMT-00853"
+      ],
+      "detail": "Same vendor, invoice INV-041-72915, amount 1547.25 paid 2 times."
+    },
+    {
+      "flag_type": "exact_duplicate",
+      "confidence": "duplicate",
+      "vendor_name": "Union Cleaning Services",
+      "payment_ids": [
+        "PMT-00586",
+        "PMT-00860"
+      ],
+      "detail": "Same vendor, invoice INV-043-75331, amount 775.61 paid 2 times."
+    },
+    {
+      "flag_type": "exact_duplicate",
+      "confidence": "duplicate",
+      "vendor_name": "Vantage Consulting Group",
+      "payment_ids": [
+        "PMT-00011",
+        "PMT-00862"
+      ],
+      "detail": "Same vendor, invoice INV-044-60795, amount 636.0 paid 2 times."
+    },
+    {
+      "flag_type": "exact_duplicate",
+      "confidence": "duplicate",
+      "vendor_name": "Vantage Supply Co.",
+      "payment_ids": [
+        "PMT-00270",
+        "PMT-00855"
+      ],
+      "detail": "Same vendor, invoice INV-045-52797, amount 859.43 paid 2 times."
+    },
+    {
+      "flag_type": "exact_duplicate",
+      "confidence": "duplicate",
+      "vendor_name": "Vertex Travel Services",
+      "payment_ids": [
+        "PMT-00035",
+        "PMT-00864"
+      ],
+      "detail": "Same vendor, invoice INV-049-56411, amount 1398.3 paid 2 times."
+    },
+    {
+      "flag_type": "threshold_split",
+      "confidence": "duplicate",
+      "vendor_name": "Beacon Logistics",
+      "payment_ids": [
+        "PMT-00894",
+        "PMT-00893",
+        "PMT-00892"
+      ],
+      "detail": "3 payments each within 12% below the $10,000 approval threshold, within 14 days (combined $28,951.10)."
+    },
+    {
+      "flag_type": "threshold_split",
+      "confidence": "duplicate",
+      "vendor_name": "Cascade Catering",
+      "payment_ids": [
+        "PMT-00870",
+        "PMT-00871"
+      ],
+      "detail": "2 payments each within 12% below the $10,000 approval threshold, within 14 days (combined $18,633.62)."
+    },
+    {
+      "flag_type": "threshold_split",
+      "confidence": "duplicate",
+      "vendor_name": "Cascade Freight",
+      "payment_ids": [
+        "PMT-00875",
+        "PMT-00876",
+        "PMT-00874"
+      ],
+      "detail": "3 payments each within 12% below the $10,000 approval threshold, within 14 days (combined $28,421.38)."
+    },
+    {
+      "flag_type": "threshold_split",
+      "confidence": "duplicate",
+      "vendor_name": "Cascade Telecom",
+      "payment_ids": [
+        "PMT-00886",
+        "PMT-00885"
+      ],
+      "detail": "2 payments each within 12% below the $10,000 approval threshold, within 14 days (combined $18,747.75)."
+    },
+    {
+      "flag_type": "threshold_split",
+      "confidence": "duplicate",
+      "vendor_name": "Crestview Landscaping",
+      "payment_ids": [
+        "PMT-00869",
+        "PMT-00868"
+      ],
+      "detail": "2 payments each within 12% below the $10,000 approval threshold, within 14 days (combined $18,527.67)."
+    },
+    {
+      "flag_type": "threshold_split",
+      "confidence": "duplicate",
+      "vendor_name": "Ironclad Equipment Rental",
+      "payment_ids": [
+        "PMT-00887",
+        "PMT-00888"
+      ],
+      "detail": "2 payments each within 12% below the $10,000 approval threshold, within 14 days (combined $18,904.17)."
+    },
+    {
+      "flag_type": "threshold_split",
+      "confidence": "duplicate",
+      "vendor_name": "Lumen Telecom",
+      "payment_ids": [
+        "PMT-00872",
+        "PMT-00873"
+      ],
+      "detail": "2 payments each within 12% below the $10,000 approval threshold, within 14 days (combined $19,204.48)."
+    },
+    {
+      "flag_type": "threshold_split",
+      "confidence": "duplicate",
+      "vendor_name": "Redwood Cleaning Services",
+      "payment_ids": [
+        "PMT-00867",
+        "PMT-00866"
+      ],
+      "detail": "2 payments each within 12% below the $10,000 approval threshold, within 14 days (combined $18,717.03)."
+    },
+    {
+      "flag_type": "threshold_split",
+      "confidence": "duplicate",
+      "vendor_name": "Silverline Freight",
+      "payment_ids": [
+        "PMT-00878",
+        "PMT-00877"
+      ],
+      "detail": "2 payments each within 12% below the $10,000 approval threshold, within 14 days (combined $18,155.97)."
+    },
+    {
+      "flag_type": "threshold_split",
+      "confidence": "duplicate",
+      "vendor_name": "Silverline Utilities",
+      "payment_ids": [
+        "PMT-00889",
+        "PMT-00891",
+        "PMT-00890"
+      ],
+      "detail": "3 payments each within 12% below the $10,000 approval threshold, within 14 days (combined $28,492.66)."
+    },
+    {
+      "flag_type": "threshold_split",
+      "confidence": "duplicate",
+      "vendor_name": "Vantage Supply Co.",
+      "payment_ids": [
+        "PMT-00881",
+        "PMT-00879",
+        "PMT-00880"
+      ],
+      "detail": "3 payments each within 12% below the $10,000 approval threshold, within 14 days (combined $29,412.05)."
+    },
+    {
+      "flag_type": "threshold_split",
+      "confidence": "duplicate",
+      "vendor_name": "Vertex Travel Services",
+      "payment_ids": [
+        "PMT-00884",
+        "PMT-00882",
+        "PMT-00883"
+      ],
+      "detail": "3 payments each within 12% below the $10,000 approval threshold, within 14 days (combined $28,369.61)."
+    },
+    {
+      "flag_type": "vendor_master_duplicate",
+      "confidence": "duplicate",
+      "vendor_name": "Blue Ridge Insurance Group / Blue Ridge Insurance Group LLC",
+      "payment_ids": [
+        "PMT-00076",
+        "PMT-00901"
+      ],
+      "detail": "Invoice INV-003-33581, amount 512.91 paid under two vendor names (93% name similarity) \u2014 likely duplicate vendor-master record."
+    },
+    {
+      "flag_type": "vendor_master_duplicate",
+      "confidence": "duplicate",
+      "vendor_name": "Falcon Supply Co. / Falcon Supply Co",
+      "payment_ids": [
+        "PMT-00432",
+        "PMT-00902"
+      ],
+      "detail": "Invoice INV-016-60352, amount 1135.13 paid under two vendor names (97% name similarity) \u2014 likely duplicate vendor-master record."
+    },
+    {
+      "flag_type": "vendor_master_duplicate",
+      "confidence": "duplicate",
+      "vendor_name": "Lumen Telecom / Lumen Telecom,",
+      "payment_ids": [
+        "PMT-00113",
+        "PMT-00900"
+      ],
+      "detail": "Invoice INV-027-84791, amount 3705.33 paid under two vendor names (96% name similarity) \u2014 likely duplicate vendor-master record."
+    },
+    {
+      "flag_type": "vendor_master_duplicate",
+      "confidence": "duplicate",
+      "vendor_name": "Pinehurst Facilities Management / Pinehurst Facilities Management LLC",
+      "payment_ids": [
+        "PMT-00249",
+        "PMT-00895"
+      ],
+      "detail": "Invoice INV-033-57068, amount 1499.56 paid under two vendor names (94% name similarity) \u2014 likely duplicate vendor-master record."
+    },
+    {
+      "flag_type": "vendor_master_duplicate",
+      "confidence": "duplicate",
+      "vendor_name": "Pinehurst Landscaping / Pinehurst Landscaping,",
+      "payment_ids": [
+        "PMT-00282",
+        "PMT-00897"
+      ],
+      "detail": "Invoice INV-034-17407, amount 6661.84 paid under two vendor names (98% name similarity) \u2014 likely duplicate vendor-master record."
+    },
+    {
+      "flag_type": "vendor_master_duplicate",
+      "confidence": "duplicate",
+      "vendor_name": "Silverline Utilities / Silverline Utilities LLC",
+      "payment_ids": [
+        "PMT-00511",
+        "PMT-00904"
+      ],
+      "detail": "Invoice INV-041-60077, amount 811.8 paid under two vendor names (91% name similarity) \u2014 likely duplicate vendor-master record."
+    },
+    {
+      "flag_type": "vendor_master_duplicate",
+      "confidence": "duplicate",
+      "vendor_name": "Silverline Waste Management / Silverline Waste Management LLC",
+      "payment_ids": [
+        "PMT-00803",
+        "PMT-00896"
+      ],
+      "detail": "Invoice INV-042-84197, amount 3561.98 paid under two vendor names (93% name similarity) \u2014 likely duplicate vendor-master record."
+    },
+    {
+      "flag_type": "vendor_master_duplicate",
+      "confidence": "duplicate",
+      "vendor_name": "Union Cleaning Services / Union Cleaning Services LLC",
+      "payment_ids": [
+        "PMT-00586",
+        "PMT-00898",
+        "PMT-00860"
+      ],
+      "detail": "Invoice INV-043-75331, amount 775.61 paid under two vendor names (92% name similarity) \u2014 likely duplicate vendor-master record."
+    },
+    {
+      "flag_type": "vendor_master_duplicate",
+      "confidence": "duplicate",
+      "vendor_name": "Vertex Analytics / Vertex Analytics,",
+      "payment_ids": [
+        "PMT-00467",
+        "PMT-00899"
+      ],
+      "detail": "Invoice INV-046-35810, amount 1818.18 paid under two vendor names (97% name similarity) \u2014 likely duplicate vendor-master record."
+    },
+    {
+      "flag_type": "review_candidate",
+      "confidence": "review_candidate",
+      "vendor_name": "Cascade Telecom",
+      "payment_ids": [
+        "PMT-00484",
+        "PMT-00910"
+      ],
+      "detail": "Same vendor and amount (1445.83), different invoice numbers, 10 days apart \u2014 worth a manual look, not a confirmed duplicate."
+    },
+    {
+      "flag_type": "review_candidate",
+      "confidence": "review_candidate",
+      "vendor_name": "Cascade Telecom",
+      "payment_ids": [
+        "PMT-00266",
+        "PMT-00912"
+      ],
+      "detail": "Same vendor and amount (1031.37), different invoice numbers, 19 days apart \u2014 worth a manual look, not a confirmed duplicate."
+    },
+    {
+      "flag_type": "review_candidate",
+      "confidence": "review_candidate",
+      "vendor_name": "Coastal Freight",
+      "payment_ids": [
+        "PMT-00759",
+        "PMT-00906"
+      ],
+      "detail": "Same vendor and amount (813.46), different invoice numbers, 14 days apart \u2014 worth a manual look, not a confirmed duplicate."
+    },
+    {
+      "flag_type": "review_candidate",
+      "confidence": "review_candidate",
+      "vendor_name": "Coastal Freight",
+      "payment_ids": [
+        "PMT-00913",
+        "PMT-00142"
+      ],
+      "detail": "Same vendor and amount (499.33), different invoice numbers, 6 days apart \u2014 worth a manual look, not a confirmed duplicate."
+    },
+    {
+      "flag_type": "review_candidate",
+      "confidence": "review_candidate",
+      "vendor_name": "Coastal Legal Services",
+      "payment_ids": [
+        "PMT-00390",
+        "PMT-00907"
+      ],
+      "detail": "Same vendor and amount (225.65), different invoice numbers, 17 days apart \u2014 worth a manual look, not a confirmed duplicate."
+    },
+    {
+      "flag_type": "review_candidate",
+      "confidence": "review_candidate",
+      "vendor_name": "Cobalt Utilities",
+      "payment_ids": [
+        "PMT-00295",
+        "PMT-00917"
+      ],
+      "detail": "Same vendor and amount (7634.11), different invoice numbers, 17 days apart \u2014 worth a manual look, not a confirmed duplicate."
+    },
+    {
+      "flag_type": "review_candidate",
+      "confidence": "review_candidate",
+      "vendor_name": "Crestview Legal Services",
+      "payment_ids": [
+        "PMT-00301",
+        "PMT-00919"
+      ],
+      "detail": "Same vendor and amount (1255.06), different invoice numbers, 7 days apart \u2014 worth a manual look, not a confirmed duplicate."
+    },
+    {
+      "flag_type": "review_candidate",
+      "confidence": "review_candidate",
+      "vendor_name": "Harbor IT Services",
+      "payment_ids": [
+        "PMT-00196",
+        "PMT-00915"
+      ],
+      "detail": "Same vendor and amount (951.14), different invoice numbers, 12 days apart \u2014 worth a manual look, not a confirmed duplicate."
+    },
+    {
+      "flag_type": "review_candidate",
+      "confidence": "review_candidate",
+      "vendor_name": "Meridian Travel Services",
+      "payment_ids": [
+        "PMT-00201",
+        "PMT-00909"
+      ],
+      "detail": "Same vendor and amount (3913.49), different invoice numbers, 6 days apart \u2014 worth a manual look, not a confirmed duplicate."
+    },
+    {
+      "flag_type": "review_candidate",
+      "confidence": "review_candidate",
+      "vendor_name": "Pinehurst Cleaning Services",
+      "payment_ids": [
+        "PMT-00404",
+        "PMT-00914"
+      ],
+      "detail": "Same vendor and amount (480.62), different invoice numbers, 12 days apart \u2014 worth a manual look, not a confirmed duplicate."
+    },
+    {
+      "flag_type": "review_candidate",
+      "confidence": "review_candidate",
+      "vendor_name": "Pinehurst Landscaping",
+      "payment_ids": [
+        "PMT-00398",
+        "PMT-00905"
+      ],
+      "detail": "Same vendor and amount (3209.75), different invoice numbers, 9 days apart \u2014 worth a manual look, not a confirmed duplicate."
+    },
+    {
+      "flag_type": "review_candidate",
+      "confidence": "review_candidate",
+      "vendor_name": "Pinehurst Security Systems",
+      "payment_ids": [
+        "PMT-00289",
+        "PMT-00911"
+      ],
+      "detail": "Same vendor and amount (1120.29), different invoice numbers, 15 days apart \u2014 worth a manual look, not a confirmed duplicate."
+    },
+    {
+      "flag_type": "review_candidate",
+      "confidence": "review_candidate",
+      "vendor_name": "Redwood Cleaning Services",
+      "payment_ids": [
+        "PMT-00067",
+        "PMT-00908"
+      ],
+      "detail": "Same vendor and amount (6345.93), different invoice numbers, 20 days apart \u2014 worth a manual look, not a confirmed duplicate."
+    },
+    {
+      "flag_type": "review_candidate",
+      "confidence": "review_candidate",
+      "vendor_name": "Silverline Freight",
+      "payment_ids": [
+        "PMT-00711",
+        "PMT-00916"
+      ],
+      "detail": "Same vendor and amount (4258.73), different invoice numbers, 9 days apart \u2014 worth a manual look, not a confirmed duplicate."
+    },
+    {
+      "flag_type": "review_candidate",
+      "confidence": "review_candidate",
+      "vendor_name": "Vantage Supply Co.",
+      "payment_ids": [
+        "PMT-00270",
+        "PMT-00918"
+      ],
+      "detail": "Same vendor and amount (859.43), different invoice numbers, 13 days apart \u2014 worth a manual look, not a confirmed duplicate."
+    },
+    {
+      "flag_type": "review_candidate",
+      "confidence": "review_candidate",
+      "vendor_name": "Vantage Supply Co.",
+      "payment_ids": [
+        "PMT-00855",
+        "PMT-00918"
+      ],
+      "detail": "Same vendor and amount (859.43), different invoice numbers, 5 days apart \u2014 worth a manual look, not a confirmed duplicate."
+    }
+  ]
+}

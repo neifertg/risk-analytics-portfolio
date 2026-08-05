@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { execFileSync } from "node:child_process";
 import matter from "gray-matter";
 import { walkCorpus, projectRoot } from "./lib.mjs";
 import { chunkNote } from "./chunk.mjs";
@@ -16,6 +17,22 @@ function loadExistingStore() {
   return new Map(Object.entries(raw));
 }
 
+// This corpus has no `updated` frontmatter field (it's synthetic practice
+// content, not curated notes) — derive it from git history instead, same
+// "generated, not hand-maintained" approach as app.py's coverage line.
+// Falls back to null (e.g. an uncommitted new file) rather than throwing.
+function lastCommitDate(file) {
+  try {
+    const out = execFileSync("git", ["log", "-1", "--format=%ad", "--date=short", "--", file], {
+      cwd: projectRoot,
+      encoding: "utf8",
+    }).trim();
+    return out || null;
+  } catch {
+    return null;
+  }
+}
+
 async function main() {
   const existing = loadExistingStore();
   const newStore = new Map();
@@ -27,13 +44,18 @@ async function main() {
     const { data, content } = matter(raw);
     if (!data.id) continue;
 
-    const chunks = chunkNote({ data, content });
+    const chunks = chunkNote({ data: { ...data, updated: lastCommitDate(file) }, content });
     const toEmbed = [];
 
     for (const chunk of chunks) {
       const prior = existing.get(chunk.chunkId);
       if (prior && prior.contentHash === chunk.contentHash) {
-        newStore.set(chunk.chunkId, prior);
+        // Reuse the (expensive) embedding, but keep the freshly computed
+        // chunk otherwise — a git-log-derived `updated` date can change
+        // between ingest runs even though contentHash (hashed from chunk
+        // text alone) stays the same, so without this the new metadata
+        // would silently never make it into the store.
+        newStore.set(chunk.chunkId, { ...chunk, embedding: prior.embedding });
         reused++;
       } else {
         toEmbed.push(chunk);

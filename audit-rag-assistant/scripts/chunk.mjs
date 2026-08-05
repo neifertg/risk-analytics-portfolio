@@ -29,6 +29,7 @@ function baseMetadata(data) {
     noteId: data.id,
     title: data.title,
     type: data.type,
+    updated: data.updated ?? null,
   };
 }
 

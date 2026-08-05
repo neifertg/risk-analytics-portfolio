@@ -94,7 +94,12 @@ export async function answerQuestion(question) {
 
   const context = buildContextBlock(results);
   const { text, usage: genUsage } = await callAnthropic(buildSystemPrompt(), question, context);
-  const sources = results.map(({ chunk }) => ({ title: chunk.title, heading: chunk.heading ?? "Summary" }));
+  const sources = results.map(({ chunk }) => ({
+    title: chunk.title,
+    heading: chunk.heading ?? "Summary",
+    type: chunk.type,
+    updated: chunk.updated,
+  }));
   const usage = {
     embeddingTokens: retrievalUsage.embeddingTokens,
     inputTokens: genUsage.inputTokens,
@@ -144,7 +149,7 @@ async function main() {
   if (result.sources.length > 0) {
     console.log("\nSources:");
     result.sources.forEach((source, i) => {
-      console.log(`  [${i + 1}] ${source.title} — ${source.heading}`);
+      console.log(`  [${i + 1}] (${source.type}) ${source.title} — ${source.heading} (updated ${source.updated})`);
     });
   }
   console.log(`\n${formatUsageLine(result.usage)}`);

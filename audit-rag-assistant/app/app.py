@@ -117,6 +117,22 @@ CSS_TEMPLATE = Template(
         font-size: 14px;
         color: $text;
     }
+    .source-card .source-date {
+        color: $muted;
+        font-size: 12px;
+    }
+    .source-card .source-badge {
+        display: inline-block;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        font-size: 10px;
+        font-weight: 700;
+        color: $eyebrow;
+        border: 1px solid $border;
+        border-radius: 4px;
+        padding: 1px 6px;
+        margin-right: 6px;
+    }
     .source-card .usage-line {
         margin-top: 14px;
         padding-top: 12px;
@@ -282,7 +298,9 @@ elif st.session_state.get("result"):
 
         if result.get("sources"):
             sources_html = "".join(
-                f"<li>[{i}] {source['title']} — {source['heading']}</li>"
+                f"<li><span class=\"source-badge\">{source['type']}</span>"
+                f"[{i}] {source['title']} — {source['heading']} "
+                f"<span class=\"source-date\">(updated {source['updated']})</span></li>"
                 for i, source in enumerate(result["sources"], start=1)
             )
             st.markdown(

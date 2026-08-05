@@ -64,3 +64,12 @@ exclude:
   - sod-conflict-checker/README.md
   - sod-conflict-checker/requirements.txt
   - sod-conflict-checker/.gitignore
+  - sampling-calculator/.venv
+  - sampling-calculator/data
+  - sampling-calculator/output
+  - sampling-calculator/generate_populations.py
+  - sampling-calculator/sampling.py
+  - sampling-calculator/check.py
+  - sampling-calculator/README.md
+  - sampling-calculator/requirements.txt
+  - sampling-calculator/.gitignore

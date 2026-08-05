@@ -147,6 +147,27 @@ can under-communicate.
 
 [Source, findings & real output](https://github.com/neifertg/risk-analytics-portfolio/tree/main/sod-conflict-checker)
 
+### Statistical Audit Sampling Calculator
+
+![Reliability factor vs. errors found, computed via the chi-square relationship at 90/95/99% confidence, matching published AICPA/PPS reference values](assets/sampling-calculator-chart.png)
+
+Plans and evaluates attribute sampling (tests of controls) and monetary-unit/
+PPS sampling (substantive testing), using the exact statistical relationship
+behind the published AICPA reliability-factor tables that IIA and ISACA
+guidance both point auditors to for the underlying mechanics — verified
+against 10 real published table values (max diff 0.0074) before being used
+for anything else. Run against illustrative synthetic populations: an
+attribute-sampling plan for testing PO approvals (156-item sample, 2
+deviations found, 4.04% computed upper deviation rate — under the 5%
+tolerable rate) and a real PPS sample drawn against a $4.6M AR balance that
+happened to select one seeded overstatement, correctly concluding the
+balance is **not** supported at the stated confidence rather than smoothing
+it into a pass. One labeled scope limit: nonzero-expected-misstatement MUS
+planning uses a conservative approximation, not the AICPA guide's exact
+expansion-factor sub-table, documented honestly rather than guessed at.
+
+[Source, findings & real output](https://github.com/neifertg/risk-analytics-portfolio/tree/main/sampling-calculator)
+
 ---
 
 ## 📄 Contact

@@ -1,0 +1,107 @@
+{
+  "reliability_factor_verification": {
+    "checks": [
+      {
+        "case": "k=0, risk=1%",
+        "published": 4.61,
+        "computed": 4.605,
+        "diff": 0.0048
+      },
+      {
+        "case": "k=0, risk=5%",
+        "published": 3.0,
+        "computed": 2.996,
+        "diff": 0.0043
+      },
+      {
+        "case": "k=0, risk=10%",
+        "published": 2.31,
+        "computed": 2.303,
+        "diff": 0.0074
+      },
+      {
+        "case": "k=0, risk=15%",
+        "published": 1.9,
+        "computed": 1.897,
+        "diff": 0.0029
+      },
+      {
+        "case": "k=0, risk=20%",
+        "published": 1.61,
+        "computed": 1.609,
+        "diff": 0.0006
+      },
+      {
+        "case": "k=0, confidence=95%",
+        "published": 3.0,
+        "computed": 2.996,
+        "diff": 0.0043
+      },
+      {
+        "case": "k=1, confidence=95%",
+        "published": 4.75,
+        "computed": 4.744,
+        "diff": 0.0061
+      },
+      {
+        "case": "k=2, confidence=95%",
+        "published": 6.3,
+        "computed": 6.296,
+        "diff": 0.0042
+      },
+      {
+        "case": "k=3, confidence=95%",
+        "published": 7.76,
+        "computed": 7.754,
+        "diff": 0.0063
+      },
+      {
+        "case": "k=4, confidence=95%",
+        "published": 9.16,
+        "computed": 9.154,
+        "diff": 0.0065
+      }
+    ],
+    "max_diff": 0.0074,
+    "all_pass": "True"
+  },
+  "attribute_sampling_example": {
+    "scenario": "Attribute sampling: were purchase orders properly approved?",
+    "plan": {
+      "population_size": 3000,
+      "confidence_level": 0.95,
+      "tolerable_rate": 0.05,
+      "expected_rate": 0.02,
+      "sample_size": 156
+    },
+    "actual_sample_deviations_found": 2,
+    "computed_upper_deviation_rate": 0.0404,
+    "conclusion": "Control can be relied on at the stated confidence."
+  },
+  "mus_sampling_example": {
+    "scenario": "Monetary-unit (PPS) sampling: is the AR balance fairly stated?",
+    "plan": {
+      "population_value": 4587449.22,
+      "confidence_level": 0.9,
+      "tolerable_misstatement": 115000.0,
+      "expected_misstatement": 0.0,
+      "sample_size": 92,
+      "sampling_interval": 49863.58,
+      "approximated_expansion": false
+    },
+    "items_selected": 92,
+    "seeded_misstatements_selected": 1,
+    "selected_misstatement_detail": [
+      {
+        "account_id": "AR-0373",
+        "book_value": 42565.28,
+        "audited_value": 36180.49
+      }
+    ],
+    "basic_precision": 114815.13,
+    "projected_misstatement": 7479.53,
+    "incremental_allowance": 11871.03,
+    "upper_misstatement_limit": 134165.7,
+    "conclusion": "Account balance NOT supported at the stated confidence -- UML exceeds tolerable misstatement."
+  }
+}

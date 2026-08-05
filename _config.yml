@@ -56,3 +56,11 @@ exclude:
   - journal-entry-testing-analyzer/README.md
   - journal-entry-testing-analyzer/requirements.txt
   - journal-entry-testing-analyzer/.gitignore
+  - sod-conflict-checker/.venv
+  - sod-conflict-checker/data
+  - sod-conflict-checker/output
+  - sod-conflict-checker/generate_access_data.py
+  - sod-conflict-checker/check.py
+  - sod-conflict-checker/README.md
+  - sod-conflict-checker/requirements.txt
+  - sod-conflict-checker/.gitignore

@@ -1,0 +1,138 @@
+[
+  {
+    "type": "exception_grant_conflict",
+    "user_id": "U-0116"
+  },
+  {
+    "type": "exception_grant_conflict",
+    "user_id": "U-0153"
+  },
+  {
+    "type": "exception_grant_conflict",
+    "user_id": "U-0032"
+  },
+  {
+    "type": "exception_grant_conflict",
+    "user_id": "U-0149"
+  },
+  {
+    "type": "exception_grant_conflict",
+    "user_id": "U-0179"
+  },
+  {
+    "type": "exception_grant_conflict",
+    "user_id": "U-0057"
+  },
+  {
+    "type": "exception_grant_conflict",
+    "user_id": "U-0057"
+  },
+  {
+    "type": "exception_grant_conflict",
+    "user_id": "U-0206"
+  },
+  {
+    "type": "exception_grant_conflict",
+    "user_id": "U-0150"
+  },
+  {
+    "type": "exception_grant_conflict",
+    "user_id": "U-0002"
+  },
+  {
+    "type": "exception_grant_conflict",
+    "user_id": "U-0055"
+  },
+  {
+    "type": "exception_grant_conflict",
+    "user_id": "U-0041"
+  },
+  {
+    "type": "exception_grant_conflict",
+    "user_id": "U-0068"
+  },
+  {
+    "type": "exception_grant_conflict",
+    "user_id": "U-0030"
+  },
+  {
+    "type": "exception_grant_conflict",
+    "user_id": "U-0161"
+  },
+  {
+    "type": "exception_grant_conflict",
+    "user_id": "U-0180"
+  },
+  {
+    "type": "exception_grant_conflict",
+    "user_id": "U-0001"
+  },
+  {
+    "type": "exception_grant_conflict",
+    "user_id": "U-0148"
+  },
+  {
+    "type": "role_design_conflict",
+    "user_id": "U-0062"
+  },
+  {
+    "type": "role_design_conflict",
+    "user_id": "U-0188"
+  },
+  {
+    "type": "role_design_conflict",
+    "user_id": "U-0122"
+  },
+  {
+    "type": "role_design_conflict",
+    "user_id": "U-0065"
+  },
+  {
+    "type": "role_design_conflict",
+    "user_id": "U-0052"
+  },
+  {
+    "type": "role_design_conflict",
+    "user_id": "U-0174"
+  },
+  {
+    "type": "remediated_conflict",
+    "user_id": "U-0115"
+  },
+  {
+    "type": "remediated_conflict",
+    "user_id": "U-0020"
+  },
+  {
+    "type": "remediated_conflict",
+    "user_id": "U-0127"
+  },
+  {
+    "type": "remediated_conflict",
+    "user_id": "U-0091"
+  },
+  {
+    "type": "remediated_conflict",
+    "user_id": "U-0021"
+  },
+  {
+    "type": "remediated_conflict",
+    "user_id": "U-0071"
+  },
+  {
+    "type": "remediated_conflict",
+    "user_id": "U-0210"
+  },
+  {
+    "type": "remediated_conflict",
+    "user_id": "U-0176"
+  },
+  {
+    "type": "remediated_conflict",
+    "user_id": "U-0006"
+  },
+  {
+    "type": "remediated_conflict",
+    "user_id": "U-0204"
+  }
+]

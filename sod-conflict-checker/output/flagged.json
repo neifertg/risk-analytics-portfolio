@@ -1,0 +1,272 @@
+{
+  "users_scanned": 220,
+  "active_grants_scanned": 244,
+  "users_flagged": 23,
+  "total_flags": 24,
+  "scoring_against_seeded_ground_truth": {
+    "seeded_conflict_users_total": 24,
+    "seeded_conflict_users_caught": 24,
+    "recall": 1.0,
+    "per_type": {
+      "exception_grant_conflict": {
+        "seeded": 18,
+        "caught": 18,
+        "recall": 1.0
+      },
+      "role_design_conflict": {
+        "seeded": 6,
+        "caught": 6,
+        "recall": 1.0
+      }
+    },
+    "remediated_users_total": 10,
+    "remediated_correctly_unflagged": 10,
+    "remediated_false_positives": [],
+    "remediation_specificity": 1.0,
+    "total_flags_raised": 24,
+    "unexplained_flags": [],
+    "precision": 1.0
+  },
+  "flags": [
+    {
+      "user_id": "U-0001",
+      "process": "Financial Close",
+      "right_a": "Post Journal Entry",
+      "right_a_source": "role: GL Accountant",
+      "right_b": "Approve Journal Entry",
+      "right_b_source": "exception grant",
+      "risk": "Self-approved manual journal entry, bypassing independent review.",
+      "detail": "U-0001 holds both 'Post Journal Entry' (via role: GL Accountant) and 'Approve Journal Entry' (via exception grant) -- Self-approved manual journal entry, bypassing independent review."
+    },
+    {
+      "user_id": "U-0002",
+      "process": "Order-to-Cash",
+      "right_a": "Create/Edit Customer Master",
+      "right_a_source": "role: AR Clerk",
+      "right_b": "Approve Credit Memo",
+      "right_b_source": "exception grant",
+      "risk": "Fictitious customer plus a self-approved credit memo or write-off.",
+      "detail": "U-0002 holds both 'Create/Edit Customer Master' (via role: AR Clerk) and 'Approve Credit Memo' (via exception grant) -- Fictitious customer plus a self-approved credit memo or write-off."
+    },
+    {
+      "user_id": "U-0030",
+      "process": "Payroll",
+      "right_a": "Edit Payroll Rates/Hours",
+      "right_a_source": "role: Payroll Admin",
+      "right_b": "Approve Payroll Run",
+      "right_b_source": "exception grant",
+      "risk": "Unauthorized pay-rate change, self-approved in the same payroll run.",
+      "detail": "U-0030 holds both 'Edit Payroll Rates/Hours' (via role: Payroll Admin) and 'Approve Payroll Run' (via exception grant) -- Unauthorized pay-rate change, self-approved in the same payroll run."
+    },
+    {
+      "user_id": "U-0032",
+      "process": "Procure-to-Pay",
+      "right_a": "Create/Edit Vendor Master",
+      "right_a_source": "role: AP Clerk",
+      "right_b": "Approve Vendor Payment",
+      "right_b_source": "exception grant",
+      "risk": "Ghost-vendor scheme: create a fictitious vendor and approve payments to it, alone.",
+      "detail": "U-0032 holds both 'Create/Edit Vendor Master' (via role: AP Clerk) and 'Approve Vendor Payment' (via exception grant) -- Ghost-vendor scheme: create a fictitious vendor and approve payments to it, alone."
+    },
+    {
+      "user_id": "U-0041",
+      "process": "Order-to-Cash",
+      "right_a": "Create/Edit Customer Master",
+      "right_a_source": "role: AR Clerk",
+      "right_b": "Approve Credit Memo",
+      "right_b_source": "exception grant",
+      "risk": "Fictitious customer plus a self-approved credit memo or write-off.",
+      "detail": "U-0041 holds both 'Create/Edit Customer Master' (via role: AR Clerk) and 'Approve Credit Memo' (via exception grant) -- Fictitious customer plus a self-approved credit memo or write-off."
+    },
+    {
+      "user_id": "U-0052",
+      "process": "Procure-to-Pay",
+      "right_a": "Create/Edit Vendor Master",
+      "right_a_source": "role: Legacy Regional Admin",
+      "right_b": "Approve Vendor Payment",
+      "right_b_source": "role: Legacy Regional Admin",
+      "risk": "Ghost-vendor scheme: create a fictitious vendor and approve payments to it, alone.",
+      "detail": "U-0052 holds both 'Create/Edit Vendor Master' (via role: Legacy Regional Admin) and 'Approve Vendor Payment' (via role: Legacy Regional Admin) -- Ghost-vendor scheme: create a fictitious vendor and approve payments to it, alone."
+    },
+    {
+      "user_id": "U-0055",
+      "process": "Order-to-Cash",
+      "right_a": "Create/Edit Customer Master",
+      "right_a_source": "exception grant",
+      "right_b": "Approve Credit Memo",
+      "right_b_source": "role: AR Supervisor",
+      "risk": "Fictitious customer plus a self-approved credit memo or write-off.",
+      "detail": "U-0055 holds both 'Create/Edit Customer Master' (via exception grant) and 'Approve Credit Memo' (via role: AR Supervisor) -- Fictitious customer plus a self-approved credit memo or write-off."
+    },
+    {
+      "user_id": "U-0057",
+      "process": "Procure-to-Pay",
+      "right_a": "Create Purchase Order",
+      "right_a_source": "role: Procurement Buyer",
+      "right_b": "Approve Purchase Order",
+      "right_b_source": "exception grant",
+      "risk": "Self-approved purchase orders, bypassing independent authorization.",
+      "detail": "U-0057 holds both 'Create Purchase Order' (via role: Procurement Buyer) and 'Approve Purchase Order' (via exception grant) -- Self-approved purchase orders, bypassing independent authorization."
+    },
+    {
+      "user_id": "U-0057",
+      "process": "Procure-to-Pay",
+      "right_a": "Create Purchase Order",
+      "right_a_source": "role: Procurement Buyer",
+      "right_b": "Receive Goods",
+      "right_b_source": "exception grant",
+      "risk": "Fictitious receipt of goods that were never actually delivered.",
+      "detail": "U-0057 holds both 'Create Purchase Order' (via role: Procurement Buyer) and 'Receive Goods' (via exception grant) -- Fictitious receipt of goods that were never actually delivered."
+    },
+    {
+      "user_id": "U-0062",
+      "process": "Procure-to-Pay",
+      "right_a": "Create/Edit Vendor Master",
+      "right_a_source": "role: Legacy Regional Admin",
+      "right_b": "Approve Vendor Payment",
+      "right_b_source": "role: Legacy Regional Admin",
+      "risk": "Ghost-vendor scheme: create a fictitious vendor and approve payments to it, alone.",
+      "detail": "U-0062 holds both 'Create/Edit Vendor Master' (via role: Legacy Regional Admin) and 'Approve Vendor Payment' (via role: Legacy Regional Admin) -- Ghost-vendor scheme: create a fictitious vendor and approve payments to it, alone."
+    },
+    {
+      "user_id": "U-0065",
+      "process": "Procure-to-Pay",
+      "right_a": "Create/Edit Vendor Master",
+      "right_a_source": "role: Legacy Regional Admin",
+      "right_b": "Approve Vendor Payment",
+      "right_b_source": "role: Legacy Regional Admin",
+      "risk": "Ghost-vendor scheme: create a fictitious vendor and approve payments to it, alone.",
+      "detail": "U-0065 holds both 'Create/Edit Vendor Master' (via role: Legacy Regional Admin) and 'Approve Vendor Payment' (via role: Legacy Regional Admin) -- Ghost-vendor scheme: create a fictitious vendor and approve payments to it, alone."
+    },
+    {
+      "user_id": "U-0068",
+      "process": "Payroll",
+      "right_a": "Edit Payroll Rates/Hours",
+      "right_a_source": "role: Payroll Admin",
+      "right_b": "Approve Payroll Run",
+      "right_b_source": "exception grant",
+      "risk": "Unauthorized pay-rate change, self-approved in the same payroll run.",
+      "detail": "U-0068 holds both 'Edit Payroll Rates/Hours' (via role: Payroll Admin) and 'Approve Payroll Run' (via exception grant) -- Unauthorized pay-rate change, self-approved in the same payroll run."
+    },
+    {
+      "user_id": "U-0116",
+      "process": "Procure-to-Pay",
+      "right_a": "Create/Edit Vendor Master",
+      "right_a_source": "exception grant",
+      "right_b": "Approve Vendor Payment",
+      "right_b_source": "role: AP Supervisor",
+      "risk": "Ghost-vendor scheme: create a fictitious vendor and approve payments to it, alone.",
+      "detail": "U-0116 holds both 'Create/Edit Vendor Master' (via exception grant) and 'Approve Vendor Payment' (via role: AP Supervisor) -- Ghost-vendor scheme: create a fictitious vendor and approve payments to it, alone."
+    },
+    {
+      "user_id": "U-0122",
+      "process": "Procure-to-Pay",
+      "right_a": "Create/Edit Vendor Master",
+      "right_a_source": "role: Legacy Regional Admin",
+      "right_b": "Approve Vendor Payment",
+      "right_b_source": "role: Legacy Regional Admin",
+      "risk": "Ghost-vendor scheme: create a fictitious vendor and approve payments to it, alone.",
+      "detail": "U-0122 holds both 'Create/Edit Vendor Master' (via role: Legacy Regional Admin) and 'Approve Vendor Payment' (via role: Legacy Regional Admin) -- Ghost-vendor scheme: create a fictitious vendor and approve payments to it, alone."
+    },
+    {
+      "user_id": "U-0148",
+      "process": "Financial Close",
+      "right_a": "Post Journal Entry",
+      "right_a_source": "role: GL Accountant",
+      "right_b": "Approve Journal Entry",
+      "right_b_source": "exception grant",
+      "risk": "Self-approved manual journal entry, bypassing independent review.",
+      "detail": "U-0148 holds both 'Post Journal Entry' (via role: GL Accountant) and 'Approve Journal Entry' (via exception grant) -- Self-approved manual journal entry, bypassing independent review."
+    },
+    {
+      "user_id": "U-0149",
+      "process": "Procure-to-Pay",
+      "right_a": "Create Purchase Order",
+      "right_a_source": "role: Procurement Buyer",
+      "right_b": "Approve Purchase Order",
+      "right_b_source": "exception grant",
+      "risk": "Self-approved purchase orders, bypassing independent authorization.",
+      "detail": "U-0149 holds both 'Create Purchase Order' (via role: Procurement Buyer) and 'Approve Purchase Order' (via exception grant) -- Self-approved purchase orders, bypassing independent authorization."
+    },
+    {
+      "user_id": "U-0150",
+      "process": "Procure-to-Pay",
+      "right_a": "Create Purchase Order",
+      "right_a_source": "role: Procurement Buyer",
+      "right_b": "Receive Goods",
+      "right_b_source": "exception grant",
+      "risk": "Fictitious receipt of goods that were never actually delivered.",
+      "detail": "U-0150 holds both 'Create Purchase Order' (via role: Procurement Buyer) and 'Receive Goods' (via exception grant) -- Fictitious receipt of goods that were never actually delivered."
+    },
+    {
+      "user_id": "U-0153",
+      "process": "Procure-to-Pay",
+      "right_a": "Create/Edit Vendor Master",
+      "right_a_source": "role: AP Clerk",
+      "right_b": "Approve Vendor Payment",
+      "right_b_source": "exception grant",
+      "risk": "Ghost-vendor scheme: create a fictitious vendor and approve payments to it, alone.",
+      "detail": "U-0153 holds both 'Create/Edit Vendor Master' (via role: AP Clerk) and 'Approve Vendor Payment' (via exception grant) -- Ghost-vendor scheme: create a fictitious vendor and approve payments to it, alone."
+    },
+    {
+      "user_id": "U-0161",
+      "process": "Payroll",
+      "right_a": "Edit Payroll Rates/Hours",
+      "right_a_source": "exception grant",
+      "right_b": "Approve Payroll Run",
+      "right_b_source": "role: Payroll Manager",
+      "risk": "Unauthorized pay-rate change, self-approved in the same payroll run.",
+      "detail": "U-0161 holds both 'Edit Payroll Rates/Hours' (via exception grant) and 'Approve Payroll Run' (via role: Payroll Manager) -- Unauthorized pay-rate change, self-approved in the same payroll run."
+    },
+    {
+      "user_id": "U-0174",
+      "process": "Procure-to-Pay",
+      "right_a": "Create/Edit Vendor Master",
+      "right_a_source": "role: Legacy Regional Admin",
+      "right_b": "Approve Vendor Payment",
+      "right_b_source": "role: Legacy Regional Admin",
+      "risk": "Ghost-vendor scheme: create a fictitious vendor and approve payments to it, alone.",
+      "detail": "U-0174 holds both 'Create/Edit Vendor Master' (via role: Legacy Regional Admin) and 'Approve Vendor Payment' (via role: Legacy Regional Admin) -- Ghost-vendor scheme: create a fictitious vendor and approve payments to it, alone."
+    },
+    {
+      "user_id": "U-0179",
+      "process": "Procure-to-Pay",
+      "right_a": "Create Purchase Order",
+      "right_a_source": "exception grant",
+      "right_b": "Approve Purchase Order",
+      "right_b_source": "role: Procurement Manager",
+      "risk": "Self-approved purchase orders, bypassing independent authorization.",
+      "detail": "U-0179 holds both 'Create Purchase Order' (via exception grant) and 'Approve Purchase Order' (via role: Procurement Manager) -- Self-approved purchase orders, bypassing independent authorization."
+    },
+    {
+      "user_id": "U-0180",
+      "process": "Financial Close",
+      "right_a": "Post Journal Entry",
+      "right_a_source": "role: GL Accountant",
+      "right_b": "Approve Journal Entry",
+      "right_b_source": "exception grant",
+      "risk": "Self-approved manual journal entry, bypassing independent review.",
+      "detail": "U-0180 holds both 'Post Journal Entry' (via role: GL Accountant) and 'Approve Journal Entry' (via exception grant) -- Self-approved manual journal entry, bypassing independent review."
+    },
+    {
+      "user_id": "U-0188",
+      "process": "Procure-to-Pay",
+      "right_a": "Create/Edit Vendor Master",
+      "right_a_source": "role: Legacy Regional Admin",
+      "right_b": "Approve Vendor Payment",
+      "right_b_source": "role: Legacy Regional Admin",
+      "risk": "Ghost-vendor scheme: create a fictitious vendor and approve payments to it, alone.",
+      "detail": "U-0188 holds both 'Create/Edit Vendor Master' (via role: Legacy Regional Admin) and 'Approve Vendor Payment' (via role: Legacy Regional Admin) -- Ghost-vendor scheme: create a fictitious vendor and approve payments to it, alone."
+    },
+    {
+      "user_id": "U-0206",
+      "process": "Procure-to-Pay",
+      "right_a": "Create Purchase Order",
+      "right_a_source": "role: Procurement Buyer",
+      "right_b": "Receive Goods",
+      "right_b_source": "exception grant",
+      "risk": "Fictitious receipt of goods that were never actually delivered.",
+      "detail": "U-0206 holds both 'Create Purchase Order' (via role: Procurement Buyer) and 'Receive Goods' (via exception grant) -- Fictitious receipt of goods that were never actually delivered."
+    }
+  ]
+}

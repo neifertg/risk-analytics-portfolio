@@ -1,0 +1,38 @@
+[
+  {
+    "process": "Procure-to-Pay",
+    "right_a": "Create/Edit Vendor Master",
+    "right_b": "Approve Vendor Payment",
+    "risk": "Ghost-vendor scheme: create a fictitious vendor and approve payments to it, alone."
+  },
+  {
+    "process": "Procure-to-Pay",
+    "right_a": "Create Purchase Order",
+    "right_b": "Approve Purchase Order",
+    "risk": "Self-approved purchase orders, bypassing independent authorization."
+  },
+  {
+    "process": "Procure-to-Pay",
+    "right_a": "Create Purchase Order",
+    "right_b": "Receive Goods",
+    "risk": "Fictitious receipt of goods that were never actually delivered."
+  },
+  {
+    "process": "Order-to-Cash",
+    "right_a": "Create/Edit Customer Master",
+    "right_b": "Approve Credit Memo",
+    "risk": "Fictitious customer plus a self-approved credit memo or write-off."
+  },
+  {
+    "process": "Payroll",
+    "right_a": "Edit Payroll Rates/Hours",
+    "right_b": "Approve Payroll Run",
+    "risk": "Unauthorized pay-rate change, self-approved in the same payroll run."
+  },
+  {
+    "process": "Financial Close",
+    "right_a": "Post Journal Entry",
+    "right_b": "Approve Journal Entry",
+    "risk": "Self-approved manual journal entry, bypassing independent review."
+  }
+]

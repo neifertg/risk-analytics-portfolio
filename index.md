@@ -126,6 +126,27 @@ actually used in practice.
 
 [Source, findings & real output](https://github.com/neifertg/risk-analytics-portfolio/tree/main/journal-entry-testing-analyzer)
 
+### Segregation-of-Duties Conflict Checker
+
+![SoD conflicts by process: Financial Close 3, Order-to-Cash 3, Payroll 3, Procure-to-Pay 15](assets/sod-conflict-chart.png)
+
+Flags users holding both sides of a defined segregation-of-duties conflict
+(e.g. creating a vendor master record and approving payments to it) based
+on *current* active access, not raw grant history — classic IT-audit/GRC
+analytics. Tests both failure modes a real SoD review has to catch: a
+legacy role that bundles conflicting rights by design, and clean roles
+where a person accumulated the other side through an active exception
+grant. Run against a synthetic 220-user access population: 100% recall and
+precision against 24 seeded active conflicts, plus a built-in true-negative
+test (10 users whose conflicting exception grant was later revoked, all
+correctly left unflagged). One real, unplanned finding the run surfaced:
+a single user ended up holding all three procure-to-pay rights at once
+(create, approve, *and* receive) through two independent seeded grants
+landing on the same person — a compounding risk a simple pairwise matrix
+can under-communicate.
+
+[Source, findings & real output](https://github.com/neifertg/risk-analytics-portfolio/tree/main/sod-conflict-checker)
+
 ---
 
 ## 📄 Contact

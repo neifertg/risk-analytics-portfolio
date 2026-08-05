@@ -1,5 +1,7 @@
 # Risk & Audit Analytics Portfolio
 
+[![CI](https://github.com/neifertg/risk-analytics-portfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/neifertg/risk-analytics-portfolio/actions/workflows/ci.yml)
+
 Real, working internal-audit and risk-analytics projects — data-driven
 detection techniques, an LLM-based assistant, and honest write-ups of what
 broke and how it was fixed. Nothing here is a mockup.
@@ -9,6 +11,8 @@ broke and how it was fixed. Nothing here is a mockup.
 ## Projects
 
 ### [Audit Procedures RAG Assistant](audit-rag-assistant/)
+
+![Audit Procedures RAG Assistant answering a question with cited sources and per-session cost tracking](assets/audit-rag-assistant-demo.png)
 
 A retrieval-augmented question-answering assistant grounded in a synthetic
 internal-audit procedures corpus — two-stage retrieval, a groundedness
@@ -22,6 +26,8 @@ fixed.
 
 ### [Benford's Law Analyzer](benfords-law-analyzer/)
 
+![Observed vs. Benford's-expected leading-digit distribution, chi-square p=0.201, MAD=0.00324](assets/benfords-chart.png)
+
 Checks whether real, public financial-statement data conforms to Benford's
 Law's expected leading-digit distribution — a classic forensic-accounting
 screening technique. Run against ~6,400 real US public companies' reported
@@ -31,6 +37,8 @@ p=0.20, Nigrini MAD=0.00324 (close conformity).
 [Source, chart & real output](benfords-law-analyzer/)
 
 ### [Duplicate Vendor Payment Checker](duplicate-vendor-payment-checker/)
+
+![Duplicate-payment flags by type: exact_duplicate 15, threshold_split 12, vendor_master_duplicate 9, review_candidate 16](assets/duplicate-vendor-chart.png)
 
 Flags potential duplicate AP payments using four named, real audit
 techniques (exact duplicates, threshold-avoidance "split" payments,

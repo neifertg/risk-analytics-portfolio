@@ -61,6 +61,8 @@ groups:
 | Recall vs. seeded groups | 51 / 52 (98%) |
 | Precision (flags that trace to a real seeded case) | 52 / 52 (100%) |
 
+![Duplicate-payment flags by type: exact_duplicate 15, threshold_split 12, vendor_master_duplicate 9, review_candidate 16](output/chart.png)
+
 Recall by pattern type:
 
 | Pattern | Seeded | Caught | Recall |

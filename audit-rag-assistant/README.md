@@ -1,5 +1,9 @@
 # Audit Procedures RAG Assistant
 
+[![CI](https://github.com/neifertg/risk-analytics-portfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/neifertg/risk-analytics-portfolio/actions/workflows/ci.yml)
+
+![Audit Procedures RAG Assistant answering a question with cited sources and per-session cost tracking](../assets/audit-rag-assistant-demo.png)
+
 A retrieval-augmented question-answering assistant grounded in a synthetic
 internal-audit procedures corpus — chunk → embed → retrieve → generate,
 with a groundedness guardrail and query logging. No orchestration
@@ -131,6 +135,10 @@ python -m venv app/.venv
 app/.venv/Scripts/pip install -r app/requirements.txt   # Windows; app/.venv/bin/pip on macOS/Linux
 app/.venv/Scripts/streamlit run app/app.py
 ```
+
+CI (badge above) runs a syntax check on every script, since the real
+`npm run ingest` / `npm run eval` pipeline needs paid Anthropic and Voyage
+API calls — that's exercised locally, not on every push.
 
 ## Live demo
 

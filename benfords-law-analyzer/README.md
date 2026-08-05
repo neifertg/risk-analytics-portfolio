@@ -48,6 +48,8 @@ Run against `us-gaap:Assets`, CY2023Q4I:
 | MAD | 0.00324 |
 | Nigrini conformity | **Close conformity** |
 
+![Observed vs. Benford's-expected leading-digit distribution, chi-square p=0.201, MAD=0.00324](output/chart.png)
+
 The leading-digit distribution of total assets across ~6,400 real US
 public companies tracks Benford's expected curve closely (see
 `output/chart.png`) — chi-square doesn't reject the null hypothesis

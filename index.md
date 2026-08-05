@@ -46,6 +46,8 @@ projects as they ship — nothing here is a mockup or a hypothetical.
 
 ### Audit Procedures RAG Assistant
 
+![Audit Procedures RAG Assistant answering a question with cited sources and per-session cost tracking](assets/audit-rag-assistant-demo.png)
+
 A retrieval-augmented question-answering assistant grounded in a
 synthetic internal-audit procedures corpus — two-stage retrieval, a
 groundedness guardrail that declines to answer rather than guess, and
@@ -60,6 +62,8 @@ root-caused and fixed — see the project README.
 
 ### Benford's Law Analyzer
 
+![Observed vs. Benford's-expected leading-digit distribution, chi-square p=0.201, MAD=0.00324](assets/benfords-chart.png)
+
 Checks whether real, public financial-statement data conforms to
 Benford's Law's expected leading-digit distribution — a classic
 forensic-accounting screening technique. Run against ~6,400 real US
@@ -72,6 +76,8 @@ single-entity population where a deviation would actually be meaningful.
 [Source, chart & real output](https://github.com/neifertg/risk-analytics-portfolio/tree/main/benfords-law-analyzer)
 
 ### Duplicate Vendor Payment Checker
+
+![Duplicate-payment flags by type: exact_duplicate 15, threshold_split 12, vendor_master_duplicate 9, review_candidate 16](assets/duplicate-vendor-chart.png)
 
 Flags potential duplicate AP payments using four named, real audit
 techniques (exact duplicates, threshold-avoidance "split" payments,

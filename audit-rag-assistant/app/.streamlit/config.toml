@@ -1,0 +1,38 @@
+# Design system ported from the source project (Seth_Wiki's Wiki RAG
+# Assistant) — same "Heraldic Ground" palette values and type stack, but
+# without the private family-crest mark, since this app runs publicly
+# under a real name on a professional portfolio. See app.py for the
+# matching wordmark treatment. Placed here (next to app.py, not at the
+# repo or project root) because Streamlit resolves script-level config
+# from the main script's own directory regardless of the process's
+# working directory — the one location that behaves the same locally and
+# on Streamlit Community Cloud.
+#
+# Dark is the default, matching the source project.
+
+[theme]
+base = "dark"
+
+[theme.dark]
+primaryColor = "#C9A257"
+backgroundColor = "#121716"
+secondaryBackgroundColor = "#1B1712"
+textColor = "#EAE2CF"
+linkColor = "#C9A257"
+borderColor = "#332A1D"
+font = "Arial Nova, Arial, Helvetica Neue, sans-serif"
+headingFont = "Cambria, Georgia, Times New Roman, serif"
+baseRadius = "0.85rem"
+showWidgetBorder = true
+
+[theme.light]
+primaryColor = "#93733A"
+backgroundColor = "#F6EFE0"
+secondaryBackgroundColor = "#FCF8EE"
+textColor = "#1B1712"
+linkColor = "#93733A"
+borderColor = "#E4D6B8"
+font = "Arial Nova, Arial, Helvetica Neue, sans-serif"
+headingFont = "Cambria, Georgia, Times New Roman, serif"
+baseRadius = "0.85rem"
+showWidgetBorder = true

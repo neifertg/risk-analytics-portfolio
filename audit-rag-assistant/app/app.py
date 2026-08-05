@@ -11,6 +11,7 @@ import json
 import os
 import subprocess
 from pathlib import Path
+from string import Template
 
 import streamlit as st
 
@@ -25,12 +26,107 @@ ANSWER_SCRIPT = PROJECT_ROOT / "scripts" / "answer.mjs"
 MAX_QUESTIONS_PER_SESSION = 5
 
 st.set_page_config(page_title="Audit Procedures RAG Assistant", page_icon="📋")
+
+# Design system ported from the source project (Seth_Wiki's Wiki RAG
+# Assistant) — same palette/type tokens as app/.streamlit/config.toml,
+# applied here to the custom HTML elements native Streamlit theming
+# doesn't reach (the eyebrow label and the sources card). No crest image
+# or family branding: this app runs publicly under a real name on a
+# professional portfolio, so a plain wordmark stands in for the source
+# project's crest mark.
+PALETTES = {
+    "dark": {
+        "eyebrow": "#C9A257",
+        "muted": "#A99D86",
+        "border": "#332A1D",
+        "card_bg": "#1B1712",
+        "text": "#EAE2CF",
+    },
+    "light": {
+        "eyebrow": "#93733A",
+        "muted": "#6B5A3E",
+        "border": "#E4D6B8",
+        "card_bg": "#FCF8EE",
+        "text": "#1B1712",
+    },
+}
+palette = PALETTES[st.context.theme.type]
+
+CSS_TEMPLATE = Template(
+    """
+    <style>
+    .block-container {
+        max-width: 860px;
+        padding-top: 2.5rem;
+        padding-bottom: 3rem;
+    }
+    .rag-eyebrow {
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        font-size: 12px;
+        font-weight: 700;
+        color: $eyebrow;
+        margin: 0 0 6px;
+    }
+    .rag-lede {
+        color: $muted;
+        font-size: 15px;
+        line-height: 1.55;
+        max-width: 60ch;
+        margin: 4px 0 0;
+    }
+    .source-card {
+        border: 1px solid $border;
+        border-radius: 0.85rem;
+        background: $card_bg;
+        padding: 18px 22px;
+        margin-top: 12px;
+    }
+    .source-card .source-title {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        font-weight: 700;
+        color: $muted;
+        margin: 0 0 10px;
+    }
+    .source-card ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+    .source-card li {
+        font-size: 14px;
+        color: $text;
+    }
+    .source-card .usage-line {
+        margin-top: 14px;
+        padding-top: 12px;
+        border-top: 1px solid $border;
+        font-size: 12px;
+        color: $muted;
+        font-variant-numeric: tabular-nums;
+    }
+    </style>
+    """
+)
+st.markdown(CSS_TEMPLATE.substitute(**palette), unsafe_allow_html=True)
+
+st.markdown(
+    '<p class="rag-eyebrow">Risk &amp; Audit Analytics Portfolio</p>',
+    unsafe_allow_html=True,
+)
 st.title("Audit Procedures RAG Assistant")
-st.caption(
-    "Ask a question about the synthetic internal-audit procedures in this "
-    "demo corpus. Every answer is grounded and cited from retrieved "
-    "excerpts, or the assistant declines rather than guessing — see the "
-    "project README for how the retrieval, guardrail, and grounding work."
+st.markdown(
+    "<p class=\"rag-lede\">Ask a question about the synthetic internal-audit "
+    "procedures in this demo corpus. Every answer is grounded and cited "
+    "from retrieved excerpts, or the assistant declines rather than "
+    "guessing — see the project README for how the retrieval, guardrail, "
+    "and grounding work.</p>",
+    unsafe_allow_html=True,
 )
 
 
@@ -96,21 +192,36 @@ elif st.session_state.get("result"):
     result = st.session_state["result"]
     st.markdown(f"**Q: {st.session_state['question']}**")
 
-    if result.get("guardrailTriggered"):
-        st.info(result["answer"])
-    else:
-        st.write(result["answer"])
-        if result.get("sources"):
-            st.subheader("Sources")
-            for i, source in enumerate(result["sources"], start=1):
-                st.markdown(f"[{i}] {source['title']} — {source['heading']}")
-
     usage = result.get("usage", {})
-    st.caption(
+    usage_line = (
         f"{usage.get('embeddingTokens', 0)} embed + {usage.get('inputTokens', 0)} in "
         f"+ {usage.get('outputTokens', 0)} out tokens "
         f"(~${usage.get('estimatedCostUsd', 0):.5f})"
     )
+
+    if result.get("guardrailTriggered"):
+        st.info(result["answer"])
+        st.caption(usage_line)
+    else:
+        st.write(result["answer"])
+
+        if result.get("sources"):
+            sources_html = "".join(
+                f"<li>[{i}] {source['title']} — {source['heading']}</li>"
+                for i, source in enumerate(result["sources"], start=1)
+            )
+            st.markdown(
+                f"""
+                <div class="source-card">
+                    <p class="source-title">Sources</p>
+                    <ul>{sources_html}</ul>
+                    <p class="usage-line">{usage_line}</p>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+        else:
+            st.caption(usage_line)
 
 remaining = MAX_QUESTIONS_PER_SESSION - st.session_state[QUESTION_COUNT_KEY]
 if 0 < remaining < MAX_QUESTIONS_PER_SESSION:

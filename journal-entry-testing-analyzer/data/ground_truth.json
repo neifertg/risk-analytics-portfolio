@@ -1,0 +1,432 @@
+[
+  {
+    "type": "unusual_preparer",
+    "confidence": "review_candidate",
+    "entry_id": "JE-02501"
+  },
+  {
+    "type": "unusual_preparer",
+    "confidence": "review_candidate",
+    "entry_id": "JE-02502"
+  },
+  {
+    "type": "unusual_preparer",
+    "confidence": "review_candidate",
+    "entry_id": "JE-02503"
+  },
+  {
+    "type": "unusual_preparer",
+    "confidence": "review_candidate",
+    "entry_id": "JE-02504"
+  },
+  {
+    "type": "unusual_preparer",
+    "confidence": "review_candidate",
+    "entry_id": "JE-02505"
+  },
+  {
+    "type": "unusual_preparer",
+    "confidence": "review_candidate",
+    "entry_id": "JE-02506"
+  },
+  {
+    "type": "unusual_preparer",
+    "confidence": "review_candidate",
+    "entry_id": "JE-02507"
+  },
+  {
+    "type": "unusual_preparer",
+    "confidence": "review_candidate",
+    "entry_id": "JE-02508"
+  },
+  {
+    "type": "unusual_preparer",
+    "confidence": "review_candidate",
+    "entry_id": "JE-02509"
+  },
+  {
+    "type": "unusual_preparer",
+    "confidence": "review_candidate",
+    "entry_id": "JE-02510"
+  },
+  {
+    "type": "unusual_preparer",
+    "confidence": "review_candidate",
+    "entry_id": "JE-02511"
+  },
+  {
+    "type": "unusual_preparer",
+    "confidence": "review_candidate",
+    "entry_id": "JE-02512"
+  },
+  {
+    "type": "unusual_preparer",
+    "confidence": "review_candidate",
+    "entry_id": "JE-02513"
+  },
+  {
+    "type": "unusual_preparer",
+    "confidence": "review_candidate",
+    "entry_id": "JE-02514"
+  },
+  {
+    "type": "unusual_preparer",
+    "confidence": "review_candidate",
+    "entry_id": "JE-02515"
+  },
+  {
+    "type": "weekend_or_holiday_posting",
+    "confidence": "flag",
+    "entry_id": "JE-02516"
+  },
+  {
+    "type": "weekend_or_holiday_posting",
+    "confidence": "flag",
+    "entry_id": "JE-02517"
+  },
+  {
+    "type": "weekend_or_holiday_posting",
+    "confidence": "flag",
+    "entry_id": "JE-02518"
+  },
+  {
+    "type": "weekend_or_holiday_posting",
+    "confidence": "flag",
+    "entry_id": "JE-02519"
+  },
+  {
+    "type": "weekend_or_holiday_posting",
+    "confidence": "flag",
+    "entry_id": "JE-02520"
+  },
+  {
+    "type": "weekend_or_holiday_posting",
+    "confidence": "flag",
+    "entry_id": "JE-02521"
+  },
+  {
+    "type": "weekend_or_holiday_posting",
+    "confidence": "flag",
+    "entry_id": "JE-02522"
+  },
+  {
+    "type": "weekend_or_holiday_posting",
+    "confidence": "flag",
+    "entry_id": "JE-02523"
+  },
+  {
+    "type": "weekend_or_holiday_posting",
+    "confidence": "flag",
+    "entry_id": "JE-02524"
+  },
+  {
+    "type": "weekend_or_holiday_posting",
+    "confidence": "flag",
+    "entry_id": "JE-02525"
+  },
+  {
+    "type": "weekend_or_holiday_posting",
+    "confidence": "flag",
+    "entry_id": "JE-02526"
+  },
+  {
+    "type": "weekend_or_holiday_posting",
+    "confidence": "flag",
+    "entry_id": "JE-02527"
+  },
+  {
+    "type": "weekend_or_holiday_posting",
+    "confidence": "flag",
+    "entry_id": "JE-02528"
+  },
+  {
+    "type": "weekend_or_holiday_posting",
+    "confidence": "flag",
+    "entry_id": "JE-02529"
+  },
+  {
+    "type": "weekend_or_holiday_posting",
+    "confidence": "flag",
+    "entry_id": "JE-02530"
+  },
+  {
+    "type": "weekend_or_holiday_posting",
+    "confidence": "flag",
+    "entry_id": "JE-02531"
+  },
+  {
+    "type": "weekend_or_holiday_posting",
+    "confidence": "flag",
+    "entry_id": "JE-02532"
+  },
+  {
+    "type": "weekend_or_holiday_posting",
+    "confidence": "flag",
+    "entry_id": "JE-02533"
+  },
+  {
+    "type": "period_end_cutoff",
+    "confidence": "flag",
+    "entry_id": "JE-02534"
+  },
+  {
+    "type": "period_end_cutoff",
+    "confidence": "flag",
+    "entry_id": "JE-02535"
+  },
+  {
+    "type": "period_end_cutoff",
+    "confidence": "flag",
+    "entry_id": "JE-02536"
+  },
+  {
+    "type": "period_end_cutoff",
+    "confidence": "flag",
+    "entry_id": "JE-02537"
+  },
+  {
+    "type": "period_end_cutoff",
+    "confidence": "flag",
+    "entry_id": "JE-02538"
+  },
+  {
+    "type": "period_end_cutoff",
+    "confidence": "flag",
+    "entry_id": "JE-02539"
+  },
+  {
+    "type": "period_end_cutoff",
+    "confidence": "flag",
+    "entry_id": "JE-02540"
+  },
+  {
+    "type": "period_end_cutoff",
+    "confidence": "flag",
+    "entry_id": "JE-02541"
+  },
+  {
+    "type": "period_end_cutoff",
+    "confidence": "flag",
+    "entry_id": "JE-02542"
+  },
+  {
+    "type": "period_end_cutoff",
+    "confidence": "flag",
+    "entry_id": "JE-02543"
+  },
+  {
+    "type": "period_end_cutoff",
+    "confidence": "flag",
+    "entry_id": "JE-02544"
+  },
+  {
+    "type": "period_end_cutoff",
+    "confidence": "flag",
+    "entry_id": "JE-02545"
+  },
+  {
+    "type": "period_end_cutoff",
+    "confidence": "flag",
+    "entry_id": "JE-02546"
+  },
+  {
+    "type": "period_end_cutoff",
+    "confidence": "flag",
+    "entry_id": "JE-02547"
+  },
+  {
+    "type": "period_end_cutoff",
+    "confidence": "flag",
+    "entry_id": "JE-02548"
+  },
+  {
+    "type": "period_end_cutoff",
+    "confidence": "flag",
+    "entry_id": "JE-02549"
+  },
+  {
+    "type": "period_end_cutoff",
+    "confidence": "flag",
+    "entry_id": "JE-02550"
+  },
+  {
+    "type": "period_end_cutoff",
+    "confidence": "flag",
+    "entry_id": "JE-02551"
+  },
+  {
+    "type": "round_dollar_weak_description",
+    "confidence": "flag",
+    "entry_id": "JE-02552"
+  },
+  {
+    "type": "round_dollar_weak_description",
+    "confidence": "flag",
+    "entry_id": "JE-02553"
+  },
+  {
+    "type": "round_dollar_weak_description",
+    "confidence": "flag",
+    "entry_id": "JE-02554"
+  },
+  {
+    "type": "round_dollar_weak_description",
+    "confidence": "flag",
+    "entry_id": "JE-02555"
+  },
+  {
+    "type": "round_dollar_weak_description",
+    "confidence": "flag",
+    "entry_id": "JE-02556"
+  },
+  {
+    "type": "round_dollar_weak_description",
+    "confidence": "flag",
+    "entry_id": "JE-02557"
+  },
+  {
+    "type": "round_dollar_weak_description",
+    "confidence": "flag",
+    "entry_id": "JE-02558"
+  },
+  {
+    "type": "round_dollar_weak_description",
+    "confidence": "flag",
+    "entry_id": "JE-02559"
+  },
+  {
+    "type": "round_dollar_weak_description",
+    "confidence": "flag",
+    "entry_id": "JE-02560"
+  },
+  {
+    "type": "round_dollar_weak_description",
+    "confidence": "flag",
+    "entry_id": "JE-02561"
+  },
+  {
+    "type": "round_dollar_weak_description",
+    "confidence": "flag",
+    "entry_id": "JE-02562"
+  },
+  {
+    "type": "round_dollar_weak_description",
+    "confidence": "flag",
+    "entry_id": "JE-02563"
+  },
+  {
+    "type": "round_dollar_weak_description",
+    "confidence": "flag",
+    "entry_id": "JE-02564"
+  },
+  {
+    "type": "round_dollar_weak_description",
+    "confidence": "flag",
+    "entry_id": "JE-02565"
+  },
+  {
+    "type": "round_dollar_weak_description",
+    "confidence": "flag",
+    "entry_id": "JE-02566"
+  },
+  {
+    "type": "round_dollar_weak_description",
+    "confidence": "flag",
+    "entry_id": "JE-02567"
+  },
+  {
+    "type": "round_dollar_weak_description",
+    "confidence": "flag",
+    "entry_id": "JE-02568"
+  },
+  {
+    "type": "round_dollar_weak_description",
+    "confidence": "flag",
+    "entry_id": "JE-02569"
+  },
+  {
+    "type": "round_dollar_weak_description",
+    "confidence": "flag",
+    "entry_id": "JE-02570"
+  },
+  {
+    "type": "round_dollar_weak_description",
+    "confidence": "flag",
+    "entry_id": "JE-02571"
+  },
+  {
+    "type": "unusual_account_combination",
+    "confidence": "review_candidate",
+    "entry_id": "JE-02572"
+  },
+  {
+    "type": "unusual_account_combination",
+    "confidence": "review_candidate",
+    "entry_id": "JE-02573"
+  },
+  {
+    "type": "unusual_account_combination",
+    "confidence": "review_candidate",
+    "entry_id": "JE-02574"
+  },
+  {
+    "type": "unusual_account_combination",
+    "confidence": "review_candidate",
+    "entry_id": "JE-02575"
+  },
+  {
+    "type": "unusual_account_combination",
+    "confidence": "review_candidate",
+    "entry_id": "JE-02576"
+  },
+  {
+    "type": "unusual_account_combination",
+    "confidence": "review_candidate",
+    "entry_id": "JE-02577"
+  },
+  {
+    "type": "unusual_account_combination",
+    "confidence": "review_candidate",
+    "entry_id": "JE-02578"
+  },
+  {
+    "type": "unusual_account_combination",
+    "confidence": "review_candidate",
+    "entry_id": "JE-02579"
+  },
+  {
+    "type": "unusual_account_combination",
+    "confidence": "review_candidate",
+    "entry_id": "JE-02580"
+  },
+  {
+    "type": "unusual_account_combination",
+    "confidence": "review_candidate",
+    "entry_id": "JE-02581"
+  },
+  {
+    "type": "unusual_account_combination",
+    "confidence": "review_candidate",
+    "entry_id": "JE-02582"
+  },
+  {
+    "type": "unusual_account_combination",
+    "confidence": "review_candidate",
+    "entry_id": "JE-02583"
+  },
+  {
+    "type": "unusual_account_combination",
+    "confidence": "review_candidate",
+    "entry_id": "JE-02584"
+  },
+  {
+    "type": "unusual_account_combination",
+    "confidence": "review_candidate",
+    "entry_id": "JE-02585"
+  },
+  {
+    "type": "unusual_account_combination",
+    "confidence": "review_candidate",
+    "entry_id": "JE-02586"
+  }
+]

@@ -48,3 +48,11 @@ exclude:
   - deck-builder/package-lock.json
   - deck-builder/decks/clustering-for-audit/deck.yaml
   - deck-builder/.gitignore
+  - journal-entry-testing-analyzer/.venv
+  - journal-entry-testing-analyzer/data
+  - journal-entry-testing-analyzer/output
+  - journal-entry-testing-analyzer/generate_journal_entries.py
+  - journal-entry-testing-analyzer/check.py
+  - journal-entry-testing-analyzer/README.md
+  - journal-entry-testing-analyzer/requirements.txt
+  - journal-entry-testing-analyzer/.gitignore

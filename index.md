@@ -107,6 +107,25 @@ payment clustering, access-log clustering).
 [Source & write-up](https://github.com/neifertg/risk-analytics-portfolio/tree/main/deck-builder)
 &middot; [Live demo](deck-builder/decks/clustering-for-audit/index.html)
 
+### Journal Entry Testing Analyzer
+
+![Journal-entry red flags by type: unusual_preparer 15, weekend_or_holiday_posting 18, period_end_cutoff 282, round_dollar_weak_description 20, unusual_account_combination 15](assets/journal-entry-testing-chart.png)
+
+Flags potential fraud-risk journal entries using five risk criteria pulled
+directly from AU-C 240 / PCAOB AS 2401's journal-entry-testing requirement —
+unusual preparer, weekend/holiday posting, period-end cutoff timing,
+round-dollar amounts with weak descriptions, and unusual account
+combinations. Run against a seeded synthetic general ledger (2,586 entries,
+86 seeded red flags, ground truth kept separate from the detector's input):
+100% recall across all five criteria, with four running at 100% precision
+too. The fifth — period-end cutoff — hits only 9.6% precision, reported
+plainly rather than smoothed over: roughly 9% of any real ledger legitimately
+falls within 2 days of month-end, so that criterion is a deliberately broad
+population screen by nature, not a precise detector, matching how it's
+actually used in practice.
+
+[Source, findings & real output](https://github.com/neifertg/risk-analytics-portfolio/tree/main/journal-entry-testing-analyzer)
+
 ---
 
 ## 📄 Contact

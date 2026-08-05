@@ -1,0 +1,3681 @@
+{
+  "records_scanned": 2586,
+  "flags_by_type": {
+    "unusual_preparer": 15,
+    "weekend_or_holiday_posting": 18,
+    "period_end_cutoff": 282,
+    "round_dollar_weak_description": 20,
+    "unusual_account_combination": 15
+  },
+  "total_flags": 350,
+  "scoring_against_seeded_ground_truth": {
+    "seeded_total": 86,
+    "seeded_caught": 86,
+    "recall": 1.0,
+    "per_type": {
+      "unusual_preparer": {
+        "seeded": 15,
+        "caught": 15,
+        "recall": 1.0
+      },
+      "weekend_or_holiday_posting": {
+        "seeded": 18,
+        "caught": 18,
+        "recall": 1.0
+      },
+      "period_end_cutoff": {
+        "seeded": 18,
+        "caught": 18,
+        "recall": 1.0
+      },
+      "round_dollar_weak_description": {
+        "seeded": 20,
+        "caught": 20,
+        "recall": 1.0
+      },
+      "unusual_account_combination": {
+        "seeded": 15,
+        "caught": 15,
+        "recall": 1.0
+      }
+    },
+    "total_flags_raised": 350,
+    "distinct_entries_flagged": 341,
+    "false_positive_flag_count": 255,
+    "false_positive_flags": [
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00573",
+        "detail": "Posted 2024-01-29, within 2 days of month-end (2024-01-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00789",
+        "detail": "Posted 2024-01-29, within 2 days of month-end (2024-01-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00428",
+        "detail": "Posted 2024-01-29, within 2 days of month-end (2024-01-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01728",
+        "detail": "Posted 2024-01-29, within 2 days of month-end (2024-01-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01875",
+        "detail": "Posted 2024-01-29, within 2 days of month-end (2024-01-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02485",
+        "detail": "Posted 2024-01-29, within 2 days of month-end (2024-01-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01719",
+        "detail": "Posted 2024-01-29, within 2 days of month-end (2024-01-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02447",
+        "detail": "Posted 2024-01-29, within 2 days of month-end (2024-01-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02439",
+        "detail": "Posted 2024-01-29, within 2 days of month-end (2024-01-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01360",
+        "detail": "Posted 2024-01-29, within 2 days of month-end (2024-01-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01668",
+        "detail": "Posted 2024-01-29, within 2 days of month-end (2024-01-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02387",
+        "detail": "Posted 2024-01-29, within 2 days of month-end (2024-01-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00681",
+        "detail": "Posted 2024-01-29, within 2 days of month-end (2024-01-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01811",
+        "detail": "Posted 2024-01-29, within 2 days of month-end (2024-01-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02153",
+        "detail": "Posted 2024-01-30, within 2 days of month-end (2024-01-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02019",
+        "detail": "Posted 2024-01-30, within 2 days of month-end (2024-01-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01108",
+        "detail": "Posted 2024-01-30, within 2 days of month-end (2024-01-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00874",
+        "detail": "Posted 2024-01-30, within 2 days of month-end (2024-01-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02225",
+        "detail": "Posted 2024-01-30, within 2 days of month-end (2024-01-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00654",
+        "detail": "Posted 2024-01-30, within 2 days of month-end (2024-01-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01050",
+        "detail": "Posted 2024-01-30, within 2 days of month-end (2024-01-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01333",
+        "detail": "Posted 2024-01-30, within 2 days of month-end (2024-01-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00235",
+        "detail": "Posted 2024-01-30, within 2 days of month-end (2024-01-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01174",
+        "detail": "Posted 2024-01-30, within 2 days of month-end (2024-01-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00824",
+        "detail": "Posted 2024-01-31, within 2 days of month-end (2024-01-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00703",
+        "detail": "Posted 2024-01-31, within 2 days of month-end (2024-01-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00697",
+        "detail": "Posted 2024-01-31, within 2 days of month-end (2024-01-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00450",
+        "detail": "Posted 2024-01-31, within 2 days of month-end (2024-01-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00582",
+        "detail": "Posted 2024-01-31, within 2 days of month-end (2024-01-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00953",
+        "detail": "Posted 2024-01-31, within 2 days of month-end (2024-01-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01032",
+        "detail": "Posted 2024-01-31, within 2 days of month-end (2024-01-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00351",
+        "detail": "Posted 2024-01-31, within 2 days of month-end (2024-01-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01867",
+        "detail": "Posted 2024-01-31, within 2 days of month-end (2024-01-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02327",
+        "detail": "Posted 2024-01-31, within 2 days of month-end (2024-01-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02305",
+        "detail": "Posted 2024-01-31, within 2 days of month-end (2024-01-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02229",
+        "detail": "Posted 2024-01-31, within 2 days of month-end (2024-01-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01917",
+        "detail": "Posted 2024-01-31, within 2 days of month-end (2024-01-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01326",
+        "detail": "Posted 2024-01-31, within 2 days of month-end (2024-01-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00144",
+        "detail": "Posted 2024-01-31, within 2 days of month-end (2024-01-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00110",
+        "detail": "Posted 2024-02-27, within 2 days of month-end (2024-02-29)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00616",
+        "detail": "Posted 2024-02-27, within 2 days of month-end (2024-02-29)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00356",
+        "detail": "Posted 2024-02-27, within 2 days of month-end (2024-02-29)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01785",
+        "detail": "Posted 2024-02-27, within 2 days of month-end (2024-02-29)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00291",
+        "detail": "Posted 2024-02-27, within 2 days of month-end (2024-02-29)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01632",
+        "detail": "Posted 2024-02-27, within 2 days of month-end (2024-02-29)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02304",
+        "detail": "Posted 2024-02-27, within 2 days of month-end (2024-02-29)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00072",
+        "detail": "Posted 2024-02-27, within 2 days of month-end (2024-02-29)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02196",
+        "detail": "Posted 2024-02-27, within 2 days of month-end (2024-02-29)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01472",
+        "detail": "Posted 2024-02-27, within 2 days of month-end (2024-02-29)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01331",
+        "detail": "Posted 2024-02-27, within 2 days of month-end (2024-02-29)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00650",
+        "detail": "Posted 2024-02-27, within 2 days of month-end (2024-02-29)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00039",
+        "detail": "Posted 2024-02-28, within 2 days of month-end (2024-02-29)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02272",
+        "detail": "Posted 2024-02-28, within 2 days of month-end (2024-02-29)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01782",
+        "detail": "Posted 2024-02-28, within 2 days of month-end (2024-02-29)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02211",
+        "detail": "Posted 2024-02-28, within 2 days of month-end (2024-02-29)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01649",
+        "detail": "Posted 2024-02-28, within 2 days of month-end (2024-02-29)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02332",
+        "detail": "Posted 2024-02-29, within 2 days of month-end (2024-02-29)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00229",
+        "detail": "Posted 2024-02-29, within 2 days of month-end (2024-02-29)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01303",
+        "detail": "Posted 2024-02-29, within 2 days of month-end (2024-02-29)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00807",
+        "detail": "Posted 2024-02-29, within 2 days of month-end (2024-02-29)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01974",
+        "detail": "Posted 2024-02-29, within 2 days of month-end (2024-02-29)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02456",
+        "detail": "Posted 2024-02-29, within 2 days of month-end (2024-02-29)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02426",
+        "detail": "Posted 2024-02-29, within 2 days of month-end (2024-02-29)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01761",
+        "detail": "Posted 2024-02-29, within 2 days of month-end (2024-02-29)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02013",
+        "detail": "Posted 2024-02-29, within 2 days of month-end (2024-02-29)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00980",
+        "detail": "Posted 2024-02-29, within 2 days of month-end (2024-02-29)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01279",
+        "detail": "Posted 2024-02-29, within 2 days of month-end (2024-02-29)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01112",
+        "detail": "Posted 2024-03-29, within 2 days of month-end (2024-03-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00895",
+        "detail": "Posted 2024-03-29, within 2 days of month-end (2024-03-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00300",
+        "detail": "Posted 2024-03-29, within 2 days of month-end (2024-03-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01742",
+        "detail": "Posted 2024-03-29, within 2 days of month-end (2024-03-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02038",
+        "detail": "Posted 2024-03-29, within 2 days of month-end (2024-03-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02032",
+        "detail": "Posted 2024-03-29, within 2 days of month-end (2024-03-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02362",
+        "detail": "Posted 2024-03-29, within 2 days of month-end (2024-03-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01932",
+        "detail": "Posted 2024-03-29, within 2 days of month-end (2024-03-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01929",
+        "detail": "Posted 2024-03-29, within 2 days of month-end (2024-03-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01920",
+        "detail": "Posted 2024-03-29, within 2 days of month-end (2024-03-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01010",
+        "detail": "Posted 2024-03-29, within 2 days of month-end (2024-03-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00621",
+        "detail": "Posted 2024-04-29, within 2 days of month-end (2024-04-30)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01897",
+        "detail": "Posted 2024-04-29, within 2 days of month-end (2024-04-30)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01234",
+        "detail": "Posted 2024-04-29, within 2 days of month-end (2024-04-30)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00081",
+        "detail": "Posted 2024-04-29, within 2 days of month-end (2024-04-30)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00546",
+        "detail": "Posted 2024-04-29, within 2 days of month-end (2024-04-30)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02087",
+        "detail": "Posted 2024-04-29, within 2 days of month-end (2024-04-30)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00682",
+        "detail": "Posted 2024-04-29, within 2 days of month-end (2024-04-30)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01707",
+        "detail": "Posted 2024-04-29, within 2 days of month-end (2024-04-30)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00568",
+        "detail": "Posted 2024-04-29, within 2 days of month-end (2024-04-30)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01085",
+        "detail": "Posted 2024-04-30, within 2 days of month-end (2024-04-30)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00389",
+        "detail": "Posted 2024-04-30, within 2 days of month-end (2024-04-30)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01945",
+        "detail": "Posted 2024-04-30, within 2 days of month-end (2024-04-30)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02176",
+        "detail": "Posted 2024-04-30, within 2 days of month-end (2024-04-30)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01257",
+        "detail": "Posted 2024-04-30, within 2 days of month-end (2024-04-30)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00453",
+        "detail": "Posted 2024-04-30, within 2 days of month-end (2024-04-30)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01089",
+        "detail": "Posted 2024-04-30, within 2 days of month-end (2024-04-30)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00343",
+        "detail": "Posted 2024-04-30, within 2 days of month-end (2024-04-30)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01595",
+        "detail": "Posted 2024-04-30, within 2 days of month-end (2024-04-30)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01432",
+        "detail": "Posted 2024-04-30, within 2 days of month-end (2024-04-30)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01395",
+        "detail": "Posted 2024-04-30, within 2 days of month-end (2024-04-30)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00264",
+        "detail": "Posted 2024-04-30, within 2 days of month-end (2024-04-30)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01406",
+        "detail": "Posted 2024-04-30, within 2 days of month-end (2024-04-30)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00482",
+        "detail": "Posted 2024-05-29, within 2 days of month-end (2024-05-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00928",
+        "detail": "Posted 2024-05-29, within 2 days of month-end (2024-05-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02465",
+        "detail": "Posted 2024-05-29, within 2 days of month-end (2024-05-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01691",
+        "detail": "Posted 2024-05-29, within 2 days of month-end (2024-05-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01414",
+        "detail": "Posted 2024-05-29, within 2 days of month-end (2024-05-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02264",
+        "detail": "Posted 2024-05-29, within 2 days of month-end (2024-05-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01232",
+        "detail": "Posted 2024-05-29, within 2 days of month-end (2024-05-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00153",
+        "detail": "Posted 2024-05-29, within 2 days of month-end (2024-05-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01451",
+        "detail": "Posted 2024-05-29, within 2 days of month-end (2024-05-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01647",
+        "detail": "Posted 2024-05-30, within 2 days of month-end (2024-05-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00511",
+        "detail": "Posted 2024-05-30, within 2 days of month-end (2024-05-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01402",
+        "detail": "Posted 2024-05-30, within 2 days of month-end (2024-05-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00032",
+        "detail": "Posted 2024-05-30, within 2 days of month-end (2024-05-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01505",
+        "detail": "Posted 2024-05-30, within 2 days of month-end (2024-05-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01962",
+        "detail": "Posted 2024-05-30, within 2 days of month-end (2024-05-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02035",
+        "detail": "Posted 2024-05-30, within 2 days of month-end (2024-05-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01175",
+        "detail": "Posted 2024-05-30, within 2 days of month-end (2024-05-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02367",
+        "detail": "Posted 2024-05-30, within 2 days of month-end (2024-05-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00288",
+        "detail": "Posted 2024-05-30, within 2 days of month-end (2024-05-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00803",
+        "detail": "Posted 2024-05-31, within 2 days of month-end (2024-05-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00238",
+        "detail": "Posted 2024-05-31, within 2 days of month-end (2024-05-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00576",
+        "detail": "Posted 2024-05-31, within 2 days of month-end (2024-05-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01002",
+        "detail": "Posted 2024-05-31, within 2 days of month-end (2024-05-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01387",
+        "detail": "Posted 2024-05-31, within 2 days of month-end (2024-05-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00507",
+        "detail": "Posted 2024-05-31, within 2 days of month-end (2024-05-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02025",
+        "detail": "Posted 2024-05-31, within 2 days of month-end (2024-05-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00931",
+        "detail": "Posted 2024-05-31, within 2 days of month-end (2024-05-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02046",
+        "detail": "Posted 2024-06-28, within 2 days of month-end (2024-06-30)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00896",
+        "detail": "Posted 2024-06-28, within 2 days of month-end (2024-06-30)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01347",
+        "detail": "Posted 2024-06-28, within 2 days of month-end (2024-06-30)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00250",
+        "detail": "Posted 2024-06-28, within 2 days of month-end (2024-06-30)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00222",
+        "detail": "Posted 2024-06-28, within 2 days of month-end (2024-06-30)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02479",
+        "detail": "Posted 2024-06-28, within 2 days of month-end (2024-06-30)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01613",
+        "detail": "Posted 2024-07-29, within 2 days of month-end (2024-07-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01886",
+        "detail": "Posted 2024-07-29, within 2 days of month-end (2024-07-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01468",
+        "detail": "Posted 2024-07-29, within 2 days of month-end (2024-07-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00344",
+        "detail": "Posted 2024-07-29, within 2 days of month-end (2024-07-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01070",
+        "detail": "Posted 2024-07-29, within 2 days of month-end (2024-07-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01724",
+        "detail": "Posted 2024-07-29, within 2 days of month-end (2024-07-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01579",
+        "detail": "Posted 2024-07-29, within 2 days of month-end (2024-07-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02175",
+        "detail": "Posted 2024-07-29, within 2 days of month-end (2024-07-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00188",
+        "detail": "Posted 2024-07-30, within 2 days of month-end (2024-07-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00466",
+        "detail": "Posted 2024-07-30, within 2 days of month-end (2024-07-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00171",
+        "detail": "Posted 2024-07-30, within 2 days of month-end (2024-07-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00420",
+        "detail": "Posted 2024-07-30, within 2 days of month-end (2024-07-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02220",
+        "detail": "Posted 2024-07-30, within 2 days of month-end (2024-07-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00151",
+        "detail": "Posted 2024-07-30, within 2 days of month-end (2024-07-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00802",
+        "detail": "Posted 2024-07-30, within 2 days of month-end (2024-07-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01970",
+        "detail": "Posted 2024-07-30, within 2 days of month-end (2024-07-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01117",
+        "detail": "Posted 2024-07-30, within 2 days of month-end (2024-07-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00941",
+        "detail": "Posted 2024-07-31, within 2 days of month-end (2024-07-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00396",
+        "detail": "Posted 2024-07-31, within 2 days of month-end (2024-07-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01857",
+        "detail": "Posted 2024-07-31, within 2 days of month-end (2024-07-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01773",
+        "detail": "Posted 2024-07-31, within 2 days of month-end (2024-07-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02381",
+        "detail": "Posted 2024-07-31, within 2 days of month-end (2024-07-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00007",
+        "detail": "Posted 2024-07-31, within 2 days of month-end (2024-07-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01741",
+        "detail": "Posted 2024-07-31, within 2 days of month-end (2024-07-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01650",
+        "detail": "Posted 2024-07-31, within 2 days of month-end (2024-07-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00755",
+        "detail": "Posted 2024-08-29, within 2 days of month-end (2024-08-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01009",
+        "detail": "Posted 2024-08-29, within 2 days of month-end (2024-08-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01605",
+        "detail": "Posted 2024-08-29, within 2 days of month-end (2024-08-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02451",
+        "detail": "Posted 2024-08-29, within 2 days of month-end (2024-08-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02313",
+        "detail": "Posted 2024-08-29, within 2 days of month-end (2024-08-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00197",
+        "detail": "Posted 2024-08-29, within 2 days of month-end (2024-08-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02222",
+        "detail": "Posted 2024-08-29, within 2 days of month-end (2024-08-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00599",
+        "detail": "Posted 2024-08-29, within 2 days of month-end (2024-08-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00245",
+        "detail": "Posted 2024-08-29, within 2 days of month-end (2024-08-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02294",
+        "detail": "Posted 2024-08-29, within 2 days of month-end (2024-08-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00662",
+        "detail": "Posted 2024-08-29, within 2 days of month-end (2024-08-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01993",
+        "detail": "Posted 2024-08-30, within 2 days of month-end (2024-08-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02239",
+        "detail": "Posted 2024-08-30, within 2 days of month-end (2024-08-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00052",
+        "detail": "Posted 2024-08-30, within 2 days of month-end (2024-08-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00519",
+        "detail": "Posted 2024-08-30, within 2 days of month-end (2024-08-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00721",
+        "detail": "Posted 2024-08-30, within 2 days of month-end (2024-08-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00458",
+        "detail": "Posted 2024-09-30, within 2 days of month-end (2024-09-30)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01870",
+        "detail": "Posted 2024-09-30, within 2 days of month-end (2024-09-30)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02440",
+        "detail": "Posted 2024-09-30, within 2 days of month-end (2024-09-30)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00901",
+        "detail": "Posted 2024-09-30, within 2 days of month-end (2024-09-30)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02284",
+        "detail": "Posted 2024-09-30, within 2 days of month-end (2024-09-30)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02281",
+        "detail": "Posted 2024-09-30, within 2 days of month-end (2024-09-30)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01690",
+        "detail": "Posted 2024-09-30, within 2 days of month-end (2024-09-30)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00057",
+        "detail": "Posted 2024-09-30, within 2 days of month-end (2024-09-30)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01868",
+        "detail": "Posted 2024-09-30, within 2 days of month-end (2024-09-30)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00676",
+        "detail": "Posted 2024-09-30, within 2 days of month-end (2024-09-30)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00839",
+        "detail": "Posted 2024-10-29, within 2 days of month-end (2024-10-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01430",
+        "detail": "Posted 2024-10-29, within 2 days of month-end (2024-10-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00345",
+        "detail": "Posted 2024-10-29, within 2 days of month-end (2024-10-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01029",
+        "detail": "Posted 2024-10-29, within 2 days of month-end (2024-10-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00294",
+        "detail": "Posted 2024-10-29, within 2 days of month-end (2024-10-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02018",
+        "detail": "Posted 2024-10-29, within 2 days of month-end (2024-10-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02271",
+        "detail": "Posted 2024-10-29, within 2 days of month-end (2024-10-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01971",
+        "detail": "Posted 2024-10-29, within 2 days of month-end (2024-10-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00139",
+        "detail": "Posted 2024-10-29, within 2 days of month-end (2024-10-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02237",
+        "detail": "Posted 2024-10-29, within 2 days of month-end (2024-10-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00084",
+        "detail": "Posted 2024-10-29, within 2 days of month-end (2024-10-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01375",
+        "detail": "Posted 2024-10-29, within 2 days of month-end (2024-10-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01087",
+        "detail": "Posted 2024-10-29, within 2 days of month-end (2024-10-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00778",
+        "detail": "Posted 2024-10-30, within 2 days of month-end (2024-10-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01890",
+        "detail": "Posted 2024-10-30, within 2 days of month-end (2024-10-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01381",
+        "detail": "Posted 2024-10-30, within 2 days of month-end (2024-10-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01170",
+        "detail": "Posted 2024-10-30, within 2 days of month-end (2024-10-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00367",
+        "detail": "Posted 2024-10-30, within 2 days of month-end (2024-10-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00391",
+        "detail": "Posted 2024-10-30, within 2 days of month-end (2024-10-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02460",
+        "detail": "Posted 2024-10-30, within 2 days of month-end (2024-10-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02382",
+        "detail": "Posted 2024-10-30, within 2 days of month-end (2024-10-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01146",
+        "detail": "Posted 2024-10-30, within 2 days of month-end (2024-10-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00625",
+        "detail": "Posted 2024-10-30, within 2 days of month-end (2024-10-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02097",
+        "detail": "Posted 2024-10-30, within 2 days of month-end (2024-10-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00156",
+        "detail": "Posted 2024-10-30, within 2 days of month-end (2024-10-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00126",
+        "detail": "Posted 2024-10-31, within 2 days of month-end (2024-10-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01500",
+        "detail": "Posted 2024-10-31, within 2 days of month-end (2024-10-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01054",
+        "detail": "Posted 2024-10-31, within 2 days of month-end (2024-10-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02268",
+        "detail": "Posted 2024-10-31, within 2 days of month-end (2024-10-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00392",
+        "detail": "Posted 2024-10-31, within 2 days of month-end (2024-10-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01743",
+        "detail": "Posted 2024-10-31, within 2 days of month-end (2024-10-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02286",
+        "detail": "Posted 2024-10-31, within 2 days of month-end (2024-10-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01714",
+        "detail": "Posted 2024-10-31, within 2 days of month-end (2024-10-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01859",
+        "detail": "Posted 2024-10-31, within 2 days of month-end (2024-10-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00120",
+        "detail": "Posted 2024-10-31, within 2 days of month-end (2024-10-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00668",
+        "detail": "Posted 2024-10-31, within 2 days of month-end (2024-10-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01413",
+        "detail": "Posted 2024-11-29, within 2 days of month-end (2024-11-30)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00696",
+        "detail": "Posted 2024-11-29, within 2 days of month-end (2024-11-30)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00042",
+        "detail": "Posted 2024-11-29, within 2 days of month-end (2024-11-30)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01545",
+        "detail": "Posted 2024-11-29, within 2 days of month-end (2024-11-30)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00308",
+        "detail": "Posted 2024-11-29, within 2 days of month-end (2024-11-30)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02040",
+        "detail": "Posted 2024-11-29, within 2 days of month-end (2024-11-30)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00600",
+        "detail": "Posted 2024-11-29, within 2 days of month-end (2024-11-30)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01762",
+        "detail": "Posted 2024-11-29, within 2 days of month-end (2024-11-30)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01341",
+        "detail": "Posted 2024-11-29, within 2 days of month-end (2024-11-30)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01137",
+        "detail": "Posted 2024-12-30, within 2 days of month-end (2024-12-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01879",
+        "detail": "Posted 2024-12-30, within 2 days of month-end (2024-12-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01796",
+        "detail": "Posted 2024-12-30, within 2 days of month-end (2024-12-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00673",
+        "detail": "Posted 2024-12-30, within 2 days of month-end (2024-12-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02388",
+        "detail": "Posted 2024-12-30, within 2 days of month-end (2024-12-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02246",
+        "detail": "Posted 2024-12-30, within 2 days of month-end (2024-12-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01063",
+        "detail": "Posted 2024-12-30, within 2 days of month-end (2024-12-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00830",
+        "detail": "Posted 2024-12-30, within 2 days of month-end (2024-12-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02266",
+        "detail": "Posted 2024-12-30, within 2 days of month-end (2024-12-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00439",
+        "detail": "Posted 2024-12-30, within 2 days of month-end (2024-12-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01328",
+        "detail": "Posted 2024-12-30, within 2 days of month-end (2024-12-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01065",
+        "detail": "Posted 2024-12-30, within 2 days of month-end (2024-12-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02359",
+        "detail": "Posted 2024-12-31, within 2 days of month-end (2024-12-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01590",
+        "detail": "Posted 2024-12-31, within 2 days of month-end (2024-12-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00377",
+        "detail": "Posted 2024-12-31, within 2 days of month-end (2024-12-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02480",
+        "detail": "Posted 2024-12-31, within 2 days of month-end (2024-12-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01949",
+        "detail": "Posted 2024-12-31, within 2 days of month-end (2024-12-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02467",
+        "detail": "Posted 2024-12-31, within 2 days of month-end (2024-12-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01368",
+        "detail": "Posted 2024-12-31, within 2 days of month-end (2024-12-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00575",
+        "detail": "Posted 2024-12-31, within 2 days of month-end (2024-12-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00636",
+        "detail": "Posted 2024-12-31, within 2 days of month-end (2024-12-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-01383",
+        "detail": "Posted 2024-12-31, within 2 days of month-end (2024-12-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00401",
+        "detail": "Posted 2024-12-31, within 2 days of month-end (2024-12-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-02340",
+        "detail": "Posted 2024-12-31, within 2 days of month-end (2024-12-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00472",
+        "detail": "Posted 2024-12-31, within 2 days of month-end (2024-12-31)."
+      },
+      {
+        "flag_type": "period_end_cutoff",
+        "confidence": "flag",
+        "entry_id": "JE-00872",
+        "detail": "Posted 2024-12-31, within 2 days of month-end (2024-12-31)."
+      }
+    ],
+    "precision": 0.271
+  },
+  "flags": [
+    {
+      "flag_type": "unusual_preparer",
+      "confidence": "review_candidate",
+      "entry_id": "JE-02510",
+      "detail": "Prepared by 'Former Employee -- Access Not Revoked', who posted only 7 entries all year (population-wide rarity, not a blocklist)."
+    },
+    {
+      "flag_type": "unusual_preparer",
+      "confidence": "review_candidate",
+      "entry_id": "JE-02506",
+      "detail": "Prepared by 'Former Employee -- Access Not Revoked', who posted only 7 entries all year (population-wide rarity, not a blocklist)."
+    },
+    {
+      "flag_type": "unusual_preparer",
+      "confidence": "review_candidate",
+      "entry_id": "JE-02507",
+      "detail": "Prepared by 'Former Employee -- Access Not Revoked', who posted only 7 entries all year (population-wide rarity, not a blocklist)."
+    },
+    {
+      "flag_type": "unusual_preparer",
+      "confidence": "review_candidate",
+      "entry_id": "JE-02505",
+      "detail": "Prepared by 'Former Employee -- Access Not Revoked', who posted only 7 entries all year (population-wide rarity, not a blocklist)."
+    },
+    {
+      "flag_type": "unusual_preparer",
+      "confidence": "review_candidate",
+      "entry_id": "JE-02515",
+      "detail": "Prepared by 'Former Employee -- Access Not Revoked', who posted only 7 entries all year (population-wide rarity, not a blocklist)."
+    },
+    {
+      "flag_type": "unusual_preparer",
+      "confidence": "review_candidate",
+      "entry_id": "JE-02509",
+      "detail": "Prepared by 'Former Employee -- Access Not Revoked', who posted only 7 entries all year (population-wide rarity, not a blocklist)."
+    },
+    {
+      "flag_type": "unusual_preparer",
+      "confidence": "review_candidate",
+      "entry_id": "JE-02508",
+      "detail": "Prepared by 'Former Employee -- Access Not Revoked', who posted only 7 entries all year (population-wide rarity, not a blocklist)."
+    },
+    {
+      "flag_type": "unusual_preparer",
+      "confidence": "review_candidate",
+      "entry_id": "JE-02511",
+      "detail": "Prepared by 'Controller (Manual Override)', who posted only 5 entries all year (population-wide rarity, not a blocklist)."
+    },
+    {
+      "flag_type": "unusual_preparer",
+      "confidence": "review_candidate",
+      "entry_id": "JE-02512",
+      "detail": "Prepared by 'Controller (Manual Override)', who posted only 5 entries all year (population-wide rarity, not a blocklist)."
+    },
+    {
+      "flag_type": "unusual_preparer",
+      "confidence": "review_candidate",
+      "entry_id": "JE-02502",
+      "detail": "Prepared by 'Controller (Manual Override)', who posted only 5 entries all year (population-wide rarity, not a blocklist)."
+    },
+    {
+      "flag_type": "unusual_preparer",
+      "confidence": "review_candidate",
+      "entry_id": "JE-02514",
+      "detail": "Prepared by 'Controller (Manual Override)', who posted only 5 entries all year (population-wide rarity, not a blocklist)."
+    },
+    {
+      "flag_type": "unusual_preparer",
+      "confidence": "review_candidate",
+      "entry_id": "JE-02504",
+      "detail": "Prepared by 'Controller (Manual Override)', who posted only 5 entries all year (population-wide rarity, not a blocklist)."
+    },
+    {
+      "flag_type": "unusual_preparer",
+      "confidence": "review_candidate",
+      "entry_id": "JE-02503",
+      "detail": "Prepared by 'IT System Admin', who posted only 3 entries all year (population-wide rarity, not a blocklist)."
+    },
+    {
+      "flag_type": "unusual_preparer",
+      "confidence": "review_candidate",
+      "entry_id": "JE-02501",
+      "detail": "Prepared by 'IT System Admin', who posted only 3 entries all year (population-wide rarity, not a blocklist)."
+    },
+    {
+      "flag_type": "unusual_preparer",
+      "confidence": "review_candidate",
+      "entry_id": "JE-02513",
+      "detail": "Prepared by 'IT System Admin', who posted only 3 entries all year (population-wide rarity, not a blocklist)."
+    },
+    {
+      "flag_type": "weekend_or_holiday_posting",
+      "confidence": "flag",
+      "entry_id": "JE-02517",
+      "detail": "Posted on a weekend (2024-01-07)."
+    },
+    {
+      "flag_type": "weekend_or_holiday_posting",
+      "confidence": "flag",
+      "entry_id": "JE-02521",
+      "detail": "Posted on a weekend (2024-01-28)."
+    },
+    {
+      "flag_type": "weekend_or_holiday_posting",
+      "confidence": "flag",
+      "entry_id": "JE-02527",
+      "detail": "Posted on a weekend (2024-02-18)."
+    },
+    {
+      "flag_type": "weekend_or_holiday_posting",
+      "confidence": "flag",
+      "entry_id": "JE-02516",
+      "detail": "Posted on a weekend (2024-03-23)."
+    },
+    {
+      "flag_type": "weekend_or_holiday_posting",
+      "confidence": "flag",
+      "entry_id": "JE-02524",
+      "detail": "Posted on a weekend (2024-04-20)."
+    },
+    {
+      "flag_type": "weekend_or_holiday_posting",
+      "confidence": "flag",
+      "entry_id": "JE-02519",
+      "detail": "Posted on a weekend (2024-05-25)."
+    },
+    {
+      "flag_type": "weekend_or_holiday_posting",
+      "confidence": "flag",
+      "entry_id": "JE-02530",
+      "detail": "Posted on a weekend (2024-06-29)."
+    },
+    {
+      "flag_type": "weekend_or_holiday_posting",
+      "confidence": "flag",
+      "entry_id": "JE-02525",
+      "detail": "Posted on a weekend (2024-07-20)."
+    },
+    {
+      "flag_type": "weekend_or_holiday_posting",
+      "confidence": "flag",
+      "entry_id": "JE-02526",
+      "detail": "Posted on a weekend (2024-07-28)."
+    },
+    {
+      "flag_type": "weekend_or_holiday_posting",
+      "confidence": "flag",
+      "entry_id": "JE-02522",
+      "detail": "Posted on a weekend (2024-08-10)."
+    },
+    {
+      "flag_type": "weekend_or_holiday_posting",
+      "confidence": "flag",
+      "entry_id": "JE-02523",
+      "detail": "Posted on a weekend (2024-08-31)."
+    },
+    {
+      "flag_type": "weekend_or_holiday_posting",
+      "confidence": "flag",
+      "entry_id": "JE-02518",
+      "detail": "Posted on a weekend (2024-09-14)."
+    },
+    {
+      "flag_type": "weekend_or_holiday_posting",
+      "confidence": "flag",
+      "entry_id": "JE-02529",
+      "detail": "Posted on a holiday (2024-10-14)."
+    },
+    {
+      "flag_type": "weekend_or_holiday_posting",
+      "confidence": "flag",
+      "entry_id": "JE-02520",
+      "detail": "Posted on a weekend (2024-10-20)."
+    },
+    {
+      "flag_type": "weekend_or_holiday_posting",
+      "confidence": "flag",
+      "entry_id": "JE-02532",
+      "detail": "Posted on a holiday (2024-11-11)."
+    },
+    {
+      "flag_type": "weekend_or_holiday_posting",
+      "confidence": "flag",
+      "entry_id": "JE-02531",
+      "detail": "Posted on a weekend (2024-11-16)."
+    },
+    {
+      "flag_type": "weekend_or_holiday_posting",
+      "confidence": "flag",
+      "entry_id": "JE-02528",
+      "detail": "Posted on a holiday (2024-11-28)."
+    },
+    {
+      "flag_type": "weekend_or_holiday_posting",
+      "confidence": "flag",
+      "entry_id": "JE-02533",
+      "detail": "Posted on a holiday (2024-11-28)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00573",
+      "detail": "Posted 2024-01-29, within 2 days of month-end (2024-01-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00789",
+      "detail": "Posted 2024-01-29, within 2 days of month-end (2024-01-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02570",
+      "detail": "Posted 2024-01-29, within 2 days of month-end (2024-01-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00428",
+      "detail": "Posted 2024-01-29, within 2 days of month-end (2024-01-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01728",
+      "detail": "Posted 2024-01-29, within 2 days of month-end (2024-01-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01875",
+      "detail": "Posted 2024-01-29, within 2 days of month-end (2024-01-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02485",
+      "detail": "Posted 2024-01-29, within 2 days of month-end (2024-01-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01719",
+      "detail": "Posted 2024-01-29, within 2 days of month-end (2024-01-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02447",
+      "detail": "Posted 2024-01-29, within 2 days of month-end (2024-01-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02439",
+      "detail": "Posted 2024-01-29, within 2 days of month-end (2024-01-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01360",
+      "detail": "Posted 2024-01-29, within 2 days of month-end (2024-01-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01668",
+      "detail": "Posted 2024-01-29, within 2 days of month-end (2024-01-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02387",
+      "detail": "Posted 2024-01-29, within 2 days of month-end (2024-01-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00681",
+      "detail": "Posted 2024-01-29, within 2 days of month-end (2024-01-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01811",
+      "detail": "Posted 2024-01-29, within 2 days of month-end (2024-01-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02153",
+      "detail": "Posted 2024-01-30, within 2 days of month-end (2024-01-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02019",
+      "detail": "Posted 2024-01-30, within 2 days of month-end (2024-01-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01108",
+      "detail": "Posted 2024-01-30, within 2 days of month-end (2024-01-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00874",
+      "detail": "Posted 2024-01-30, within 2 days of month-end (2024-01-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02225",
+      "detail": "Posted 2024-01-30, within 2 days of month-end (2024-01-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00654",
+      "detail": "Posted 2024-01-30, within 2 days of month-end (2024-01-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01050",
+      "detail": "Posted 2024-01-30, within 2 days of month-end (2024-01-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01333",
+      "detail": "Posted 2024-01-30, within 2 days of month-end (2024-01-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00235",
+      "detail": "Posted 2024-01-30, within 2 days of month-end (2024-01-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01174",
+      "detail": "Posted 2024-01-30, within 2 days of month-end (2024-01-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00824",
+      "detail": "Posted 2024-01-31, within 2 days of month-end (2024-01-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00703",
+      "detail": "Posted 2024-01-31, within 2 days of month-end (2024-01-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00697",
+      "detail": "Posted 2024-01-31, within 2 days of month-end (2024-01-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00450",
+      "detail": "Posted 2024-01-31, within 2 days of month-end (2024-01-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00582",
+      "detail": "Posted 2024-01-31, within 2 days of month-end (2024-01-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00953",
+      "detail": "Posted 2024-01-31, within 2 days of month-end (2024-01-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01032",
+      "detail": "Posted 2024-01-31, within 2 days of month-end (2024-01-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00351",
+      "detail": "Posted 2024-01-31, within 2 days of month-end (2024-01-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01867",
+      "detail": "Posted 2024-01-31, within 2 days of month-end (2024-01-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02327",
+      "detail": "Posted 2024-01-31, within 2 days of month-end (2024-01-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02305",
+      "detail": "Posted 2024-01-31, within 2 days of month-end (2024-01-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02229",
+      "detail": "Posted 2024-01-31, within 2 days of month-end (2024-01-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02545",
+      "detail": "Posted 2024-01-31, within 2 days of month-end (2024-01-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01917",
+      "detail": "Posted 2024-01-31, within 2 days of month-end (2024-01-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01326",
+      "detail": "Posted 2024-01-31, within 2 days of month-end (2024-01-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00144",
+      "detail": "Posted 2024-01-31, within 2 days of month-end (2024-01-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00110",
+      "detail": "Posted 2024-02-27, within 2 days of month-end (2024-02-29)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00616",
+      "detail": "Posted 2024-02-27, within 2 days of month-end (2024-02-29)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00356",
+      "detail": "Posted 2024-02-27, within 2 days of month-end (2024-02-29)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01785",
+      "detail": "Posted 2024-02-27, within 2 days of month-end (2024-02-29)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00291",
+      "detail": "Posted 2024-02-27, within 2 days of month-end (2024-02-29)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01632",
+      "detail": "Posted 2024-02-27, within 2 days of month-end (2024-02-29)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02304",
+      "detail": "Posted 2024-02-27, within 2 days of month-end (2024-02-29)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00072",
+      "detail": "Posted 2024-02-27, within 2 days of month-end (2024-02-29)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02196",
+      "detail": "Posted 2024-02-27, within 2 days of month-end (2024-02-29)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01472",
+      "detail": "Posted 2024-02-27, within 2 days of month-end (2024-02-29)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01331",
+      "detail": "Posted 2024-02-27, within 2 days of month-end (2024-02-29)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00650",
+      "detail": "Posted 2024-02-27, within 2 days of month-end (2024-02-29)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00039",
+      "detail": "Posted 2024-02-28, within 2 days of month-end (2024-02-29)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02272",
+      "detail": "Posted 2024-02-28, within 2 days of month-end (2024-02-29)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01782",
+      "detail": "Posted 2024-02-28, within 2 days of month-end (2024-02-29)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02211",
+      "detail": "Posted 2024-02-28, within 2 days of month-end (2024-02-29)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01649",
+      "detail": "Posted 2024-02-28, within 2 days of month-end (2024-02-29)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02547",
+      "detail": "Posted 2024-02-29, within 2 days of month-end (2024-02-29)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02332",
+      "detail": "Posted 2024-02-29, within 2 days of month-end (2024-02-29)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00229",
+      "detail": "Posted 2024-02-29, within 2 days of month-end (2024-02-29)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01303",
+      "detail": "Posted 2024-02-29, within 2 days of month-end (2024-02-29)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02551",
+      "detail": "Posted 2024-02-29, within 2 days of month-end (2024-02-29)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00807",
+      "detail": "Posted 2024-02-29, within 2 days of month-end (2024-02-29)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02548",
+      "detail": "Posted 2024-02-29, within 2 days of month-end (2024-02-29)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01974",
+      "detail": "Posted 2024-02-29, within 2 days of month-end (2024-02-29)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02456",
+      "detail": "Posted 2024-02-29, within 2 days of month-end (2024-02-29)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02426",
+      "detail": "Posted 2024-02-29, within 2 days of month-end (2024-02-29)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01761",
+      "detail": "Posted 2024-02-29, within 2 days of month-end (2024-02-29)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02013",
+      "detail": "Posted 2024-02-29, within 2 days of month-end (2024-02-29)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00980",
+      "detail": "Posted 2024-02-29, within 2 days of month-end (2024-02-29)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01279",
+      "detail": "Posted 2024-02-29, within 2 days of month-end (2024-02-29)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01112",
+      "detail": "Posted 2024-03-29, within 2 days of month-end (2024-03-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00895",
+      "detail": "Posted 2024-03-29, within 2 days of month-end (2024-03-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00300",
+      "detail": "Posted 2024-03-29, within 2 days of month-end (2024-03-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01742",
+      "detail": "Posted 2024-03-29, within 2 days of month-end (2024-03-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02038",
+      "detail": "Posted 2024-03-29, within 2 days of month-end (2024-03-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02032",
+      "detail": "Posted 2024-03-29, within 2 days of month-end (2024-03-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02535",
+      "detail": "Posted 2024-03-29, within 2 days of month-end (2024-03-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02362",
+      "detail": "Posted 2024-03-29, within 2 days of month-end (2024-03-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02546",
+      "detail": "Posted 2024-03-29, within 2 days of month-end (2024-03-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01932",
+      "detail": "Posted 2024-03-29, within 2 days of month-end (2024-03-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01929",
+      "detail": "Posted 2024-03-29, within 2 days of month-end (2024-03-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02564",
+      "detail": "Posted 2024-03-29, within 2 days of month-end (2024-03-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01920",
+      "detail": "Posted 2024-03-29, within 2 days of month-end (2024-03-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01010",
+      "detail": "Posted 2024-03-29, within 2 days of month-end (2024-03-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00621",
+      "detail": "Posted 2024-04-29, within 2 days of month-end (2024-04-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01897",
+      "detail": "Posted 2024-04-29, within 2 days of month-end (2024-04-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01234",
+      "detail": "Posted 2024-04-29, within 2 days of month-end (2024-04-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00081",
+      "detail": "Posted 2024-04-29, within 2 days of month-end (2024-04-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00546",
+      "detail": "Posted 2024-04-29, within 2 days of month-end (2024-04-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02087",
+      "detail": "Posted 2024-04-29, within 2 days of month-end (2024-04-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00682",
+      "detail": "Posted 2024-04-29, within 2 days of month-end (2024-04-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01707",
+      "detail": "Posted 2024-04-29, within 2 days of month-end (2024-04-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00568",
+      "detail": "Posted 2024-04-29, within 2 days of month-end (2024-04-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01085",
+      "detail": "Posted 2024-04-30, within 2 days of month-end (2024-04-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00389",
+      "detail": "Posted 2024-04-30, within 2 days of month-end (2024-04-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01945",
+      "detail": "Posted 2024-04-30, within 2 days of month-end (2024-04-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02176",
+      "detail": "Posted 2024-04-30, within 2 days of month-end (2024-04-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01257",
+      "detail": "Posted 2024-04-30, within 2 days of month-end (2024-04-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00453",
+      "detail": "Posted 2024-04-30, within 2 days of month-end (2024-04-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01089",
+      "detail": "Posted 2024-04-30, within 2 days of month-end (2024-04-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00343",
+      "detail": "Posted 2024-04-30, within 2 days of month-end (2024-04-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01595",
+      "detail": "Posted 2024-04-30, within 2 days of month-end (2024-04-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01432",
+      "detail": "Posted 2024-04-30, within 2 days of month-end (2024-04-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01395",
+      "detail": "Posted 2024-04-30, within 2 days of month-end (2024-04-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00264",
+      "detail": "Posted 2024-04-30, within 2 days of month-end (2024-04-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01406",
+      "detail": "Posted 2024-04-30, within 2 days of month-end (2024-04-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00482",
+      "detail": "Posted 2024-05-29, within 2 days of month-end (2024-05-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00928",
+      "detail": "Posted 2024-05-29, within 2 days of month-end (2024-05-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02465",
+      "detail": "Posted 2024-05-29, within 2 days of month-end (2024-05-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01691",
+      "detail": "Posted 2024-05-29, within 2 days of month-end (2024-05-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01414",
+      "detail": "Posted 2024-05-29, within 2 days of month-end (2024-05-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02264",
+      "detail": "Posted 2024-05-29, within 2 days of month-end (2024-05-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01232",
+      "detail": "Posted 2024-05-29, within 2 days of month-end (2024-05-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00153",
+      "detail": "Posted 2024-05-29, within 2 days of month-end (2024-05-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01451",
+      "detail": "Posted 2024-05-29, within 2 days of month-end (2024-05-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01647",
+      "detail": "Posted 2024-05-30, within 2 days of month-end (2024-05-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00511",
+      "detail": "Posted 2024-05-30, within 2 days of month-end (2024-05-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01402",
+      "detail": "Posted 2024-05-30, within 2 days of month-end (2024-05-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00032",
+      "detail": "Posted 2024-05-30, within 2 days of month-end (2024-05-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01505",
+      "detail": "Posted 2024-05-30, within 2 days of month-end (2024-05-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01962",
+      "detail": "Posted 2024-05-30, within 2 days of month-end (2024-05-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02035",
+      "detail": "Posted 2024-05-30, within 2 days of month-end (2024-05-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01175",
+      "detail": "Posted 2024-05-30, within 2 days of month-end (2024-05-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02367",
+      "detail": "Posted 2024-05-30, within 2 days of month-end (2024-05-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00288",
+      "detail": "Posted 2024-05-30, within 2 days of month-end (2024-05-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02541",
+      "detail": "Posted 2024-05-31, within 2 days of month-end (2024-05-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00803",
+      "detail": "Posted 2024-05-31, within 2 days of month-end (2024-05-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00238",
+      "detail": "Posted 2024-05-31, within 2 days of month-end (2024-05-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00576",
+      "detail": "Posted 2024-05-31, within 2 days of month-end (2024-05-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02538",
+      "detail": "Posted 2024-05-31, within 2 days of month-end (2024-05-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01002",
+      "detail": "Posted 2024-05-31, within 2 days of month-end (2024-05-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02544",
+      "detail": "Posted 2024-05-31, within 2 days of month-end (2024-05-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01387",
+      "detail": "Posted 2024-05-31, within 2 days of month-end (2024-05-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00507",
+      "detail": "Posted 2024-05-31, within 2 days of month-end (2024-05-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02025",
+      "detail": "Posted 2024-05-31, within 2 days of month-end (2024-05-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00931",
+      "detail": "Posted 2024-05-31, within 2 days of month-end (2024-05-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02046",
+      "detail": "Posted 2024-06-28, within 2 days of month-end (2024-06-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00896",
+      "detail": "Posted 2024-06-28, within 2 days of month-end (2024-06-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01347",
+      "detail": "Posted 2024-06-28, within 2 days of month-end (2024-06-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00250",
+      "detail": "Posted 2024-06-28, within 2 days of month-end (2024-06-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00222",
+      "detail": "Posted 2024-06-28, within 2 days of month-end (2024-06-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02479",
+      "detail": "Posted 2024-06-28, within 2 days of month-end (2024-06-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02543",
+      "detail": "Posted 2024-06-28, within 2 days of month-end (2024-06-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02542",
+      "detail": "Posted 2024-06-28, within 2 days of month-end (2024-06-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02539",
+      "detail": "Posted 2024-06-28, within 2 days of month-end (2024-06-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02530",
+      "detail": "Posted 2024-06-29, within 2 days of month-end (2024-06-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01613",
+      "detail": "Posted 2024-07-29, within 2 days of month-end (2024-07-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01886",
+      "detail": "Posted 2024-07-29, within 2 days of month-end (2024-07-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01468",
+      "detail": "Posted 2024-07-29, within 2 days of month-end (2024-07-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00344",
+      "detail": "Posted 2024-07-29, within 2 days of month-end (2024-07-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01070",
+      "detail": "Posted 2024-07-29, within 2 days of month-end (2024-07-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01724",
+      "detail": "Posted 2024-07-29, within 2 days of month-end (2024-07-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01579",
+      "detail": "Posted 2024-07-29, within 2 days of month-end (2024-07-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02175",
+      "detail": "Posted 2024-07-29, within 2 days of month-end (2024-07-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00188",
+      "detail": "Posted 2024-07-30, within 2 days of month-end (2024-07-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00466",
+      "detail": "Posted 2024-07-30, within 2 days of month-end (2024-07-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00171",
+      "detail": "Posted 2024-07-30, within 2 days of month-end (2024-07-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00420",
+      "detail": "Posted 2024-07-30, within 2 days of month-end (2024-07-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02220",
+      "detail": "Posted 2024-07-30, within 2 days of month-end (2024-07-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00151",
+      "detail": "Posted 2024-07-30, within 2 days of month-end (2024-07-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00802",
+      "detail": "Posted 2024-07-30, within 2 days of month-end (2024-07-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01970",
+      "detail": "Posted 2024-07-30, within 2 days of month-end (2024-07-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01117",
+      "detail": "Posted 2024-07-30, within 2 days of month-end (2024-07-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00941",
+      "detail": "Posted 2024-07-31, within 2 days of month-end (2024-07-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00396",
+      "detail": "Posted 2024-07-31, within 2 days of month-end (2024-07-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01857",
+      "detail": "Posted 2024-07-31, within 2 days of month-end (2024-07-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02534",
+      "detail": "Posted 2024-07-31, within 2 days of month-end (2024-07-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02536",
+      "detail": "Posted 2024-07-31, within 2 days of month-end (2024-07-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01773",
+      "detail": "Posted 2024-07-31, within 2 days of month-end (2024-07-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02381",
+      "detail": "Posted 2024-07-31, within 2 days of month-end (2024-07-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00007",
+      "detail": "Posted 2024-07-31, within 2 days of month-end (2024-07-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01741",
+      "detail": "Posted 2024-07-31, within 2 days of month-end (2024-07-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01650",
+      "detail": "Posted 2024-07-31, within 2 days of month-end (2024-07-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00755",
+      "detail": "Posted 2024-08-29, within 2 days of month-end (2024-08-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01009",
+      "detail": "Posted 2024-08-29, within 2 days of month-end (2024-08-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01605",
+      "detail": "Posted 2024-08-29, within 2 days of month-end (2024-08-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02451",
+      "detail": "Posted 2024-08-29, within 2 days of month-end (2024-08-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02313",
+      "detail": "Posted 2024-08-29, within 2 days of month-end (2024-08-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00197",
+      "detail": "Posted 2024-08-29, within 2 days of month-end (2024-08-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02222",
+      "detail": "Posted 2024-08-29, within 2 days of month-end (2024-08-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00599",
+      "detail": "Posted 2024-08-29, within 2 days of month-end (2024-08-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00245",
+      "detail": "Posted 2024-08-29, within 2 days of month-end (2024-08-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02294",
+      "detail": "Posted 2024-08-29, within 2 days of month-end (2024-08-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00662",
+      "detail": "Posted 2024-08-29, within 2 days of month-end (2024-08-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01993",
+      "detail": "Posted 2024-08-30, within 2 days of month-end (2024-08-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02239",
+      "detail": "Posted 2024-08-30, within 2 days of month-end (2024-08-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00052",
+      "detail": "Posted 2024-08-30, within 2 days of month-end (2024-08-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02586",
+      "detail": "Posted 2024-08-30, within 2 days of month-end (2024-08-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00519",
+      "detail": "Posted 2024-08-30, within 2 days of month-end (2024-08-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00721",
+      "detail": "Posted 2024-08-30, within 2 days of month-end (2024-08-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02523",
+      "detail": "Posted 2024-08-31, within 2 days of month-end (2024-08-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00458",
+      "detail": "Posted 2024-09-30, within 2 days of month-end (2024-09-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01870",
+      "detail": "Posted 2024-09-30, within 2 days of month-end (2024-09-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02440",
+      "detail": "Posted 2024-09-30, within 2 days of month-end (2024-09-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00901",
+      "detail": "Posted 2024-09-30, within 2 days of month-end (2024-09-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02284",
+      "detail": "Posted 2024-09-30, within 2 days of month-end (2024-09-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02281",
+      "detail": "Posted 2024-09-30, within 2 days of month-end (2024-09-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01690",
+      "detail": "Posted 2024-09-30, within 2 days of month-end (2024-09-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00057",
+      "detail": "Posted 2024-09-30, within 2 days of month-end (2024-09-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01868",
+      "detail": "Posted 2024-09-30, within 2 days of month-end (2024-09-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00676",
+      "detail": "Posted 2024-09-30, within 2 days of month-end (2024-09-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00839",
+      "detail": "Posted 2024-10-29, within 2 days of month-end (2024-10-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01430",
+      "detail": "Posted 2024-10-29, within 2 days of month-end (2024-10-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02584",
+      "detail": "Posted 2024-10-29, within 2 days of month-end (2024-10-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00345",
+      "detail": "Posted 2024-10-29, within 2 days of month-end (2024-10-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01029",
+      "detail": "Posted 2024-10-29, within 2 days of month-end (2024-10-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00294",
+      "detail": "Posted 2024-10-29, within 2 days of month-end (2024-10-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02018",
+      "detail": "Posted 2024-10-29, within 2 days of month-end (2024-10-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02271",
+      "detail": "Posted 2024-10-29, within 2 days of month-end (2024-10-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01971",
+      "detail": "Posted 2024-10-29, within 2 days of month-end (2024-10-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00139",
+      "detail": "Posted 2024-10-29, within 2 days of month-end (2024-10-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02237",
+      "detail": "Posted 2024-10-29, within 2 days of month-end (2024-10-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00084",
+      "detail": "Posted 2024-10-29, within 2 days of month-end (2024-10-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01375",
+      "detail": "Posted 2024-10-29, within 2 days of month-end (2024-10-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01087",
+      "detail": "Posted 2024-10-29, within 2 days of month-end (2024-10-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00778",
+      "detail": "Posted 2024-10-30, within 2 days of month-end (2024-10-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01890",
+      "detail": "Posted 2024-10-30, within 2 days of month-end (2024-10-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01381",
+      "detail": "Posted 2024-10-30, within 2 days of month-end (2024-10-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01170",
+      "detail": "Posted 2024-10-30, within 2 days of month-end (2024-10-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00367",
+      "detail": "Posted 2024-10-30, within 2 days of month-end (2024-10-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00391",
+      "detail": "Posted 2024-10-30, within 2 days of month-end (2024-10-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02460",
+      "detail": "Posted 2024-10-30, within 2 days of month-end (2024-10-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02382",
+      "detail": "Posted 2024-10-30, within 2 days of month-end (2024-10-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01146",
+      "detail": "Posted 2024-10-30, within 2 days of month-end (2024-10-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00625",
+      "detail": "Posted 2024-10-30, within 2 days of month-end (2024-10-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02097",
+      "detail": "Posted 2024-10-30, within 2 days of month-end (2024-10-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00156",
+      "detail": "Posted 2024-10-30, within 2 days of month-end (2024-10-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00126",
+      "detail": "Posted 2024-10-31, within 2 days of month-end (2024-10-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01500",
+      "detail": "Posted 2024-10-31, within 2 days of month-end (2024-10-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01054",
+      "detail": "Posted 2024-10-31, within 2 days of month-end (2024-10-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02268",
+      "detail": "Posted 2024-10-31, within 2 days of month-end (2024-10-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00392",
+      "detail": "Posted 2024-10-31, within 2 days of month-end (2024-10-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01743",
+      "detail": "Posted 2024-10-31, within 2 days of month-end (2024-10-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02286",
+      "detail": "Posted 2024-10-31, within 2 days of month-end (2024-10-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01714",
+      "detail": "Posted 2024-10-31, within 2 days of month-end (2024-10-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01859",
+      "detail": "Posted 2024-10-31, within 2 days of month-end (2024-10-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02550",
+      "detail": "Posted 2024-10-31, within 2 days of month-end (2024-10-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00120",
+      "detail": "Posted 2024-10-31, within 2 days of month-end (2024-10-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00668",
+      "detail": "Posted 2024-10-31, within 2 days of month-end (2024-10-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02528",
+      "detail": "Posted 2024-11-28, within 2 days of month-end (2024-11-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02533",
+      "detail": "Posted 2024-11-28, within 2 days of month-end (2024-11-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02555",
+      "detail": "Posted 2024-11-29, within 2 days of month-end (2024-11-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01413",
+      "detail": "Posted 2024-11-29, within 2 days of month-end (2024-11-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00696",
+      "detail": "Posted 2024-11-29, within 2 days of month-end (2024-11-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00042",
+      "detail": "Posted 2024-11-29, within 2 days of month-end (2024-11-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01545",
+      "detail": "Posted 2024-11-29, within 2 days of month-end (2024-11-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00308",
+      "detail": "Posted 2024-11-29, within 2 days of month-end (2024-11-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02540",
+      "detail": "Posted 2024-11-29, within 2 days of month-end (2024-11-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02040",
+      "detail": "Posted 2024-11-29, within 2 days of month-end (2024-11-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00600",
+      "detail": "Posted 2024-11-29, within 2 days of month-end (2024-11-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01762",
+      "detail": "Posted 2024-11-29, within 2 days of month-end (2024-11-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01341",
+      "detail": "Posted 2024-11-29, within 2 days of month-end (2024-11-30)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01137",
+      "detail": "Posted 2024-12-30, within 2 days of month-end (2024-12-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01879",
+      "detail": "Posted 2024-12-30, within 2 days of month-end (2024-12-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01796",
+      "detail": "Posted 2024-12-30, within 2 days of month-end (2024-12-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00673",
+      "detail": "Posted 2024-12-30, within 2 days of month-end (2024-12-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02388",
+      "detail": "Posted 2024-12-30, within 2 days of month-end (2024-12-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02246",
+      "detail": "Posted 2024-12-30, within 2 days of month-end (2024-12-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01063",
+      "detail": "Posted 2024-12-30, within 2 days of month-end (2024-12-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00830",
+      "detail": "Posted 2024-12-30, within 2 days of month-end (2024-12-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02266",
+      "detail": "Posted 2024-12-30, within 2 days of month-end (2024-12-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00439",
+      "detail": "Posted 2024-12-30, within 2 days of month-end (2024-12-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01328",
+      "detail": "Posted 2024-12-30, within 2 days of month-end (2024-12-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01065",
+      "detail": "Posted 2024-12-30, within 2 days of month-end (2024-12-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02359",
+      "detail": "Posted 2024-12-31, within 2 days of month-end (2024-12-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01590",
+      "detail": "Posted 2024-12-31, within 2 days of month-end (2024-12-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02549",
+      "detail": "Posted 2024-12-31, within 2 days of month-end (2024-12-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00377",
+      "detail": "Posted 2024-12-31, within 2 days of month-end (2024-12-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02480",
+      "detail": "Posted 2024-12-31, within 2 days of month-end (2024-12-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01949",
+      "detail": "Posted 2024-12-31, within 2 days of month-end (2024-12-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02467",
+      "detail": "Posted 2024-12-31, within 2 days of month-end (2024-12-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01368",
+      "detail": "Posted 2024-12-31, within 2 days of month-end (2024-12-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00575",
+      "detail": "Posted 2024-12-31, within 2 days of month-end (2024-12-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00636",
+      "detail": "Posted 2024-12-31, within 2 days of month-end (2024-12-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-01383",
+      "detail": "Posted 2024-12-31, within 2 days of month-end (2024-12-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00401",
+      "detail": "Posted 2024-12-31, within 2 days of month-end (2024-12-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02340",
+      "detail": "Posted 2024-12-31, within 2 days of month-end (2024-12-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00472",
+      "detail": "Posted 2024-12-31, within 2 days of month-end (2024-12-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-00872",
+      "detail": "Posted 2024-12-31, within 2 days of month-end (2024-12-31)."
+    },
+    {
+      "flag_type": "period_end_cutoff",
+      "confidence": "flag",
+      "entry_id": "JE-02537",
+      "detail": "Posted 2024-12-31, within 2 days of month-end (2024-12-31)."
+    },
+    {
+      "flag_type": "round_dollar_weak_description",
+      "confidence": "flag",
+      "entry_id": "JE-02569",
+      "detail": "$2,500 (multiple of $500) with description 'Correction'."
+    },
+    {
+      "flag_type": "round_dollar_weak_description",
+      "confidence": "flag",
+      "entry_id": "JE-02570",
+      "detail": "$20,000 (multiple of $500) with description 'Reclass'."
+    },
+    {
+      "flag_type": "round_dollar_weak_description",
+      "confidence": "flag",
+      "entry_id": "JE-02559",
+      "detail": "$50,000 (multiple of $500) with description 'Adjustment'."
+    },
+    {
+      "flag_type": "round_dollar_weak_description",
+      "confidence": "flag",
+      "entry_id": "JE-02552",
+      "detail": "$7,500 (multiple of $500) with description 'Adjustment'."
+    },
+    {
+      "flag_type": "round_dollar_weak_description",
+      "confidence": "flag",
+      "entry_id": "JE-02564",
+      "detail": "$5,000 (multiple of $500) with description 'TBD'."
+    },
+    {
+      "flag_type": "round_dollar_weak_description",
+      "confidence": "flag",
+      "entry_id": "JE-02563",
+      "detail": "$50,000 (multiple of $500) with description 'See attached'."
+    },
+    {
+      "flag_type": "round_dollar_weak_description",
+      "confidence": "flag",
+      "entry_id": "JE-02556",
+      "detail": "$1,000 (multiple of $500) with description 'TBD'."
+    },
+    {
+      "flag_type": "round_dollar_weak_description",
+      "confidence": "flag",
+      "entry_id": "JE-02561",
+      "detail": "$5,000 (multiple of $500) with description 'Reclass'."
+    },
+    {
+      "flag_type": "round_dollar_weak_description",
+      "confidence": "flag",
+      "entry_id": "JE-02566",
+      "detail": "$1,000 (multiple of $500) with description 'Adjustment'."
+    },
+    {
+      "flag_type": "round_dollar_weak_description",
+      "confidence": "flag",
+      "entry_id": "JE-02554",
+      "detail": "$25,000 (multiple of $500) with description 'See attached'."
+    },
+    {
+      "flag_type": "round_dollar_weak_description",
+      "confidence": "flag",
+      "entry_id": "JE-02558",
+      "detail": "$20,000 (multiple of $500) with description 'TBD'."
+    },
+    {
+      "flag_type": "round_dollar_weak_description",
+      "confidence": "flag",
+      "entry_id": "JE-02562",
+      "detail": "$1,000 (multiple of $500) with description 'nan'."
+    },
+    {
+      "flag_type": "round_dollar_weak_description",
+      "confidence": "flag",
+      "entry_id": "JE-02560",
+      "detail": "$5,000 (multiple of $500) with description 'TBD'."
+    },
+    {
+      "flag_type": "round_dollar_weak_description",
+      "confidence": "flag",
+      "entry_id": "JE-02557",
+      "detail": "$10,000 (multiple of $500) with description 'TBD'."
+    },
+    {
+      "flag_type": "round_dollar_weak_description",
+      "confidence": "flag",
+      "entry_id": "JE-02571",
+      "detail": "$2,500 (multiple of $500) with description 'nan'."
+    },
+    {
+      "flag_type": "round_dollar_weak_description",
+      "confidence": "flag",
+      "entry_id": "JE-02565",
+      "detail": "$50,000 (multiple of $500) with description 'Adjustment'."
+    },
+    {
+      "flag_type": "round_dollar_weak_description",
+      "confidence": "flag",
+      "entry_id": "JE-02567",
+      "detail": "$25,000 (multiple of $500) with description 'Adjustment'."
+    },
+    {
+      "flag_type": "round_dollar_weak_description",
+      "confidence": "flag",
+      "entry_id": "JE-02555",
+      "detail": "$2,500 (multiple of $500) with description 'nan'."
+    },
+    {
+      "flag_type": "round_dollar_weak_description",
+      "confidence": "flag",
+      "entry_id": "JE-02553",
+      "detail": "$7,500 (multiple of $500) with description 'TBD'."
+    },
+    {
+      "flag_type": "round_dollar_weak_description",
+      "confidence": "flag",
+      "entry_id": "JE-02568",
+      "detail": "$50,000 (multiple of $500) with description 'See attached'."
+    },
+    {
+      "flag_type": "unusual_account_combination",
+      "confidence": "review_candidate",
+      "entry_id": "JE-02579",
+      "detail": "Dr Revenue / Cr Retained Earnings -- this combination appears only 4 times in the whole ledger (source system: Manual/Topside)."
+    },
+    {
+      "flag_type": "unusual_account_combination",
+      "confidence": "review_candidate",
+      "entry_id": "JE-02581",
+      "detail": "Dr Accumulated Depreciation / Cr Revenue -- this combination appears only 5 times in the whole ledger (source system: Manual/Topside)."
+    },
+    {
+      "flag_type": "unusual_account_combination",
+      "confidence": "review_candidate",
+      "entry_id": "JE-02574",
+      "detail": "Dr Cash / Cr Revenue -- this combination appears only 4 times in the whole ledger (source system: Manual/Topside)."
+    },
+    {
+      "flag_type": "unusual_account_combination",
+      "confidence": "review_candidate",
+      "entry_id": "JE-02572",
+      "detail": "Dr Accrued Payroll Liabilities / Cr Equity -- this combination appears only 2 times in the whole ledger (source system: Manual/Topside)."
+    },
+    {
+      "flag_type": "unusual_account_combination",
+      "confidence": "review_candidate",
+      "entry_id": "JE-02582",
+      "detail": "Dr Accumulated Depreciation / Cr Revenue -- this combination appears only 5 times in the whole ledger (source system: Manual/Topside)."
+    },
+    {
+      "flag_type": "unusual_account_combination",
+      "confidence": "review_candidate",
+      "entry_id": "JE-02577",
+      "detail": "Dr Accumulated Depreciation / Cr Revenue -- this combination appears only 5 times in the whole ledger (source system: Manual/Topside)."
+    },
+    {
+      "flag_type": "unusual_account_combination",
+      "confidence": "review_candidate",
+      "entry_id": "JE-02575",
+      "detail": "Dr Cash / Cr Revenue -- this combination appears only 4 times in the whole ledger (source system: Manual/Topside)."
+    },
+    {
+      "flag_type": "unusual_account_combination",
+      "confidence": "review_candidate",
+      "entry_id": "JE-02580",
+      "detail": "Dr Accumulated Depreciation / Cr Revenue -- this combination appears only 5 times in the whole ledger (source system: Manual/Topside)."
+    },
+    {
+      "flag_type": "unusual_account_combination",
+      "confidence": "review_candidate",
+      "entry_id": "JE-02585",
+      "detail": "Dr Revenue / Cr Retained Earnings -- this combination appears only 4 times in the whole ledger (source system: Manual/Topside)."
+    },
+    {
+      "flag_type": "unusual_account_combination",
+      "confidence": "review_candidate",
+      "entry_id": "JE-02586",
+      "detail": "Dr Cash / Cr Revenue -- this combination appears only 4 times in the whole ledger (source system: Manual/Topside)."
+    },
+    {
+      "flag_type": "unusual_account_combination",
+      "confidence": "review_candidate",
+      "entry_id": "JE-02578",
+      "detail": "Dr Revenue / Cr Retained Earnings -- this combination appears only 4 times in the whole ledger (source system: Manual/Topside)."
+    },
+    {
+      "flag_type": "unusual_account_combination",
+      "confidence": "review_candidate",
+      "entry_id": "JE-02583",
+      "detail": "Dr Cash / Cr Revenue -- this combination appears only 4 times in the whole ledger (source system: Manual/Topside)."
+    },
+    {
+      "flag_type": "unusual_account_combination",
+      "confidence": "review_candidate",
+      "entry_id": "JE-02584",
+      "detail": "Dr Accrued Payroll Liabilities / Cr Equity -- this combination appears only 2 times in the whole ledger (source system: Manual/Topside)."
+    },
+    {
+      "flag_type": "unusual_account_combination",
+      "confidence": "review_candidate",
+      "entry_id": "JE-02576",
+      "detail": "Dr Revenue / Cr Retained Earnings -- this combination appears only 4 times in the whole ledger (source system: Manual/Topside)."
+    },
+    {
+      "flag_type": "unusual_account_combination",
+      "confidence": "review_candidate",
+      "entry_id": "JE-02573",
+      "detail": "Dr Accumulated Depreciation / Cr Revenue -- this combination appears only 5 times in the whole ledger (source system: Manual/Topside)."
+    }
+  ]
+}

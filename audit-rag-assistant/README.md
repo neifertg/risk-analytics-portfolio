@@ -14,13 +14,17 @@ pipeline is unchanged; only the content it runs against is new.
 
 Real audit-standards text (IIA/COSO frameworks) is copyrighted; real SEC
 filings or GAO reports would have worked but needed real curation effort
-this port didn't need to spend to make the point. The 12 procedure
+this port didn't need to spend to make the point. The 20 procedure
 documents in `corpus/` are self-written, covering a real internal-audit
-curriculum (SOX 404 testing, sampling methodology, vendor/expense/access
-controls, revenue recognition, segregation of duties, journal entry
-testing, inventory observation, contract compliance, risk assessment) —
-plausible, not authoritative. Don't cite this corpus as real audit
-guidance.
+curriculum: fieldwork-level testing (SOX 404 testing, sampling
+methodology, vendor/expense/access controls, revenue recognition,
+segregation of duties, journal entry testing, inventory observation,
+contract compliance, procurement/PO matching, IT change management,
+data privacy) and department-level governance (risk assessment,
+enterprise risk management/risk appetite, whistleblower hotline
+handling, third-party vendor risk, business continuity/disaster
+recovery, audit committee reporting) — plausible, not authoritative.
+Don't cite this corpus as real audit guidance.
 
 ## Architecture
 
@@ -88,8 +92,10 @@ self-contained unit" principle Seth_Wiki's own chunking contract already
 states, just not something I'd seen violated visibly enough to notice
 before running this eval for real.
 
-Both fixes are in this repo's history. `npm run eval` is 9/9 as of this
-writing — check it yourself rather than trusting this paragraph, since
+Both fixes are in this repo's history. `npm run eval` is 17/17 as of this
+writing (9 original cases plus 8 added when the corpus was expanded to
+cover governance topics) — check it yourself rather than trusting this
+paragraph, since
 "don't trust the paragraph, run the eval" is the actual lesson both bugs
 taught.
 

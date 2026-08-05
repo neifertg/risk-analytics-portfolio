@@ -16,7 +16,7 @@
     "id": "sox-walkthrough-phase2",
     "question": "What's tested in Phase 2 of the SOX 404 key controls walkthrough?",
     "expectedNoteIds": ["sox-404-key-controls-walkthrough"],
-    "expectedKeywords": ["operating effectiveness"]
+    "expectedKeywords": ["operating effectiveness", "operating-effectiveness"]
   },
   {
     "id": "vendor-fraud-indicator",
@@ -53,5 +53,53 @@
     "question": "What risk criteria are used to select journal entries for testing?",
     "expectedNoteIds": ["journal-entry-testing"],
     "expectedKeywords": ["round-dollar", "weekend", "same user"]
+  },
+  {
+    "id": "erm-assurance-role",
+    "question": "Does internal audit own the enterprise risk register, or just provide assurance over it?",
+    "expectedNoteIds": ["enterprise-risk-management-and-risk-appetite"],
+    "expectedKeywords": ["assurance"]
+  },
+  {
+    "id": "hotline-retaliation-check",
+    "question": "How is retaliation against a whistleblower hotline reporter actually tested?",
+    "expectedNoteIds": ["code-of-conduct-and-whistleblower-hotline-testing"],
+    "expectedKeywords": ["performance ratings", "12 months"]
+  },
+  {
+    "id": "emergency-change-approval-window",
+    "question": "How quickly must an emergency IT change receive retroactive approval?",
+    "expectedNoteIds": ["it-change-management-testing"],
+    "expectedKeywords": ["24-48 hours", "emergency"]
+  },
+  {
+    "id": "vendor-soc2-report-age",
+    "question": "How old can a vendor's SOC 2 report be before it's treated as effectively no evidence during third-party risk due diligence?",
+    "expectedNoteIds": ["third-party-vendor-risk-management"],
+    "expectedKeywords": ["12 months"]
+  },
+  {
+    "id": "bcp-rto-rpo-validation",
+    "question": "What two recovery objectives must be validated through an actual tabletop or failover exercise, not just stated in the plan?",
+    "expectedNoteIds": ["business-continuity-and-disaster-recovery-testing"],
+    "expectedKeywords": ["recovery time", "recovery point", "RTO", "RPO"]
+  },
+  {
+    "id": "data-deletion-backup-gap",
+    "question": "Why doesn't removing a record from the production database alone satisfy a data subject deletion request?",
+    "expectedNoteIds": ["data-privacy-compliance-testing"],
+    "expectedKeywords": ["backup"]
+  },
+  {
+    "id": "three-way-match-documents",
+    "question": "What three documents does a three-way match compare before a purchase invoice can be paid?",
+    "expectedNoteIds": ["procurement-and-purchase-order-matching-controls"],
+    "expectedKeywords": ["purchase order", "receipt", "invoice"]
+  },
+  {
+    "id": "finding-closure-validation",
+    "question": "Why shouldn't a finding be closed as remediated just because management says it's fixed?",
+    "expectedNoteIds": ["audit-committee-reporting-and-issue-tracking"],
+    "expectedKeywords": ["independently validated", "root cause"]
   }
 ]

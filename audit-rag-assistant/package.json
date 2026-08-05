@@ -8,7 +8,8 @@
     "ingest": "node scripts/ingest.mjs",
     "search": "node scripts/search.mjs",
     "ask": "node scripts/answer.mjs",
-    "eval": "node scripts/eval.mjs"
+    "eval": "node scripts/eval.mjs",
+    "stats": "node scripts/stats.mjs"
   },
   "devDependencies": {
     "gray-matter": "^4.0.3",

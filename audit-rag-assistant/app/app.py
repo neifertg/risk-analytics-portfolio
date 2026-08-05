@@ -17,6 +17,7 @@ import streamlit as st
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 ANSWER_SCRIPT = PROJECT_ROOT / "scripts" / "answer.mjs"
+STATS_SCRIPT = PROJECT_ROOT / "scripts" / "stats.mjs"
 
 # A portfolio demo running on a public Streamlit Cloud deployment has no
 # rate-limiting of its own — anyone can hit "Ask" and spend real API
@@ -75,6 +76,20 @@ CSS_TEMPLATE = Template(
         max-width: 60ch;
         margin: 4px 0 0;
     }
+    .rag-coverage {
+        color: $muted;
+        font-size: 13px;
+        line-height: 1.5;
+        max-width: 60ch;
+        margin: 6px 0 0;
+    }
+    .examples-label {
+        color: $muted;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin: 18px 0 6px;
+    }
     .source-card {
         border: 1px solid $border;
         border-radius: 0.85rem;
@@ -130,6 +145,36 @@ st.markdown(
 )
 
 
+@st.cache_data(ttl=300)
+def get_stats() -> dict:
+    """Live corpus-coverage stats, read fresh each time (5-minute cache)
+    rather than hand-written, so the coverage line and sidebar can't drift
+    out of sync with the actual corpus the way a static description would."""
+    result = subprocess.run(
+        ["node", str(STATS_SCRIPT), "--json"],
+        cwd=PROJECT_ROOT,
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+    )
+    if result.returncode != 0:
+        return {}
+    return json.loads(result.stdout)
+
+
+stats = get_stats()
+if stats:
+    st.markdown(
+        f'<p class="rag-coverage">Indexed: {stats["totalDocs"]} synthetic '
+        f'procedure documents ({stats["sectionChunks"]} sections).</p>',
+        unsafe_allow_html=True,
+    )
+    with st.sidebar.expander("Coverage", expanded=False):
+        st.caption(f"{stats['totalDocs']} documents indexed")
+        for topic in stats.get("topics", []):
+            st.markdown(f"- {topic['title']}")
+
+
 def ask(question: str) -> dict:
     env = os.environ.copy()
     # On Streamlit Community Cloud, these come from that app's own Secrets
@@ -160,7 +205,32 @@ def ask(question: str) -> dict:
 
 
 QUESTION_COUNT_KEY = "question_count"
+SESSION_TOTALS_KEY = "session_totals"
 st.session_state.setdefault(QUESTION_COUNT_KEY, 0)
+
+
+def run_query(q: str) -> None:
+    with st.spinner("Retrieving and generating..."):
+        try:
+            result = ask(q)
+            st.session_state["result"] = result
+            st.session_state["question"] = q
+            st.session_state["error"] = None
+            st.session_state[QUESTION_COUNT_KEY] += 1
+
+            usage = result.get("usage", {})
+            totals = st.session_state.setdefault(
+                SESSION_TOTALS_KEY,
+                {"embeddingTokens": 0, "inputTokens": 0, "outputTokens": 0, "costUsd": 0.0},
+            )
+            totals["embeddingTokens"] += usage.get("embeddingTokens", 0)
+            totals["inputTokens"] += usage.get("inputTokens", 0)
+            totals["outputTokens"] += usage.get("outputTokens", 0)
+            totals["costUsd"] += usage.get("estimatedCostUsd", 0.0)
+        except Exception as exc:
+            st.session_state["error"] = str(exc)
+            st.session_state["result"] = None
+
 
 if st.session_state[QUESTION_COUNT_KEY] >= MAX_QUESTIONS_PER_SESSION:
     st.warning(
@@ -168,6 +238,20 @@ if st.session_state[QUESTION_COUNT_KEY] >= MAX_QUESTIONS_PER_SESSION:
         "running for everyone. Refresh the page to reset your count."
     )
 else:
+    # Pulled straight from evals/questions.json, spanning both flavors of
+    # the corpus (fieldwork testing, governance) — known to retrieve well
+    # rather than a placeholder guess at what the corpus covers.
+    EXAMPLE_QUESTIONS = [
+        "What's tested in Phase 2 of the SOX 404 key controls walkthrough?",
+        "Does internal audit own the enterprise risk register, or just provide assurance over it?",
+        "What three documents does a three-way match compare before a purchase invoice can be paid?",
+    ]
+    st.markdown('<p class="examples-label">Try one:</p>', unsafe_allow_html=True)
+    example_cols = st.columns(len(EXAMPLE_QUESTIONS))
+    for col, eq in zip(example_cols, EXAMPLE_QUESTIONS):
+        if col.button(eq, use_container_width=True, key=f"example_{eq}"):
+            run_query(eq)
+
     with st.form("question_form"):
         question = st.text_input(
             "Question", placeholder="e.g. what's tested in Phase 2 of the SOX 404 walkthrough?"
@@ -175,16 +259,7 @@ else:
         submitted = st.form_submit_button("Ask")
 
     if submitted and question.strip():
-        with st.spinner("Retrieving and generating..."):
-            try:
-                result = ask(question.strip())
-                st.session_state["result"] = result
-                st.session_state["question"] = question.strip()
-                st.session_state["error"] = None
-                st.session_state[QUESTION_COUNT_KEY] += 1
-            except Exception as exc:
-                st.session_state["error"] = str(exc)
-                st.session_state["result"] = None
+        run_query(question.strip())
 
 if st.session_state.get("error"):
     st.error(st.session_state["error"])
@@ -226,3 +301,11 @@ elif st.session_state.get("result"):
 remaining = MAX_QUESTIONS_PER_SESSION - st.session_state[QUESTION_COUNT_KEY]
 if 0 < remaining < MAX_QUESTIONS_PER_SESSION:
     st.caption(f"{remaining} question(s) left this session.")
+
+totals = st.session_state.get(SESSION_TOTALS_KEY)
+if totals:
+    st.sidebar.metric("Session cost (est.)", f"${totals['costUsd']:.4f}")
+    st.sidebar.caption(
+        f"{totals['embeddingTokens']} embed + {totals['inputTokens']} in "
+        f"+ {totals['outputTokens']} out tokens this session"
+    )

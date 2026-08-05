@@ -1,0 +1,16 @@
+{
+  "name": "presentation-decks",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Branded reveal.js slide decks generated from an intent-based deck.yaml, per PATTERN.md.",
+  "scripts": {
+    "new-deck": "node scripts/new-deck.mjs",
+    "validate": "node scripts/validate-deck.mjs",
+    "render": "node scripts/render.mjs",
+    "check-contrast": "node scripts/check-contrast.mjs"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.0"
+  }
+}

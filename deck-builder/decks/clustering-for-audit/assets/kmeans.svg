@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260">
+  <rect x="1" y="1" width="398" height="258" rx="14" fill="#fbfaf8" stroke="#e4e2dc" stroke-width="2"/>
+
+  <!-- Partition boundaries — every point in the space belongs to its nearest centroid -->
+  <g stroke="#9aa0a8" stroke-width="1.5" stroke-dasharray="4 3">
+    <line x1="150" y1="8" x2="205" y2="252"/>
+    <line x1="300" y1="8" x2="332" y2="252"/>
+  </g>
+
+  <!-- Cluster 1 (blue) -->
+  <g fill="#2a6fdb">
+    <circle cx="55" cy="190" r="7"/>
+    <circle cx="75" cy="205" r="7"/>
+    <circle cx="90" cy="180" r="7"/>
+    <circle cx="65" cy="165" r="7"/>
+    <circle cx="45" cy="175" r="7"/>
+    <circle cx="80" cy="155" r="7"/>
+    <circle cx="58" cy="155" r="7"/>
+    <circle cx="95" cy="200" r="7"/>
+    <circle cx="40" cy="195" r="7"/>
+  </g>
+  <path d="M60 178 L76 178 M68 170 L68 186" stroke="#2a6fdb" stroke-width="3"/>
+
+  <!-- Cluster 2 (orange) -->
+  <g fill="#c0611f">
+    <circle cx="270" cy="60" r="7"/>
+    <circle cx="290" cy="75" r="7"/>
+    <circle cx="310" cy="55" r="7"/>
+    <circle cx="285" cy="90" r="7"/>
+    <circle cx="255" cy="80" r="7"/>
+    <circle cx="300" cy="95" r="7"/>
+    <circle cx="265" cy="100" r="7"/>
+    <circle cx="305" cy="65" r="7"/>
+    <circle cx="245" cy="65" r="7"/>
+  </g>
+  <path d="M277 76 L293 76 M285 68 L285 84" stroke="#c0611f" stroke-width="3"/>
+
+  <!-- Cluster 3 (green) — the small, odd segment that stands out -->
+  <g fill="#2f9e6e">
+    <circle cx="355" cy="170" r="7"/>
+    <circle cx="370" cy="190" r="7"/>
+    <circle cx="345" cy="195" r="7"/>
+    <circle cx="365" cy="150" r="7"/>
+  </g>
+  <path d="M352 172 L368 172 M360 164 L360 180" stroke="#2f9e6e" stroke-width="3"/>
+</svg>

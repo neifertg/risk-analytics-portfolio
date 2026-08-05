@@ -1,0 +1,465 @@
+/*
+  Placeholder brand theme. Swap the values in :root for a real brand later —
+  nothing below this block should ever need to change for a rebrand.
+  See PATTERN.md §5.
+*/
+
+/* Base reset — reveal.js's own CSS sets height:100% on .reveal but never
+   on html/body, so that 100% has no definite ancestor height to resolve
+   against unless the page provides one. Every reveal.js deployment needs
+   this; it was missing here, which is the likely root cause of the
+   evidence-image sizing bugs (percentage heights failing to resolve
+   through an indefinite chain, all the way up from html/body). */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+:root {
+  /* Non-color tokens are theme-independent — every palette below shares them. */
+  --font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+
+  /* Fixed rem, not vw-based clamp(): reveal.js scales its whole 1920x1080
+     logical canvas as a unit via a CSS transform, so a vw-sized font is
+     scaled twice — once by vw resolving against the real browser
+     viewport, again by reveal.js's transform — compounding depending on
+     window size. These values are each the old clamp()'s own max, which
+     is what every one of them already resolved to at a 1920px-wide
+     viewport; reveal.js's transform alone now handles all responsive
+     resizing, the same way it already does for evidence images. */
+  --font-scale-label: 1.15rem;
+  --font-scale-body: 1.6rem;
+  --font-scale-headline: 3.2rem;
+  --font-scale-display: 4.8rem;
+  --font-scale-stat: 9rem;
+
+  --space-unit: 1.25rem;
+  --space-sm: calc(var(--space-unit) * 1);
+  --space-md: calc(var(--space-unit) * 2);
+  --space-lg: calc(var(--space-unit) * 4);
+  --space-xl: calc(var(--space-unit) * 6);
+
+  --radius: 14px;
+}
+
+/* ---------- Color themes ----------
+   The presenter cycles themes at runtime by pressing "T" (toggle script
+   lives in render.mjs, THEMES list). Only the accent triad varies between
+   themes — bg/bg-inverse/ink/ink-inverse stay fixed high-contrast neutrals
+   per the anti-slop guardrails in PATTERN.md §7 (no beige/cream fallback
+   backgrounds, one accent color at a time). Every theme is checked by
+   `npm run check-contrast` (scripts/check-contrast.mjs) against every
+   foreground/background pairing actually used in layouts/ — adding a
+   theme means adding its name to that script's THEMES list too, and to
+   render.mjs's THEMES list so the runtime toggle can reach it. See
+   PATTERN.md §5. */
+
+:root, [data-theme="slate"] {
+  --color-bg: #fbfaf8;
+  --color-bg-inverse: #14161a;
+  --color-ink: #181b20;
+  --color-ink-inverse: #f5f6f7;
+  --color-accent: #3452e1;
+  --color-accent-on-dark: #7d93ee;
+  --color-accent-soft: #e7eafc;
+  --color-muted: #6b7280;
+  --color-border: #e4e2dc;
+}
+
+[data-theme="forest"] {
+  --color-bg: #fbfaf8;
+  --color-bg-inverse: #14161a;
+  --color-ink: #181b20;
+  --color-ink-inverse: #f5f6f7;
+  --color-accent: #1f7a4d;
+  --color-accent-on-dark: #5cbf8e;
+  --color-accent-soft: #e3f2e8;
+  --color-muted: #6b7280;
+  --color-border: #e4e2dc;
+}
+
+[data-theme="copper"] {
+  --color-bg: #fbfaf8;
+  --color-bg-inverse: #14161a;
+  --color-ink: #181b20;
+  --color-ink-inverse: #f5f6f7;
+  --color-accent: #a8522e;
+  --color-accent-on-dark: #e0916d;
+  --color-accent-soft: #f7e6dd;
+  --color-muted: #6b7280;
+  --color-border: #e4e2dc;
+}
+
+/* ---------- Base ---------- */
+
+.reveal {
+  font-family: var(--font-family);
+  color: var(--color-ink);
+}
+
+.reveal .slides section {
+  background: var(--color-bg);
+  text-align: left;
+  padding: var(--space-xl);
+  box-sizing: border-box;
+}
+
+.reveal .slides section.dark {
+  background: var(--color-bg-inverse);
+  color: var(--color-ink-inverse);
+}
+
+.reveal h1, .reveal h2, .reveal h3 {
+  margin: 0 0 var(--space-md) 0;
+  line-height: 1.15;
+  font-weight: 600;
+}
+
+.reveal p {
+  margin: 0 0 var(--space-sm) 0;
+}
+
+.reveal ul, .reveal ol {
+  margin: 0;
+  padding-left: 1.1em;
+}
+
+.brand-corner-mark {
+  position: fixed;
+  right: var(--space-sm);
+  bottom: var(--space-sm);
+  width: 2.2rem;
+  height: 2.2rem;
+  opacity: 0.55;
+  z-index: 5;
+  pointer-events: none;
+  color: var(--color-accent);
+}
+
+.brand-corner-mark svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* ---------- title ---------- */
+
+.layout-title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  height: 100%;
+}
+
+.layout-title .logo {
+  display: block;
+  width: 4.5rem;
+  height: 4.5rem;
+  margin-bottom: var(--space-md);
+  color: var(--color-accent);
+}
+
+.layout-title .logo svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.layout-title h1 {
+  font-size: var(--font-scale-display);
+  color: var(--color-ink);
+}
+
+.layout-title .subtitle {
+  font-size: var(--font-scale-headline);
+  color: var(--color-muted);
+  font-weight: 400;
+}
+
+.layout-title .meta {
+  margin-top: var(--space-md);
+  font-size: var(--font-scale-label);
+  color: var(--color-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ---------- agenda ---------- */
+
+.layout-agenda h2 {
+  font-size: var(--font-scale-headline);
+  color: var(--color-accent);
+}
+
+.layout-agenda ol {
+  list-style: none;
+  padding: 0;
+  counter-reset: agenda;
+}
+
+.layout-agenda ol li {
+  counter-increment: agenda;
+  font-size: var(--font-scale-body);
+  padding: var(--space-sm) 0;
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-sm);
+}
+
+.layout-agenda ol li::before {
+  content: counter(agenda, decimal-leading-zero);
+  color: var(--color-accent);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- section-divider ---------- */
+
+.layout-section-divider {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  /* background/color come from the .dark modifier (see
+     .reveal .slides section.dark) — a plain single class here can't win
+     against .reveal .slides section's higher specificity. */
+}
+
+.layout-section-divider .label {
+  font-size: var(--font-scale-label);
+  color: var(--color-accent-on-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: var(--space-sm);
+}
+
+.layout-section-divider h2 {
+  font-size: var(--font-scale-display);
+  color: var(--color-ink-inverse);
+}
+
+/* ---------- assertion-evidence ---------- */
+
+.layout-assertion-evidence {
+  /* height is an absolute length, not a percentage: per spec, a
+     percentage max-height resolved against a container whose height
+     isn't itself definite computes to "none" (unconstrained) — not
+     "capped at 100%". That's what broke every percentage-based sizing
+     attempt here, no matter how the flex/grid structure was arranged.
+     1080px matches Reveal.initialize({height: 1080}) in render.mjs — the
+     slide's actual fixed logical canvas height, so this is genuinely
+     definite the whole way down. overflow:hidden is a safety net so a
+     miscalculation clips at the slide edge instead of bleeding past the
+     browser viewport.
+     grid-template-rows uses minmax(0, 1fr), not bare 1fr, as defense in
+     depth against the classic CSS Grid "blowout" bug (bare `1fr` is
+     shorthand for `minmax(auto, 1fr)`, whose implicit minimum is the
+     track's min-content size). This alone did not fix the real bug below
+     — see .evidence img's comment. */
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  height: 1080px;
+  overflow: hidden;
+}
+
+.layout-assertion-evidence h2 {
+  font-size: var(--font-scale-headline);
+  color: var(--color-ink);
+}
+
+.layout-assertion-evidence .evidence {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+  min-width: 0;
+}
+
+.layout-assertion-evidence .evidence img {
+  /* max-height must NOT be a percentage. Confirmed by live measurement
+     (getComputedStyle, pre-transform): with max-height:75% this element's
+     computed height was a constant 819px on every diagram slide,
+     regardless of how much room the row actually had (643.8px on a
+     2-line headline, 702.7px on a 1-line headline) — proof the
+     percentage was never actually applying. Root cause: this element's
+     row is the flexible (1fr) track in a grid whose row-sizing (block
+     axis) is being computed at the same time as this img's own
+     percentage max-height needs to resolve against that same axis — a
+     circular dependency. Per spec, a percentage height that can't
+     resolve computes to "none" (unconstrained), so max-height:75%
+     silently no-opped; the rendered size was 100% a function of
+     max-width:75% (safe — width is always definite here) plus the
+     image's fixed aspect ratio, with zero regard for vertical space.
+     560px is an absolute cap with real margin below the worst measured
+     budget (~644px for a 2-line headline + 1-line caption, less for a
+     rarer 3-line headline or 2-line caption) — see PATTERN.md §4. */
+  max-width: 75%;
+  max-height: 560px;
+  border-radius: var(--radius);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.layout-assertion-evidence .evidence table {
+  border-collapse: collapse;
+  font-size: var(--font-scale-body);
+}
+
+.layout-assertion-evidence .evidence td,
+.layout-assertion-evidence .evidence th {
+  padding: var(--space-sm) var(--space-md);
+  border-bottom: 1px solid var(--color-border);
+  text-align: left;
+}
+
+.layout-assertion-evidence .caption {
+  font-size: var(--font-scale-label);
+  color: var(--color-muted);
+  margin-top: var(--space-sm);
+}
+
+/* ---------- big-stat ---------- */
+
+.layout-big-stat {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  height: 100%;
+}
+
+.layout-big-stat .stat {
+  font-size: var(--font-scale-stat);
+  font-weight: 700;
+  color: var(--color-accent);
+  line-height: 1;
+}
+
+.layout-big-stat .context {
+  margin-top: var(--space-md);
+  font-size: var(--font-scale-headline);
+  color: var(--color-ink);
+}
+
+/* ---------- comparison ---------- */
+
+.layout-comparison {
+  height: 100%;
+}
+
+.layout-comparison .columns {
+  display: flex;
+  gap: var(--space-md);
+  height: 100%;
+}
+
+.layout-comparison .column {
+  flex: 1;
+  background: var(--color-accent-soft);
+  border-radius: var(--radius);
+  padding: var(--space-md);
+}
+
+.layout-comparison .column h3 {
+  font-size: var(--font-scale-headline);
+  color: var(--color-accent);
+}
+
+.layout-comparison .column ul {
+  list-style: none;
+  padding: 0;
+}
+
+.layout-comparison .column li {
+  font-size: var(--font-scale-body);
+  padding: calc(var(--space-sm) / 2) 0;
+}
+
+/* ---------- timeline ---------- */
+
+.layout-timeline .steps {
+  display: flex;
+  gap: var(--space-md);
+  align-items: flex-start;
+  margin-top: var(--space-lg);
+}
+
+.layout-timeline .step {
+  flex: 1;
+  padding-top: var(--space-sm);
+}
+
+.layout-timeline .step .label {
+  font-size: var(--font-scale-body);
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.layout-timeline .step .detail {
+  font-size: var(--font-scale-label);
+  color: var(--color-muted);
+  margin-top: calc(var(--space-sm) / 2);
+}
+
+/* ---------- quote ---------- */
+
+.layout-quote {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  text-align: center;
+}
+
+.layout-quote blockquote {
+  margin: 0;
+  font-size: var(--font-scale-display);
+  font-weight: 500;
+  color: var(--color-ink);
+  max-width: 80%;
+}
+
+.layout-quote blockquote::before {
+  content: '\201C';
+  color: var(--color-accent);
+}
+
+.layout-quote blockquote::after {
+  content: '\201D';
+  color: var(--color-accent);
+}
+
+.layout-quote .attribution {
+  margin-top: var(--space-md);
+  font-size: var(--font-scale-label);
+  color: var(--color-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ---------- closing ---------- */
+
+.layout-closing {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  /* background/color come from the .dark modifier (see
+     .reveal .slides section.dark) — a plain single class here can't win
+     against .reveal .slides section's higher specificity. */
+}
+
+.layout-closing h2 {
+  font-size: var(--font-scale-display);
+  color: var(--color-ink-inverse);
+}
+
+.layout-closing .cta {
+  margin-top: var(--space-md);
+  font-size: var(--font-scale-headline);
+  color: var(--color-accent-on-dark);
+  font-weight: 600;
+}

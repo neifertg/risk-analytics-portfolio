@@ -91,6 +91,22 @@ a hidden flaw.
 
 [Source, findings & real output](https://github.com/neifertg/risk-analytics-portfolio/tree/main/duplicate-vendor-payment-checker)
 
+### Presentation Deck Builder
+
+![A Gaussian Mixture Models slide from the Clustering for Audit Analytics training deck, showing each record assigned a probability of risk instead of a hard yes/no label](assets/deck-builder-demo.png)
+
+A generator for branded, self-contained reveal.js training decks — content
+authored as structured `deck.yaml`, rendered through a fixed set of layouts
+and design tokens so every deck stays visually consistent without hand-tuned
+CSS per talk. The example here, "Clustering for Audit Analytics," is a real
+17-slide internal-training deck walking through K-Means, Hierarchical
+Clustering, DBSCAN, and Gaussian Mixture Models, each framed as an audit
+question rather than abstract ML theory, with two worked examples (vendor-
+payment clustering, access-log clustering).
+
+[Source & write-up](https://github.com/neifertg/risk-analytics-portfolio/tree/main/deck-builder)
+&middot; [Live demo](deck-builder/decks/clustering-for-audit/index.html)
+
 ---
 
 ## 📄 Contact

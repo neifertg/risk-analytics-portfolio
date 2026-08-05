@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260">
+  <rect x="1" y="1" width="398" height="258" rx="14" fill="#fbfaf8" stroke="#e4e2dc" stroke-width="2"/>
+
+  <!-- Dense region 1 (blue) -->
+  <g fill="#2a6fdb">
+    <circle cx="55" cy="190" r="7"/>
+    <circle cx="75" cy="205" r="7"/>
+    <circle cx="90" cy="180" r="7"/>
+    <circle cx="65" cy="165" r="7"/>
+    <circle cx="45" cy="175" r="7"/>
+    <circle cx="80" cy="155" r="7"/>
+  </g>
+
+  <!-- Dense region 2 (orange) -->
+  <g fill="#c0611f">
+    <circle cx="270" cy="60" r="7"/>
+    <circle cx="290" cy="75" r="7"/>
+    <circle cx="310" cy="55" r="7"/>
+    <circle cx="285" cy="90" r="7"/>
+    <circle cx="255" cy="80" r="7"/>
+    <circle cx="300" cy="95" r="7"/>
+  </g>
+
+  <!-- Noise points — sparse, unassigned, automatically flagged -->
+  <g fill="none" stroke="#6b7280" stroke-width="2" stroke-dasharray="3 2">
+    <circle cx="180" cy="150" r="8"/>
+    <circle cx="225" cy="195" r="8"/>
+    <circle cx="140" cy="70" r="8"/>
+  </g>
+</svg>

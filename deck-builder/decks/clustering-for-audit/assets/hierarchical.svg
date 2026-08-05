@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260">
+  <rect x="1" y="1" width="398" height="258" rx="14" fill="#fbfaf8" stroke="#e4e2dc" stroke-width="2"/>
+
+  <!-- Below the cut: 3 resulting groups, colored -->
+  <g stroke-width="3" fill="none">
+    <path d="M40 220 L40 170 L110 170 L110 220" stroke="#2a6fdb"/>
+    <path d="M75 170 L75 140" stroke="#2a6fdb"/>
+    <path d="M155 220 L155 170 L205 170 L205 220" stroke="#c0611f"/>
+    <path d="M180 170 L180 140" stroke="#c0611f"/>
+    <path d="M260 220 L260 170 L340 170 L340 220" stroke="#2f9e6e"/>
+    <path d="M300 170 L300 140" stroke="#2f9e6e"/>
+  </g>
+
+  <!-- Above the cut: already-merged structure, de-emphasized -->
+  <g stroke-width="2" fill="none" stroke="#9aa0a8">
+    <path d="M75 140 L75 90 L180 90 L180 140"/>
+    <path d="M127.5 90 L127.5 40 L300 40 L300 140"/>
+  </g>
+
+  <!-- Leaves -->
+  <g>
+    <circle cx="40" cy="220" r="6" fill="#2a6fdb"/>
+    <circle cx="110" cy="220" r="6" fill="#2a6fdb"/>
+    <circle cx="155" cy="220" r="6" fill="#c0611f"/>
+    <circle cx="205" cy="220" r="6" fill="#c0611f"/>
+    <circle cx="260" cy="220" r="6" fill="#2f9e6e"/>
+    <circle cx="340" cy="220" r="6" fill="#2f9e6e"/>
+  </g>
+
+  <!-- Cut line -->
+  <line x1="15" y1="140" x2="385" y2="140" stroke="#6b7280" stroke-width="1.5" stroke-dasharray="5 3"/>
+  <text x="385" y="133" text-anchor="end" font-family="'Segoe UI', sans-serif" font-size="13" fill="#6b7280">cut here &#8594; 3 groups</text>
+</svg>

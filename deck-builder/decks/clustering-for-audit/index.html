@@ -1,0 +1,639 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Clustering for Audit Analytics</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+<style>
+/*
+  Placeholder brand theme. Swap the values in :root for a real brand later —
+  nothing below this block should ever need to change for a rebrand.
+  See PATTERN.md §5.
+*/
+
+/* Base reset — reveal.js's own CSS sets height:100% on .reveal but never
+   on html/body, so that 100% has no definite ancestor height to resolve
+   against unless the page provides one. Every reveal.js deployment needs
+   this; it was missing here, which is the likely root cause of the
+   evidence-image sizing bugs (percentage heights failing to resolve
+   through an indefinite chain, all the way up from html/body). */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+:root {
+  /* Non-color tokens are theme-independent — every palette below shares them. */
+  --font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+
+  /* Fixed rem, not vw-based clamp(): reveal.js scales its whole 1920x1080
+     logical canvas as a unit via a CSS transform, so a vw-sized font is
+     scaled twice — once by vw resolving against the real browser
+     viewport, again by reveal.js's transform — compounding depending on
+     window size. These values are each the old clamp()'s own max, which
+     is what every one of them already resolved to at a 1920px-wide
+     viewport; reveal.js's transform alone now handles all responsive
+     resizing, the same way it already does for evidence images. */
+  --font-scale-label: 1.15rem;
+  --font-scale-body: 1.6rem;
+  --font-scale-headline: 3.2rem;
+  --font-scale-display: 4.8rem;
+  --font-scale-stat: 9rem;
+
+  --space-unit: 1.25rem;
+  --space-sm: calc(var(--space-unit) * 1);
+  --space-md: calc(var(--space-unit) * 2);
+  --space-lg: calc(var(--space-unit) * 4);
+  --space-xl: calc(var(--space-unit) * 6);
+
+  --radius: 14px;
+}
+
+/* ---------- Color themes ----------
+   The presenter cycles themes at runtime by pressing "T" (toggle script
+   lives in render.mjs, THEMES list). Only the accent triad varies between
+   themes — bg/bg-inverse/ink/ink-inverse stay fixed high-contrast neutrals
+   per the anti-slop guardrails in PATTERN.md §7 (no beige/cream fallback
+   backgrounds, one accent color at a time). Every theme is checked by
+   `npm run check-contrast` (scripts/check-contrast.mjs) against every
+   foreground/background pairing actually used in layouts/ — adding a
+   theme means adding its name to that script's THEMES list too, and to
+   render.mjs's THEMES list so the runtime toggle can reach it. See
+   PATTERN.md §5. */
+
+:root, [data-theme="slate"] {
+  --color-bg: #fbfaf8;
+  --color-bg-inverse: #14161a;
+  --color-ink: #181b20;
+  --color-ink-inverse: #f5f6f7;
+  --color-accent: #3452e1;
+  --color-accent-on-dark: #7d93ee;
+  --color-accent-soft: #e7eafc;
+  --color-muted: #6b7280;
+  --color-border: #e4e2dc;
+}
+
+[data-theme="forest"] {
+  --color-bg: #fbfaf8;
+  --color-bg-inverse: #14161a;
+  --color-ink: #181b20;
+  --color-ink-inverse: #f5f6f7;
+  --color-accent: #1f7a4d;
+  --color-accent-on-dark: #5cbf8e;
+  --color-accent-soft: #e3f2e8;
+  --color-muted: #6b7280;
+  --color-border: #e4e2dc;
+}
+
+[data-theme="copper"] {
+  --color-bg: #fbfaf8;
+  --color-bg-inverse: #14161a;
+  --color-ink: #181b20;
+  --color-ink-inverse: #f5f6f7;
+  --color-accent: #a8522e;
+  --color-accent-on-dark: #e0916d;
+  --color-accent-soft: #f7e6dd;
+  --color-muted: #6b7280;
+  --color-border: #e4e2dc;
+}
+
+/* ---------- Base ---------- */
+
+.reveal {
+  font-family: var(--font-family);
+  color: var(--color-ink);
+}
+
+.reveal .slides section {
+  background: var(--color-bg);
+  text-align: left;
+  padding: var(--space-xl);
+  box-sizing: border-box;
+}
+
+.reveal .slides section.dark {
+  background: var(--color-bg-inverse);
+  color: var(--color-ink-inverse);
+}
+
+.reveal h1, .reveal h2, .reveal h3 {
+  margin: 0 0 var(--space-md) 0;
+  line-height: 1.15;
+  font-weight: 600;
+}
+
+.reveal p {
+  margin: 0 0 var(--space-sm) 0;
+}
+
+.reveal ul, .reveal ol {
+  margin: 0;
+  padding-left: 1.1em;
+}
+
+.brand-corner-mark {
+  position: fixed;
+  right: var(--space-sm);
+  bottom: var(--space-sm);
+  width: 2.2rem;
+  height: 2.2rem;
+  opacity: 0.55;
+  z-index: 5;
+  pointer-events: none;
+  color: var(--color-accent);
+}
+
+.brand-corner-mark svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* ---------- title ---------- */
+
+.layout-title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  height: 100%;
+}
+
+.layout-title .logo {
+  display: block;
+  width: 4.5rem;
+  height: 4.5rem;
+  margin-bottom: var(--space-md);
+  color: var(--color-accent);
+}
+
+.layout-title .logo svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.layout-title h1 {
+  font-size: var(--font-scale-display);
+  color: var(--color-ink);
+}
+
+.layout-title .subtitle {
+  font-size: var(--font-scale-headline);
+  color: var(--color-muted);
+  font-weight: 400;
+}
+
+.layout-title .meta {
+  margin-top: var(--space-md);
+  font-size: var(--font-scale-label);
+  color: var(--color-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ---------- agenda ---------- */
+
+.layout-agenda h2 {
+  font-size: var(--font-scale-headline);
+  color: var(--color-accent);
+}
+
+.layout-agenda ol {
+  list-style: none;
+  padding: 0;
+  counter-reset: agenda;
+}
+
+.layout-agenda ol li {
+  counter-increment: agenda;
+  font-size: var(--font-scale-body);
+  padding: var(--space-sm) 0;
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-sm);
+}
+
+.layout-agenda ol li::before {
+  content: counter(agenda, decimal-leading-zero);
+  color: var(--color-accent);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- section-divider ---------- */
+
+.layout-section-divider {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  /* background/color come from the .dark modifier (see
+     .reveal .slides section.dark) — a plain single class here can't win
+     against .reveal .slides section's higher specificity. */
+}
+
+.layout-section-divider .label {
+  font-size: var(--font-scale-label);
+  color: var(--color-accent-on-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: var(--space-sm);
+}
+
+.layout-section-divider h2 {
+  font-size: var(--font-scale-display);
+  color: var(--color-ink-inverse);
+}
+
+/* ---------- assertion-evidence ---------- */
+
+.layout-assertion-evidence {
+  /* height is an absolute length, not a percentage: per spec, a
+     percentage max-height resolved against a container whose height
+     isn't itself definite computes to "none" (unconstrained) — not
+     "capped at 100%". That's what broke every percentage-based sizing
+     attempt here, no matter how the flex/grid structure was arranged.
+     1080px matches Reveal.initialize({height: 1080}) in render.mjs — the
+     slide's actual fixed logical canvas height, so this is genuinely
+     definite the whole way down. overflow:hidden is a safety net so a
+     miscalculation clips at the slide edge instead of bleeding past the
+     browser viewport.
+     grid-template-rows uses minmax(0, 1fr), not bare 1fr, as defense in
+     depth against the classic CSS Grid "blowout" bug (bare `1fr` is
+     shorthand for `minmax(auto, 1fr)`, whose implicit minimum is the
+     track's min-content size). This alone did not fix the real bug below
+     — see .evidence img's comment. */
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  height: 1080px;
+  overflow: hidden;
+}
+
+.layout-assertion-evidence h2 {
+  font-size: var(--font-scale-headline);
+  color: var(--color-ink);
+}
+
+.layout-assertion-evidence .evidence {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+  min-width: 0;
+}
+
+.layout-assertion-evidence .evidence img {
+  /* max-height must NOT be a percentage. Confirmed by live measurement
+     (getComputedStyle, pre-transform): with max-height:75% this element's
+     computed height was a constant 819px on every diagram slide,
+     regardless of how much room the row actually had (643.8px on a
+     2-line headline, 702.7px on a 1-line headline) — proof the
+     percentage was never actually applying. Root cause: this element's
+     row is the flexible (1fr) track in a grid whose row-sizing (block
+     axis) is being computed at the same time as this img's own
+     percentage max-height needs to resolve against that same axis — a
+     circular dependency. Per spec, a percentage height that can't
+     resolve computes to "none" (unconstrained), so max-height:75%
+     silently no-opped; the rendered size was 100% a function of
+     max-width:75% (safe — width is always definite here) plus the
+     image's fixed aspect ratio, with zero regard for vertical space.
+     560px is an absolute cap with real margin below the worst measured
+     budget (~644px for a 2-line headline + 1-line caption, less for a
+     rarer 3-line headline or 2-line caption) — see PATTERN.md §4. */
+  max-width: 75%;
+  max-height: 560px;
+  border-radius: var(--radius);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.layout-assertion-evidence .evidence table {
+  border-collapse: collapse;
+  font-size: var(--font-scale-body);
+}
+
+.layout-assertion-evidence .evidence td,
+.layout-assertion-evidence .evidence th {
+  padding: var(--space-sm) var(--space-md);
+  border-bottom: 1px solid var(--color-border);
+  text-align: left;
+}
+
+.layout-assertion-evidence .caption {
+  font-size: var(--font-scale-label);
+  color: var(--color-muted);
+  margin-top: var(--space-sm);
+}
+
+/* ---------- big-stat ---------- */
+
+.layout-big-stat {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  height: 100%;
+}
+
+.layout-big-stat .stat {
+  font-size: var(--font-scale-stat);
+  font-weight: 700;
+  color: var(--color-accent);
+  line-height: 1;
+}
+
+.layout-big-stat .context {
+  margin-top: var(--space-md);
+  font-size: var(--font-scale-headline);
+  color: var(--color-ink);
+}
+
+/* ---------- comparison ---------- */
+
+.layout-comparison {
+  height: 100%;
+}
+
+.layout-comparison .columns {
+  display: flex;
+  gap: var(--space-md);
+  height: 100%;
+}
+
+.layout-comparison .column {
+  flex: 1;
+  background: var(--color-accent-soft);
+  border-radius: var(--radius);
+  padding: var(--space-md);
+}
+
+.layout-comparison .column h3 {
+  font-size: var(--font-scale-headline);
+  color: var(--color-accent);
+}
+
+.layout-comparison .column ul {
+  list-style: none;
+  padding: 0;
+}
+
+.layout-comparison .column li {
+  font-size: var(--font-scale-body);
+  padding: calc(var(--space-sm) / 2) 0;
+}
+
+/* ---------- timeline ---------- */
+
+.layout-timeline .steps {
+  display: flex;
+  gap: var(--space-md);
+  align-items: flex-start;
+  margin-top: var(--space-lg);
+}
+
+.layout-timeline .step {
+  flex: 1;
+  padding-top: var(--space-sm);
+}
+
+.layout-timeline .step .label {
+  font-size: var(--font-scale-body);
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.layout-timeline .step .detail {
+  font-size: var(--font-scale-label);
+  color: var(--color-muted);
+  margin-top: calc(var(--space-sm) / 2);
+}
+
+/* ---------- quote ---------- */
+
+.layout-quote {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  text-align: center;
+}
+
+.layout-quote blockquote {
+  margin: 0;
+  font-size: var(--font-scale-display);
+  font-weight: 500;
+  color: var(--color-ink);
+  max-width: 80%;
+}
+
+.layout-quote blockquote::before {
+  content: '\201C';
+  color: var(--color-accent);
+}
+
+.layout-quote blockquote::after {
+  content: '\201D';
+  color: var(--color-accent);
+}
+
+.layout-quote .attribution {
+  margin-top: var(--space-md);
+  font-size: var(--font-scale-label);
+  color: var(--color-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ---------- closing ---------- */
+
+.layout-closing {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  /* background/color come from the .dark modifier (see
+     .reveal .slides section.dark) — a plain single class here can't win
+     against .reveal .slides section's higher specificity. */
+}
+
+.layout-closing h2 {
+  font-size: var(--font-scale-display);
+  color: var(--color-ink-inverse);
+}
+
+.layout-closing .cta {
+  margin-top: var(--space-md);
+  font-size: var(--font-scale-headline);
+  color: var(--color-accent-on-dark);
+  font-weight: 600;
+}
+
+</style>
+</head>
+<body>
+<div class="reveal">
+  <div class="brand-corner-mark"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <circle cx="32" cy="32" r="30" fill="none" stroke="currentColor" stroke-width="4"/>
+  <path d="M20 40 L32 18 L44 40 Z" fill="currentColor"/>
+</svg></div>
+  <div class="slides">
+<section class="layout-title">
+  <span class="logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <circle cx="32" cy="32" r="30" fill="none" stroke="currentColor" stroke-width="4"/>
+  <path d="M20 40 L32 18 L44 40 Z" fill="currentColor"/>
+</svg></span>
+  <h1>Clustering for Audit Analytics</h1>
+  <p class="subtitle">Finding patterns in audit data you haven&#39;t named yet</p>
+  <p class="meta">Internal Audit — Analytics Training &middot; 2026-07-30</p>
+  
+</section>
+
+<section class="layout-agenda">
+  <h2>Agenda</h2>
+  <ol>
+    <li>Why clustering fits audit work</li>
+<li>Four techniques, four audit questions</li>
+<li>Applying it: business and IT audit examples</li>
+<li>Where to start</li>
+  </ol>
+  
+</section>
+
+<section class="layout-section-divider dark">
+  <p class="label">Part 1</p>
+  <h2>Why clustering fits audit work</h2>
+  
+</section>
+
+<section class="layout-assertion-evidence">
+  <h2>Most audit populations have no label marking which record is the problem.</h2>
+  <div class="evidence"><table><thead><tr><th>Supervised methods</th><th>Clustering (unsupervised)</th></tr></thead><tbody><tr><td>Need labeled examples: known fraud, known control failures</td><td>No labels required</td></tr><tr><td>Learn to repeat a pattern you&#39;ve already seen</td><td>Group records by similarity, then let the odd ones stand out</td></tr><tr><td>Only as good as your past examples</td><td>Can surface a pattern you&#39;ve never seen before</td></tr></tbody></table></div>
+  <p class="caption">Most audit testing starts from a population with no &#39;bad&#39; column to learn from.</p>
+  <aside class="notes">This is the core motivation for using clustering in audit: fraud/error labels are rare, expensive, or don&#39;t exist yet for a new risk area. Clustering doesn&#39;t need them.</aside>
+</section>
+
+<section class="layout-section-divider dark">
+  <p class="label">Part 2</p>
+  <h2>Four techniques, four audit questions</h2>
+  
+</section>
+
+<section class="layout-assertion-evidence">
+  <h2>K-Means sorts records into a fixed number of segments so the odd segment stands out.</h2>
+  <div class="evidence"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MDAgMjYwIj4KICA8cmVjdCB4PSIxIiB5PSIxIiB3aWR0aD0iMzk4IiBoZWlnaHQ9IjI1OCIgcng9IjE0IiBmaWxsPSIjZmJmYWY4IiBzdHJva2U9IiNlNGUyZGMiIHN0cm9rZS13aWR0aD0iMiIvPgoKICA8IS0tIFBhcnRpdGlvbiBib3VuZGFyaWVzIOKAlCBldmVyeSBwb2ludCBpbiB0aGUgc3BhY2UgYmVsb25ncyB0byBpdHMgbmVhcmVzdCBjZW50cm9pZCAtLT4KICA8ZyBzdHJva2U9IiM5YWEwYTgiIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2UtZGFzaGFycmF5PSI0IDMiPgogICAgPGxpbmUgeDE9IjE1MCIgeTE9IjgiIHgyPSIyMDUiIHkyPSIyNTIiLz4KICAgIDxsaW5lIHgxPSIzMDAiIHkxPSI4IiB4Mj0iMzMyIiB5Mj0iMjUyIi8+CiAgPC9nPgoKICA8IS0tIENsdXN0ZXIgMSAoYmx1ZSkgLS0+CiAgPGcgZmlsbD0iIzJhNmZkYiI+CiAgICA8Y2lyY2xlIGN4PSI1NSIgY3k9IjE5MCIgcj0iNyIvPgogICAgPGNpcmNsZSBjeD0iNzUiIGN5PSIyMDUiIHI9IjciLz4KICAgIDxjaXJjbGUgY3g9IjkwIiBjeT0iMTgwIiByPSI3Ii8+CiAgICA8Y2lyY2xlIGN4PSI2NSIgY3k9IjE2NSIgcj0iNyIvPgogICAgPGNpcmNsZSBjeD0iNDUiIGN5PSIxNzUiIHI9IjciLz4KICAgIDxjaXJjbGUgY3g9IjgwIiBjeT0iMTU1IiByPSI3Ii8+CiAgICA8Y2lyY2xlIGN4PSI1OCIgY3k9IjE1NSIgcj0iNyIvPgogICAgPGNpcmNsZSBjeD0iOTUiIGN5PSIyMDAiIHI9IjciLz4KICAgIDxjaXJjbGUgY3g9IjQwIiBjeT0iMTk1IiByPSI3Ii8+CiAgPC9nPgogIDxwYXRoIGQ9Ik02MCAxNzggTDc2IDE3OCBNNjggMTcwIEw2OCAxODYiIHN0cm9rZT0iIzJhNmZkYiIgc3Ryb2tlLXdpZHRoPSIzIi8+CgogIDwhLS0gQ2x1c3RlciAyIChvcmFuZ2UpIC0tPgogIDxnIGZpbGw9IiNjMDYxMWYiPgogICAgPGNpcmNsZSBjeD0iMjcwIiBjeT0iNjAiIHI9IjciLz4KICAgIDxjaXJjbGUgY3g9IjI5MCIgY3k9Ijc1IiByPSI3Ii8+CiAgICA8Y2lyY2xlIGN4PSIzMTAiIGN5PSI1NSIgcj0iNyIvPgogICAgPGNpcmNsZSBjeD0iMjg1IiBjeT0iOTAiIHI9IjciLz4KICAgIDxjaXJjbGUgY3g9IjI1NSIgY3k9IjgwIiByPSI3Ii8+CiAgICA8Y2lyY2xlIGN4PSIzMDAiIGN5PSI5NSIgcj0iNyIvPgogICAgPGNpcmNsZSBjeD0iMjY1IiBjeT0iMTAwIiByPSI3Ii8+CiAgICA8Y2lyY2xlIGN4PSIzMDUiIGN5PSI2NSIgcj0iNyIvPgogICAgPGNpcmNsZSBjeD0iMjQ1IiBjeT0iNjUiIHI9IjciLz4KICA8L2c+CiAgPHBhdGggZD0iTTI3NyA3NiBMMjkzIDc2IE0yODUgNjggTDI4NSA4NCIgc3Ryb2tlPSIjYzA2MTFmIiBzdHJva2Utd2lkdGg9IjMiLz4KCiAgPCEtLSBDbHVzdGVyIDMgKGdyZWVuKSDigJQgdGhlIHNtYWxsLCBvZGQgc2VnbWVudCB0aGF0IHN0YW5kcyBvdXQgLS0+CiAgPGcgZmlsbD0iIzJmOWU2ZSI+CiAgICA8Y2lyY2xlIGN4PSIzNTUiIGN5PSIxNzAiIHI9IjciLz4KICAgIDxjaXJjbGUgY3g9IjM3MCIgY3k9IjE5MCIgcj0iNyIvPgogICAgPGNpcmNsZSBjeD0iMzQ1IiBjeT0iMTk1IiByPSI3Ii8+CiAgICA8Y2lyY2xlIGN4PSIzNjUiIGN5PSIxNTAiIHI9IjciLz4KICA8L2c+CiAgPHBhdGggZD0iTTM1MiAxNzIgTDM2OCAxNzIgTTM2MCAxNjQgTDM2MCAxODAiIHN0cm9rZT0iIzJmOWU2ZSIgc3Ryb2tlLXdpZHRoPSIzIi8+Cjwvc3ZnPgo=" alt="Scatter plot of records grouped into two large clusters and one small, isolated cluster" /></div>
+  <p class="caption">Nearest-centroid assignment, recomputed until stable — you choose k up front.</p>
+  <aside class="notes">Audit use: segment vendors or transactions to find the outlier segment. Limit: requires choosing k upfront; assumes round, evenly sized groups. Source: wiki resources/k-means-clustering.md. Good fit: exploratory grouping of numeric data, e.g. customer/vendor segmentation. Poor fit: unknown k, non-round clusters, categorical-only data.</aside>
+</section>
+
+<section class="layout-assertion-evidence">
+  <h2>Hierarchical clustering builds a tree of groupings, so you decide the count last.</h2>
+  <div class="evidence"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MDAgMjYwIj4KICA8cmVjdCB4PSIxIiB5PSIxIiB3aWR0aD0iMzk4IiBoZWlnaHQ9IjI1OCIgcng9IjE0IiBmaWxsPSIjZmJmYWY4IiBzdHJva2U9IiNlNGUyZGMiIHN0cm9rZS13aWR0aD0iMiIvPgoKICA8IS0tIEJlbG93IHRoZSBjdXQ6IDMgcmVzdWx0aW5nIGdyb3VwcywgY29sb3JlZCAtLT4KICA8ZyBzdHJva2Utd2lkdGg9IjMiIGZpbGw9Im5vbmUiPgogICAgPHBhdGggZD0iTTQwIDIyMCBMNDAgMTcwIEwxMTAgMTcwIEwxMTAgMjIwIiBzdHJva2U9IiMyYTZmZGIiLz4KICAgIDxwYXRoIGQ9Ik03NSAxNzAgTDc1IDE0MCIgc3Ryb2tlPSIjMmE2ZmRiIi8+CiAgICA8cGF0aCBkPSJNMTU1IDIyMCBMMTU1IDE3MCBMMjA1IDE3MCBMMjA1IDIyMCIgc3Ryb2tlPSIjYzA2MTFmIi8+CiAgICA8cGF0aCBkPSJNMTgwIDE3MCBMMTgwIDE0MCIgc3Ryb2tlPSIjYzA2MTFmIi8+CiAgICA8cGF0aCBkPSJNMjYwIDIyMCBMMjYwIDE3MCBMMzQwIDE3MCBMMzQwIDIyMCIgc3Ryb2tlPSIjMmY5ZTZlIi8+CiAgICA8cGF0aCBkPSJNMzAwIDE3MCBMMzAwIDE0MCIgc3Ryb2tlPSIjMmY5ZTZlIi8+CiAgPC9nPgoKICA8IS0tIEFib3ZlIHRoZSBjdXQ6IGFscmVhZHktbWVyZ2VkIHN0cnVjdHVyZSwgZGUtZW1waGFzaXplZCAtLT4KICA8ZyBzdHJva2Utd2lkdGg9IjIiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzlhYTBhOCI+CiAgICA8cGF0aCBkPSJNNzUgMTQwIEw3NSA5MCBMMTgwIDkwIEwxODAgMTQwIi8+CiAgICA8cGF0aCBkPSJNMTI3LjUgOTAgTDEyNy41IDQwIEwzMDAgNDAgTDMwMCAxNDAiLz4KICA8L2c+CgogIDwhLS0gTGVhdmVzIC0tPgogIDxnPgogICAgPGNpcmNsZSBjeD0iNDAiIGN5PSIyMjAiIHI9IjYiIGZpbGw9IiMyYTZmZGIiLz4KICAgIDxjaXJjbGUgY3g9IjExMCIgY3k9IjIyMCIgcj0iNiIgZmlsbD0iIzJhNmZkYiIvPgogICAgPGNpcmNsZSBjeD0iMTU1IiBjeT0iMjIwIiByPSI2IiBmaWxsPSIjYzA2MTFmIi8+CiAgICA8Y2lyY2xlIGN4PSIyMDUiIGN5PSIyMjAiIHI9IjYiIGZpbGw9IiNjMDYxMWYiLz4KICAgIDxjaXJjbGUgY3g9IjI2MCIgY3k9IjIyMCIgcj0iNiIgZmlsbD0iIzJmOWU2ZSIvPgogICAgPGNpcmNsZSBjeD0iMzQwIiBjeT0iMjIwIiByPSI2IiBmaWxsPSIjMmY5ZTZlIi8+CiAgPC9nPgoKICA8IS0tIEN1dCBsaW5lIC0tPgogIDxsaW5lIHgxPSIxNSIgeTE9IjE0MCIgeDI9IjM4NSIgeTI9IjE0MCIgc3Ryb2tlPSIjNmI3MjgwIiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLWRhc2hhcnJheT0iNSAzIi8+CiAgPHRleHQgeD0iMzg1IiB5PSIxMzMiIHRleHQtYW5jaG9yPSJlbmQiIGZvbnQtZmFtaWx5PSInU2Vnb2UgVUknLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBmaWxsPSIjNmI3MjgwIj5jdXQgaGVyZSAmIzg1OTQ7IDMgZ3JvdXBzPC90ZXh0Pgo8L3N2Zz4K" alt="Dendrogram of five records merging into a tree, with a cut line producing three groups" /></div>
+  <p class="caption">Repeatedly merges the two closest clusters — you decide the count after seeing the tree.</p>
+  <aside class="notes">Audit use: explore population structure before setting a testing plan. Limit: O(n²) cost — doesn&#39;t scale to a full population; an early bad merge can&#39;t be undone. Source: wiki resources/hierarchical-clustering.md. Good fit: don&#39;t know k in advance, want to see nested structure, need deterministic results (no random init unlike K-Means). Poor fit: large datasets, noisy data with single linkage.</aside>
+</section>
+
+<section class="layout-assertion-evidence">
+  <h2>DBSCAN separates dense, ordinary activity from outliers automatically.</h2>
+  <div class="evidence"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MDAgMjYwIj4KICA8cmVjdCB4PSIxIiB5PSIxIiB3aWR0aD0iMzk4IiBoZWlnaHQ9IjI1OCIgcng9IjE0IiBmaWxsPSIjZmJmYWY4IiBzdHJva2U9IiNlNGUyZGMiIHN0cm9rZS13aWR0aD0iMiIvPgoKICA8IS0tIERlbnNlIHJlZ2lvbiAxIChibHVlKSAtLT4KICA8ZyBmaWxsPSIjMmE2ZmRiIj4KICAgIDxjaXJjbGUgY3g9IjU1IiBjeT0iMTkwIiByPSI3Ii8+CiAgICA8Y2lyY2xlIGN4PSI3NSIgY3k9IjIwNSIgcj0iNyIvPgogICAgPGNpcmNsZSBjeD0iOTAiIGN5PSIxODAiIHI9IjciLz4KICAgIDxjaXJjbGUgY3g9IjY1IiBjeT0iMTY1IiByPSI3Ii8+CiAgICA8Y2lyY2xlIGN4PSI0NSIgY3k9IjE3NSIgcj0iNyIvPgogICAgPGNpcmNsZSBjeD0iODAiIGN5PSIxNTUiIHI9IjciLz4KICA8L2c+CgogIDwhLS0gRGVuc2UgcmVnaW9uIDIgKG9yYW5nZSkgLS0+CiAgPGcgZmlsbD0iI2MwNjExZiI+CiAgICA8Y2lyY2xlIGN4PSIyNzAiIGN5PSI2MCIgcj0iNyIvPgogICAgPGNpcmNsZSBjeD0iMjkwIiBjeT0iNzUiIHI9IjciLz4KICAgIDxjaXJjbGUgY3g9IjMxMCIgY3k9IjU1IiByPSI3Ii8+CiAgICA8Y2lyY2xlIGN4PSIyODUiIGN5PSI5MCIgcj0iNyIvPgogICAgPGNpcmNsZSBjeD0iMjU1IiBjeT0iODAiIHI9IjciLz4KICAgIDxjaXJjbGUgY3g9IjMwMCIgY3k9Ijk1IiByPSI3Ii8+CiAgPC9nPgoKICA8IS0tIE5vaXNlIHBvaW50cyDigJQgc3BhcnNlLCB1bmFzc2lnbmVkLCBhdXRvbWF0aWNhbGx5IGZsYWdnZWQgLS0+CiAgPGcgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNmI3MjgwIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1kYXNoYXJyYXk9IjMgMiI+CiAgICA8Y2lyY2xlIGN4PSIxODAiIGN5PSIxNTAiIHI9IjgiLz4KICAgIDxjaXJjbGUgY3g9IjIyNSIgY3k9IjE5NSIgcj0iOCIvPgogICAgPGNpcmNsZSBjeD0iMTQwIiBjeT0iNzAiIHI9IjgiLz4KICA8L2c+Cjwvc3ZnPgo=" alt="Scatter plot with two dense clusters and three sparse points marked as noise" /></div>
+  <p class="caption">Dense regions become clusters; sparse points are flagged as noise automatically.</p>
+  <aside class="notes">Audit use: auto-flag transactions or log entries that fit no normal pattern. Limit: struggles with mixed-density populations; radius/threshold settings are fiddly. Source: wiki resources/dbscan.md. Good fit: arbitrary-shaped clusters, automatic outlier detection, unknown cluster count. Poor fit: high-dimensional data, mixed-density clusters.</aside>
+</section>
+
+<section class="layout-assertion-evidence">
+  <h2>Gaussian Mixture Models assign each record a probability of risk instead of a hard yes/no.</h2>
+  <div class="evidence"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MDAgMjYwIj4KICA8cmVjdCB4PSIxIiB5PSIxIiB3aWR0aD0iMzk4IiBoZWlnaHQ9IjI1OCIgcng9IjE0IiBmaWxsPSIjZmJmYWY4IiBzdHJva2U9IiNlNGUyZGMiIHN0cm9rZS13aWR0aD0iMiIvPgoKICA8IS0tIE92ZXJsYXBwaW5nIHByb2JhYmlsaXR5IGRlbnNpdHkgY29udG91cnMgLS0+CiAgPGc+CiAgICA8ZWxsaXBzZSBjeD0iNzAiIGN5PSIxNzgiIHJ4PSIxMzAiIHJ5PSI4NSIgZmlsbD0iIzJhNmZkYiIgZmlsbC1vcGFjaXR5PSIwLjEyIiBzdHJva2U9IiMyYTZmZGIiIHN0cm9rZS13aWR0aD0iMS41Ii8+CiAgICA8ZWxsaXBzZSBjeD0iNzAiIGN5PSIxNzgiIHJ4PSI5MCIgcnk9IjU5IiBmaWxsPSIjMmE2ZmRiIiBmaWxsLW9wYWNpdHk9IjAuMTYiIHN0cm9rZT0iIzJhNmZkYiIgc3Ryb2tlLXdpZHRoPSIxLjUiLz4KICAgIDxlbGxpcHNlIGN4PSI3MCIgY3k9IjE3OCIgcng9IjUyIiByeT0iMzQiIGZpbGw9IiMyYTZmZGIiIGZpbGwtb3BhY2l0eT0iMC4yIiBzdHJva2U9IiMyYTZmZGIiIHN0cm9rZS13aWR0aD0iMS41Ii8+CiAgPC9nPgogIDxnPgogICAgPGVsbGlwc2UgY3g9IjI4MyIgY3k9Ijc3IiByeD0iMTMwIiByeT0iODUiIGZpbGw9IiNjMDYxMWYiIGZpbGwtb3BhY2l0eT0iMC4xMiIgc3Ryb2tlPSIjYzA2MTFmIiBzdHJva2Utd2lkdGg9IjEuNSIvPgogICAgPGVsbGlwc2UgY3g9IjI4MyIgY3k9Ijc3IiByeD0iOTAiIHJ5PSI1OSIgZmlsbD0iI2MwNjExZiIgZmlsbC1vcGFjaXR5PSIwLjE2IiBzdHJva2U9IiNjMDYxMWYiIHN0cm9rZS13aWR0aD0iMS41Ii8+CiAgICA8ZWxsaXBzZSBjeD0iMjgzIiBjeT0iNzciIHJ4PSI1MiIgcnk9IjM0IiBmaWxsPSIjYzA2MTFmIiBmaWxsLW9wYWNpdHk9IjAuMiIgc3Ryb2tlPSIjYzA2MTFmIiBzdHJva2Utd2lkdGg9IjEuNSIvPgogIDwvZz4KCiAgPCEtLSBSZWdpb24gMSBwb2ludHMgKGJsdWUpIC0tPgogIDxnIGZpbGw9IiMyYTZmZGIiPgogICAgPGNpcmNsZSBjeD0iNTUiIGN5PSIxOTAiIHI9IjciLz4KICAgIDxjaXJjbGUgY3g9Ijc1IiBjeT0iMjA1IiByPSI3Ii8+CiAgICA8Y2lyY2xlIGN4PSI5MCIgY3k9IjE4MCIgcj0iNyIvPgogICAgPGNpcmNsZSBjeD0iNjUiIGN5PSIxNjUiIHI9IjciLz4KICAgIDxjaXJjbGUgY3g9IjQ1IiBjeT0iMTc1IiByPSI3Ii8+CiAgICA8Y2lyY2xlIGN4PSIzOCIgY3k9IjIwNSIgcj0iNyIvPgogICAgPGNpcmNsZSBjeD0iOTgiIGN5PSIxNTUiIHI9IjciLz4KICA8L2c+CgogIDwhLS0gUmVnaW9uIDIgcG9pbnRzIChvcmFuZ2UpIC0tPgogIDxnIGZpbGw9IiNjMDYxMWYiPgogICAgPGNpcmNsZSBjeD0iMjcwIiBjeT0iNjAiIHI9IjciLz4KICAgIDxjaXJjbGUgY3g9IjI5MCIgY3k9Ijc1IiByPSI3Ii8+CiAgICA8Y2lyY2xlIGN4PSIzMTAiIGN5PSI1NSIgcj0iNyIvPgogICAgPGNpcmNsZSBjeD0iMjg1IiBjeT0iOTAiIHI9IjciLz4KICAgIDxjaXJjbGUgY3g9IjMwMCIgY3k9Ijk1IiByPSI3Ii8+CiAgICA8Y2lyY2xlIGN4PSIyNTMiIGN5PSI5NSIgcj0iNyIvPgogICAgPGNpcmNsZSBjeD0iMzI1IiBjeT0iNzAiIHI9IjciLz4KICA8L2c+CgogIDwhLS0gUG9pbnQgaW4gdGhlIG92ZXJsYXAg4oCUIHNvZnQsIHNwbGl0IG1lbWJlcnNoaXAgLS0+CiAgPGNpcmNsZSBjeD0iMTgyIiBjeT0iMTIzIiByPSI3IiBmaWxsPSIjMmE2ZmRiIi8+CiAgPHBhdGggZD0iTTE4MiAxMTYgQTcgNyAwIDAgMSAxODIgMTMwIFoiIGZpbGw9IiNjMDYxMWYiLz4KICA8Y2lyY2xlIGN4PSIxODIiIGN5PSIxMjMiIHI9IjE0IiBmaWxsPSJub25lIiBzdHJva2U9IiM2YjcyODAiIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2UtZGFzaGFycmF5PSIyIDIiLz4KPC9zdmc+Cg==" alt="Scatter plot with two overlapping probability regions and one point with split membership" /></div>
+  <p class="caption">Each record gets a probability of belonging to each group, not a hard label.</p>
+  <aside class="notes">Audit use: risk-score records instead of a hard flag. Limit: needs more data than K-Means; easy to overfit the wrong number of components. Source: wiki resources/gaussian-mixture-models.md. Good fit: overlapping/elliptical clusters, soft assignments, varying cluster sizes. Poor fit: small datasets, no good guess for component count, very high feature counts.</aside>
+</section>
+
+<section class="layout-comparison">
+  <div class="columns">
+    <div class="column"><h3>K-Means</h3><ul><li>You choose the number of groups up front</li><li>Fast, scales well</li><li>Assumes round, evenly sized groups</li></ul></div>
+<div class="column"><h3>Hierarchical</h3><ul><li>You choose the number of groups after seeing the tree</li><li>Deterministic, no random start</li><li>Doesn&#39;t scale to a full large population</li></ul></div>
+<div class="column"><h3>DBSCAN</h3><ul><li>The technique finds the number of groups itself</li><li>Flags outliers automatically as noise</li><li>Struggles with mixed-density populations</li></ul></div>
+  </div>
+  <aside class="notes">Choosing among the three is mostly about whether you already know how many groups you&#39;re looking for, and whether automatic outlier-flagging matters more than speed.</aside>
+</section>
+
+<section class="layout-big-stat">
+  <div class="stat">O(n²)</div>
+  <p class="context">the memory and compute cost of hierarchical clustering — a real limit when testing a full transaction population rather than a sample.</p>
+  <aside class="notes">From wiki resources/hierarchical-clustering.md. Practical implication for audit: hierarchical clustering is well suited to exploring a sample or a narrowed-down population, not a full year of transactional detail. K-Means or DBSCAN scale further.</aside>
+</section>
+
+<section class="layout-section-divider dark">
+  <p class="label">Part 3</p>
+  <h2>Applying it: business and IT audit examples</h2>
+  
+</section>
+
+<section class="layout-assertion-evidence">
+  <h2>Clustering vendor payments can surface the one vendor that doesn&#39;t look like the rest.</h2>
+  <div class="evidence"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MDAgMjYwIj4KICA8cmVjdCB4PSIxIiB5PSIxIiB3aWR0aD0iMzk4IiBoZWlnaHQ9IjI1OCIgcng9IjE0IiBmaWxsPSIjZmJmYWY4IiBzdHJva2U9IiNlNGUyZGMiIHN0cm9rZS13aWR0aD0iMiIvPgoKICA8IS0tIEF4ZXMgLS0+CiAgPHBhdGggZD0iTTUwIDMwIEw1MCAyMTAgTDM3MCAyMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzlhYTBhOCIgc3Ryb2tlLXdpZHRoPSIxLjUiLz4KICA8dGV4dCB4PSIyMTAiIHk9IjIzMiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidTZWdvZSBVSScsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGZpbGw9IiM2YjcyODAiPlBheW1lbnQgZnJlcXVlbmN5ICYjODU5NDs8L3RleHQ+CiAgPHRleHQgeD0iMjQiIHk9IjEyMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidTZWdvZSBVSScsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGZpbGw9IiM2YjcyODAiIHRyYW5zZm9ybT0icm90YXRlKC05MCAyNCAxMjApIj5QYXltZW50IGFtb3VudCAmIzg1OTQ7PC90ZXh0PgoKICA8IS0tIFdpZGVyIHZlbmRvciBwb3B1bGF0aW9uIC0tPgogIDxnIGZpbGw9IiNjN2NiZDEiPgogICAgPGNpcmNsZSBjeD0iOTAiIGN5PSI5MCIgcj0iNSIvPgogICAgPGNpcmNsZSBjeD0iMjQwIiBjeT0iMTgwIiByPSI1Ii8+CiAgICA8Y2lyY2xlIGN4PSIyODAiIGN5PSIxMzAiIHI9IjUiLz4KICAgIDxjaXJjbGUgY3g9IjIyMCIgY3k9IjU1IiByPSI1Ii8+CiAgICA8Y2lyY2xlIGN4PSIxMDAiIGN5PSIxNDAiIHI9IjUiLz4KICAgIDxjaXJjbGUgY3g9IjMxMCIgY3k9IjE3MCIgcj0iNSIvPgogICAgPGNpcmNsZSBjeD0iNzAiIGN5PSIxOTAiIHI9IjUiLz4KICAgIDxjaXJjbGUgY3g9IjI1NSIgY3k9Ijk1IiByPSI1Ii8+CiAgPC9nPgoKICA8IS0tIE5vcm1hbCB2ZW5kb3JzIC0tPgogIDxnIGZpbGw9IiMyYTZmZGIiPgogICAgPGNpcmNsZSBjeD0iMTMwIiBjeT0iMTcwIiByPSI3Ii8+CiAgICA8Y2lyY2xlIGN4PSIxNTAiIGN5PSIxNTAiIHI9IjciLz4KICAgIDxjaXJjbGUgY3g9IjE0MCIgY3k9IjE5MCIgcj0iNyIvPgogICAgPGNpcmNsZSBjeD0iMTcwIiBjeT0iMTYwIiByPSI3Ii8+CiAgICA8Y2lyY2xlIGN4PSIxOTAiIGN5PSIxNDAiIHI9IjciLz4KICAgIDxjaXJjbGUgY3g9IjE2MCIgY3k9IjEyMCIgcj0iNyIvPgogICAgPGNpcmNsZSBjeD0iMjAwIiBjeT0iMTc1IiByPSI3Ii8+CiAgICA8Y2lyY2xlIGN4PSIxODAiIGN5PSIxMDUiIHI9IjciLz4KICA8L2c+CgogIDwhLS0gRmxhZ2dlZCB2ZW5kb3IgLS0+CiAgPGNpcmNsZSBjeD0iMzI1IiBjeT0iNjAiIHI9IjgiIGZpbGw9IiNjMDM5MmIiLz4KICA8Y2lyY2xlIGN4PSIzMjUiIGN5PSI2MCIgcj0iMTciIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2MwMzkyYiIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1kYXNoYXJyYXk9IjMgMiIvPgo8L3N2Zz4K" alt="Scatter plot of vendor payment records with one vendor isolated from the normal cluster" /></div>
+  <p class="caption">Illustrative example — not a specific finding.</p>
+  <aside class="notes">Population: vendor payment records for a business cycle. Features: amount, frequency, approval path, vendor age, payment timing. This is a generic teaching example, not drawn from a real audit or organization. Adapt the population and features to whatever business-cycle data the department actually has. A flagged vendor is a lead to investigate, e.g. for duplicate payments or a shell-vendor risk — not a conclusion on its own.</aside>
+</section>
+
+<section class="layout-assertion-evidence">
+  <h2>Clustering access logs can flag the one account that doesn&#39;t match its peers.</h2>
+  <div class="evidence"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MDAgMjYwIj4KICA8cmVjdCB4PSIxIiB5PSIxIiB3aWR0aD0iMzk4IiBoZWlnaHQ9IjI1OCIgcng9IjE0IiBmaWxsPSIjZmJmYWY4IiBzdHJva2U9IiNlNGUyZGMiIHN0cm9rZS13aWR0aD0iMiIvPgoKICA8IS0tIEF4ZXMgLS0+CiAgPHBhdGggZD0iTTUwIDMwIEw1MCAyMTAgTDM3MCAyMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzlhYTBhOCIgc3Ryb2tlLXdpZHRoPSIxLjUiLz4KICA8dGV4dCB4PSIyMTAiIHk9IjIzMiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidTZWdvZSBVSScsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGZpbGw9IiM2YjcyODAiPlN5c3RlbXMgYWNjZXNzZWQgJiM4NTk0OzwvdGV4dD4KICA8dGV4dCB4PSIyNCIgeT0iMTIwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ1NlZ29lIFVJJywgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMyIgZmlsbD0iIzZiNzI4MCIgdHJhbnNmb3JtPSJyb3RhdGUoLTkwIDI0IDEyMCkiPlNlc3Npb24gbGVuZ3RoICYjODU5NDs8L3RleHQ+CgogIDwhLS0gV2lkZXIgYWNjb3VudCBwb3B1bGF0aW9uIC0tPgogIDxnIGZpbGw9IiNjN2NiZDEiPgogICAgPGNpcmNsZSBjeD0iOTUiIGN5PSI5NSIgcj0iNSIvPgogICAgPGNpcmNsZSBjeD0iMjMwIiBjeT0iMTc1IiByPSI1Ii8+CiAgICA8Y2lyY2xlIGN4PSIyNzAiIGN5PSIxMjAiIHI9IjUiLz4KICAgIDxjaXJjbGUgY3g9IjIxMCIgY3k9IjYwIiByPSI1Ii8+CiAgICA8Y2lyY2xlIGN4PSI4NSIgY3k9IjE1MCIgcj0iNSIvPgogICAgPGNpcmNsZSBjeD0iMzAwIiBjeT0iMTgwIiByPSI1Ii8+CiAgICA8Y2lyY2xlIGN4PSI2NSIgY3k9IjE4NSIgcj0iNSIvPgogICAgPGNpcmNsZSBjeD0iMjUwIiBjeT0iOTAiIHI9IjUiLz4KICA8L2c+CgogIDwhLS0gUGVlciBhY2NvdW50cyAtLT4KICA8ZyBmaWxsPSIjMmY5ZTZlIj4KICAgIDxjaXJjbGUgY3g9IjExMCIgY3k9IjE4MCIgcj0iNyIvPgogICAgPGNpcmNsZSBjeD0iMTMwIiBjeT0iMTYwIiByPSI3Ii8+CiAgICA8Y2lyY2xlIGN4PSIxMjAiIGN5PSIxOTUiIHI9IjciLz4KICAgIDxjaXJjbGUgY3g9IjE1MCIgY3k9IjE3MCIgcj0iNyIvPgogICAgPGNpcmNsZSBjeD0iMTY1IiBjeT0iMTUwIiByPSI3Ii8+CiAgICA8Y2lyY2xlIGN4PSIxNDAiIGN5PSIxMzUiIHI9IjciLz4KICAgIDxjaXJjbGUgY3g9IjE3NSIgY3k9IjE4NSIgcj0iNyIvPgogICAgPGNpcmNsZSBjeD0iMTU1IiBjeT0iMTE1IiByPSI3Ii8+CiAgPC9nPgoKICA8IS0tIEZsYWdnZWQgYWNjb3VudCAtLT4KICA8Y2lyY2xlIGN4PSIzMTUiIGN5PSI1NSIgcj0iOCIgZmlsbD0iI2MwMzkyYiIvPgogIDxjaXJjbGUgY3g9IjMxNSIgY3k9IjU1IiByPSIxNyIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjYzAzOTJiIiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLWRhc2hhcnJheT0iMyAyIi8+Cjwvc3ZnPgo=" alt="Scatter plot of access-log records with one account isolated from its peer group" /></div>
+  <p class="caption">Illustrative example — not a specific finding.</p>
+  <aside class="notes">Population: access logs or privileged-account activity, IT general controls. Features: login times, systems accessed, transaction types, peer role. This is a generic teaching example, not drawn from a real audit or organization. Peer-group definition (e.g. by role or department) matters a lot here — cluster within a peer group, not across the whole population. A flagged account is a lead, e.g. excessive access or a compromised credential — not a conclusion on its own.</aside>
+</section>
+
+<section class="layout-section-divider dark">
+  <p class="label">Part 4</p>
+  <h2>Where to start</h2>
+  
+</section>
+
+<section class="layout-timeline">
+  <h2>A first clustering pilot, end to end</h2>
+  <div class="steps">
+    <div class="step"><div class="label">1. Pick a population</div><div class="detail">One with no existing &#39;bad&#39; label — a vendor master, an access log, an expense population</div></div>
+<div class="step"><div class="label">2. Choose features</div><div class="detail">A handful of numeric fields that describe behavior, not identity</div></div>
+<div class="step"><div class="label">3. Run and review</div><div class="detail">Try K-Means or DBSCAN first; read the outlier group, not just the average</div></div>
+<div class="step"><div class="label">4. Fold into testing</div><div class="detail">Treat flagged records as leads for existing substantive procedures, not a final conclusion</div></div>
+  </div>
+  <aside class="notes">This mirrors the make-deck render pipeline&#39;s own philosophy: start from the simplest version of each piece, and only add complexity (hierarchical, GMM) once the first pass earns it.</aside>
+</section>
+
+<section class="layout-closing dark">
+  <h2>Clustering turns &#39;we don&#39;t know what we&#39;re looking for&#39; into a testable question.</h2>
+  <p class="cta">Pick one dataset without a fraud label and run a first K-Means or DBSCAN pass this quarter.</p>
+  <aside class="notes">Start small: one population, one technique, one review of the outlier group. The four techniques and PATTERN.md-style layout choices in this deck are illustrative — expect to adapt features and thresholds to the actual data in hand.</aside>
+</section>
+
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    width: 1920,
+    height: 1080,
+    margin: 0.04,
+    plugins: typeof RevealNotes !== 'undefined' ? [ RevealNotes ] : []
+  });
+</script>
+<script>
+  // Presenter-only color-theme toggle — press "T" to cycle. No on-screen
+  // control by design (PATTERN.md §7's no-decorative-chrome rule).
+  (function () {
+    var THEMES = ["slate","forest","copper"];
+    var root = document.documentElement;
+    root.dataset.theme = root.dataset.theme || THEMES[0];
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== 't' && e.key !== 'T') return;
+      var i = THEMES.indexOf(root.dataset.theme);
+      root.dataset.theme = THEMES[(i + 1) % THEMES.length];
+    });
+  })();
+</script>
+</body>
+</html>

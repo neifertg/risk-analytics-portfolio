@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260">
+  <rect x="1" y="1" width="398" height="258" rx="14" fill="#fbfaf8" stroke="#e4e2dc" stroke-width="2"/>
+
+  <!-- Overlapping probability density contours -->
+  <g>
+    <ellipse cx="70" cy="178" rx="130" ry="85" fill="#2a6fdb" fill-opacity="0.12" stroke="#2a6fdb" stroke-width="1.5"/>
+    <ellipse cx="70" cy="178" rx="90" ry="59" fill="#2a6fdb" fill-opacity="0.16" stroke="#2a6fdb" stroke-width="1.5"/>
+    <ellipse cx="70" cy="178" rx="52" ry="34" fill="#2a6fdb" fill-opacity="0.2" stroke="#2a6fdb" stroke-width="1.5"/>
+  </g>
+  <g>
+    <ellipse cx="283" cy="77" rx="130" ry="85" fill="#c0611f" fill-opacity="0.12" stroke="#c0611f" stroke-width="1.5"/>
+    <ellipse cx="283" cy="77" rx="90" ry="59" fill="#c0611f" fill-opacity="0.16" stroke="#c0611f" stroke-width="1.5"/>
+    <ellipse cx="283" cy="77" rx="52" ry="34" fill="#c0611f" fill-opacity="0.2" stroke="#c0611f" stroke-width="1.5"/>
+  </g>
+
+  <!-- Region 1 points (blue) -->
+  <g fill="#2a6fdb">
+    <circle cx="55" cy="190" r="7"/>
+    <circle cx="75" cy="205" r="7"/>
+    <circle cx="90" cy="180" r="7"/>
+    <circle cx="65" cy="165" r="7"/>
+    <circle cx="45" cy="175" r="7"/>
+    <circle cx="38" cy="205" r="7"/>
+    <circle cx="98" cy="155" r="7"/>
+  </g>
+
+  <!-- Region 2 points (orange) -->
+  <g fill="#c0611f">
+    <circle cx="270" cy="60" r="7"/>
+    <circle cx="290" cy="75" r="7"/>
+    <circle cx="310" cy="55" r="7"/>
+    <circle cx="285" cy="90" r="7"/>
+    <circle cx="300" cy="95" r="7"/>
+    <circle cx="253" cy="95" r="7"/>
+    <circle cx="325" cy="70" r="7"/>
+  </g>
+
+  <!-- Point in the overlap — soft, split membership -->
+  <circle cx="182" cy="123" r="7" fill="#2a6fdb"/>
+  <path d="M182 116 A7 7 0 0 1 182 130 Z" fill="#c0611f"/>
+  <circle cx="182" cy="123" r="14" fill="none" stroke="#6b7280" stroke-width="1.5" stroke-dasharray="2 2"/>
+</svg>

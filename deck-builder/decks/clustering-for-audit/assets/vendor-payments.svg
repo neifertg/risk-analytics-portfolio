@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260">
+  <rect x="1" y="1" width="398" height="258" rx="14" fill="#fbfaf8" stroke="#e4e2dc" stroke-width="2"/>
+
+  <!-- Axes -->
+  <path d="M50 30 L50 210 L370 210" fill="none" stroke="#9aa0a8" stroke-width="1.5"/>
+  <text x="210" y="232" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" fill="#6b7280">Payment frequency &#8594;</text>
+  <text x="24" y="120" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" fill="#6b7280" transform="rotate(-90 24 120)">Payment amount &#8594;</text>
+
+  <!-- Wider vendor population -->
+  <g fill="#c7cbd1">
+    <circle cx="90" cy="90" r="5"/>
+    <circle cx="240" cy="180" r="5"/>
+    <circle cx="280" cy="130" r="5"/>
+    <circle cx="220" cy="55" r="5"/>
+    <circle cx="100" cy="140" r="5"/>
+    <circle cx="310" cy="170" r="5"/>
+    <circle cx="70" cy="190" r="5"/>
+    <circle cx="255" cy="95" r="5"/>
+  </g>
+
+  <!-- Normal vendors -->
+  <g fill="#2a6fdb">
+    <circle cx="130" cy="170" r="7"/>
+    <circle cx="150" cy="150" r="7"/>
+    <circle cx="140" cy="190" r="7"/>
+    <circle cx="170" cy="160" r="7"/>
+    <circle cx="190" cy="140" r="7"/>
+    <circle cx="160" cy="120" r="7"/>
+    <circle cx="200" cy="175" r="7"/>
+    <circle cx="180" cy="105" r="7"/>
+  </g>
+
+  <!-- Flagged vendor -->
+  <circle cx="325" cy="60" r="8" fill="#c0392b"/>
+  <circle cx="325" cy="60" r="17" fill="none" stroke="#c0392b" stroke-width="1.5" stroke-dasharray="3 2"/>
+</svg>

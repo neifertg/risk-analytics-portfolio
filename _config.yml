@@ -34,3 +34,17 @@ exclude:
   - duplicate-vendor-payment-checker/README.md
   - duplicate-vendor-payment-checker/requirements.txt
   - duplicate-vendor-payment-checker/.gitignore
+  # deck-builder/decks/clustering-for-audit/index.html and its assets/ are
+  # deliberately NOT excluded — that's a self-contained static HTML file
+  # (SVGs inlined as base64, reveal.js from CDN) meant to be served live by
+  # GitHub Pages as a clickable demo, unlike the other three projects' code.
+  - deck-builder/node_modules
+  - deck-builder/scripts
+  - deck-builder/layouts
+  - deck-builder/brand
+  - deck-builder/PATTERN.md
+  - deck-builder/README.md
+  - deck-builder/package.json
+  - deck-builder/package-lock.json
+  - deck-builder/decks/clustering-for-audit/deck.yaml
+  - deck-builder/.gitignore

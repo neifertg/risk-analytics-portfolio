@@ -118,6 +118,11 @@ taught.
   (5, `app/app.py`). This is a cost deterrent for a public demo, not real
   rate-limiting — flagged here so it doesn't read as more robust than it
   is.
+- **Cost accounting**: every call is priced against real rates
+  (`scripts/cost.mjs`) — Voyage `voyage-3-lite` embeddings at $0.02/MTok,
+  Anthropic `claude-haiku-4-5` at $1 in / $5 out per MTok — and shown live
+  in the Streamlit sidebar as a running session total, not estimated after
+  the fact.
 
 ## Running locally
 

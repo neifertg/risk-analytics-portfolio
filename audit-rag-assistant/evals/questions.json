@@ -4,7 +4,7 @@
     "question": "Why does the audit sampling methodology use a two-stage approach?",
     "expectedNoteIds": ["audit-sampling-methodology"],
     "mustNotCite": ["sox-404-key-controls-walkthrough"],
-    "expectedKeywords": ["stratif"]
+    "expectedKeywords": ["stratif", "stratum", "strata"]
   },
   {
     "id": "out-of-scope-tax-deadline",

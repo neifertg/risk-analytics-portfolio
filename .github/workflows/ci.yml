@@ -45,10 +45,31 @@ jobs:
         with:
           node-version: "20"
       - run: npm ci
-      # No API keys in CI: this validates syntax only, not the live
-      # embed/retrieve/generate pipeline (that needs paid Anthropic and
-      # Voyage calls — exercised locally, see the project README).
-      # node --check only validates its first file argument, so each
-      # script needs its own invocation rather than one command with all
-      # of them listed.
+      # No API keys here: this job runs on every push and PR (including
+      # forks), so it stays to a free syntax check rather than the live
+      # embed/retrieve/generate pipeline. node --check only validates its
+      # first file argument, so each script needs its own invocation
+      # rather than one command with all of them listed.
       - run: for f in scripts/*.mjs; do node --check "$f"; done
+
+  audit-rag-assistant-eval:
+    runs-on: ubuntu-latest
+    # push only, not pull_request: this job needs real Anthropic/Voyage
+    # secrets, and pull_request-triggered runs would expose repo secrets
+    # to whatever branch opened the PR (including forks).
+    if: github.event_name == 'push'
+    defaults:
+      run:
+        working-directory: audit-rag-assistant
+    env:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      VOYAGE_API_KEY: ${{ secrets.VOYAGE_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - run: npm ci
+      # index/store.json is committed (see README), so eval can run
+      # straight against it without an npm run ingest step here.
+      - run: npm run eval

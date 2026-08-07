@@ -141,9 +141,14 @@ app/.venv/Scripts/pip install -r app/requirements.txt   # Windows; app/.venv/bin
 app/.venv/Scripts/streamlit run app/app.py
 ```
 
-CI (badge above) runs a syntax check on every script, since the real
-`npm run ingest` / `npm run eval` pipeline needs paid Anthropic and Voyage
-API calls — that's exercised locally, not on every push.
+CI (badge above) runs two checks: a free syntax check on every push and PR
+(no API keys needed), and the real `npm run eval` suite on every push to
+`main` — genuine Anthropic/Voyage calls against the committed
+`index/store.json`, gated on `ANTHROPIC_API_KEY`/`VOYAGE_API_KEY` repo
+secrets and restricted to `push` (not `pull_request`) so those secrets
+never reach a fork-opened PR. `npm run ingest` itself still isn't run in
+CI — `index/store.json` only needs regenerating locally when `corpus/`
+changes, then re-committing.
 
 ## Live demo
 

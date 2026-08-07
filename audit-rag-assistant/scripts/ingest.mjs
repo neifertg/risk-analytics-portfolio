@@ -5,6 +5,7 @@ import matter from "gray-matter";
 import { walkCorpus, projectRoot } from "./lib.mjs";
 import { chunkNote } from "./chunk.mjs";
 import { embedTexts } from "./embed.mjs";
+import { rebuildTable } from "./vectorstore.mjs";
 
 // index/ is gitignored — a regenerable local cache, not content. Same
 // pattern as Seth_Wiki: re-run this after editing corpus docs.
@@ -75,6 +76,11 @@ async function main() {
 
   fs.mkdirSync(indexDir, { recursive: true });
   fs.writeFileSync(storePath, JSON.stringify(Object.fromEntries(newStore), null, 2));
+
+  // The LanceDB table (index/lancedb/, committed) is what search.mjs and
+  // stats.mjs actually query — store.json above stays purely a local
+  // embedding-reuse cache now, same role Seth_Wiki's version plays.
+  await rebuildTable([...newStore.values()]);
 
   console.log(
     `ingest: ${newStore.size} chunk(s) total (${embedded} embedded, ${reused} reused, ${pruned} pruned)`

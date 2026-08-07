@@ -19,6 +19,25 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 ANSWER_SCRIPT = PROJECT_ROOT / "scripts" / "answer.mjs"
 STATS_SCRIPT = PROJECT_ROOT / "scripts" / "stats.mjs"
 
+
+@st.cache_resource
+def ensure_node_modules() -> None:
+    """Real bug found this session, not hypothetical: nothing in the
+    deploy path (packages.txt, this file) ever ran `npm install`, and
+    node_modules/ isn't committed — Streamlit Community Cloud doesn't
+    auto-install npm dependencies from package.json. Every node subprocess
+    call below (stats.mjs, answer.mjs) needs real installed packages
+    (gray-matter, and now @lancedb/lancedb for retrieval), so this almost
+    certainly silently broke the stats sidebar in production before now
+    (get_stats() below swallows a non-zero exit and just renders nothing).
+    st.cache_resource runs this once per app process, not once per rerun."""
+    if (PROJECT_ROOT / "node_modules").exists():
+        return
+    subprocess.run(["npm", "ci"], cwd=PROJECT_ROOT, check=True)
+
+
+ensure_node_modules()
+
 # A portfolio demo running on a public Streamlit Cloud deployment has no
 # rate-limiting of its own — anyone can hit "Ask" and spend real API
 # credits. This is a cheap deterrent, not real abuse protection: cap

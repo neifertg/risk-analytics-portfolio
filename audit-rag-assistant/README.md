@@ -33,7 +33,7 @@ Don't cite this corpus as real audit guidance.
 ## Architecture
 
 ```
-corpus/*.md  →  chunk.mjs  →  embed.mjs (Voyage voyage-3-lite)  →  index/store.json
+corpus/*.md  →  chunk.mjs  →  embed.mjs (Voyage voyage-3-lite)  →  index/lancedb/ (LanceDB)
                                                                           │
 question  →  search.mjs (two-stage retrieval)  ───────────────────────┘
                     │
@@ -56,6 +56,25 @@ above 2 chunks — ported preventively from the source project's own
 retrieval-mismatch bug (asking "why does this wiki use two-stage search?"
 once surfaced a *reranking* note ahead of the wiki's own two-stage design,
 because the two concepts are genuinely, confusably similar).
+
+`index/lancedb/` is a real embedded vector index
+([LanceDB](https://lancedb.com), `@lancedb/lancedb`) — local files, no
+server process — replacing an earlier flat-JSON/brute-force-cosine store.
+Chroma was the original plan, but its Node client turned out to talk to a
+separate running Chroma server rather than embedding in-process like its
+Python client does; LanceDB is the one that's actually embedded on Node.
+`search.mjs`'s two queries (`.search(vector).distanceType("cosine")`,
+filtered by `kind`/`noteId`) replace the old in-memory cosine loop;
+`capPerNote`'s per-document diversity cap stays application-side, since
+LanceDB has no "max N per group" primitive. `index/store.json` still
+exists, but only as `ingest.mjs`'s local, gitignored cache for skipping
+re-embedding unchanged chunks — it's no longer what gets queried or
+committed. `package.json`'s `overrides` pins `sharp` to a patched version:
+`@lancedb/lancedb` optionally depends on `@huggingface/transformers` (its
+built-in embedding-function convenience API, unused here since this
+project brings its own Voyage embeddings) which pulled in a `sharp`
+version with known libvips CVEs — `npm audit` was 0 vulnerabilities before
+committing this.
 
 ## Two real bugs, found live by actually running the eval suite
 
@@ -132,7 +151,7 @@ Requires Node 18+, Python 3.10+, and `anthropic.api_key` /
 
 ```bash
 npm install
-npm run ingest          # embeds the corpus into index/store.json
+npm run ingest          # embeds the corpus into index/lancedb/
 npm run ask -- "what's tested in Phase 2 of the SOX 404 walkthrough?"
 npm run eval             # golden-question suite, incl. the guardrail + diversity cases
 
@@ -144,10 +163,10 @@ app/.venv/Scripts/streamlit run app/app.py
 CI (badge above) runs two checks: a free syntax check on every push and PR
 (no API keys needed), and the real `npm run eval` suite on every push to
 `main` — genuine Anthropic/Voyage calls against the committed
-`index/store.json`, gated on `ANTHROPIC_API_KEY`/`VOYAGE_API_KEY` repo
+`index/lancedb/`, gated on `ANTHROPIC_API_KEY`/`VOYAGE_API_KEY` repo
 secrets and restricted to `push` (not `pull_request`) so those secrets
 never reach a fork-opened PR. `npm run ingest` itself still isn't run in
-CI — `index/store.json` only needs regenerating locally when `corpus/`
+CI — `index/lancedb/` only needs regenerating locally when `corpus/`
 changes, then re-committing.
 
 ## Live demo
@@ -171,16 +190,25 @@ as `ANTHROPIC_API_KEY`/`VOYAGE_API_KEY`.
 Three things make the deployed environment work without running the full
 local setup:
 
-- `index/store.json` (the built embeddings) is **committed**, not
-  gitignored, here — unlike Seth_Wiki, where it's a regenerable cache for
-  a constantly-changing wiki. Streamlit Cloud can't run `npm run ingest`
-  itself, so the pre-built index has to already be in the repo. Re-run
-  `npm run ingest` locally and commit the result whenever `corpus/`
-  changes.
+- `index/lancedb/` (the built vector index) is **committed**, not
+  gitignored, here — unlike Seth_Wiki, where its equivalent cache is
+  regenerable for a constantly-changing wiki. Streamlit Cloud can't run
+  `npm run ingest` itself, so the pre-built index has to already be in the
+  repo. Re-run `npm run ingest` locally and commit the result whenever
+  `corpus/` changes.
 - Root-level `packages.txt` (`nodejs`, `npm`) tells Streamlit Cloud's apt
   provisioning step to install Node, since `app.py` shells out to it.
-- `secrets.mjs` only imports `js-yaml` (the one real npm dependency the
-  query-time path could need) lazily, inside the local-file fallback
-  branch — since Cloud always has the env vars set, that branch never
-  runs there, so the deployed app needs no `npm install` step at all.
+- **A real bug, found and fixed this session, not hypothetical**: nothing
+  in the deploy path ever ran `npm install`/`npm ci`, and `node_modules/`
+  isn't committed — Streamlit Community Cloud doesn't auto-install npm
+  dependencies from `package.json` at all. `stats.mjs` imports
+  `gray-matter` directly, so the sidebar's "Indexed: N documents" line was
+  almost certainly silently broken on the live deployment: `app.py`'s
+  `get_stats()` swallows a non-zero exit and just renders nothing, no
+  visible error. Adding `@lancedb/lancedb` (a native package, unlike the
+  pure-JS `gray-matter`/`js-yaml`) would have broken the real Q&A path the
+  same way, not just a decorative stat. Fixed by having `app.py` run
+  `npm ci` once at startup (`st.cache_resource`-guarded, only if
+  `node_modules/` doesn't already exist) before any subprocess call that
+  needs it.
 

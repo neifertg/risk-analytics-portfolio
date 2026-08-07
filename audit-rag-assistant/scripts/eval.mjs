@@ -98,12 +98,16 @@ function printCase({ testCase, retrievalCheck, guardrailCheck, citationCheck, ke
 }
 
 async function main() {
-  const storePath = path.join(projectRoot, "index", "store.json");
-  if (!fs.existsSync(storePath)) {
-    console.error("eval: no index found — run `npm run ingest` first.");
-    process.exit(1);
-  }
-
+  // No explicit index-existence check here — retrieve() (via
+  // vectorstore.mjs's getTable()) already throws a clear "no index
+  // found" error if index/lancedb/ is missing, and main().catch() below
+  // reports it the same way. A prior version of this check pointed at
+  // index/store.json, which is now just ingest.mjs's local embedding-
+  // reuse cache, not the thing retrieval actually reads — a stale check
+  // like that silently masks the real failure by exiting before ever
+  // reaching the code that matters. Found live in CI: it passed locally
+  // only because a leftover store.json happened to still be on disk from
+  // before the LanceDB swap.
   const questions = JSON.parse(fs.readFileSync(questionsPath, "utf8"));
   const results = [];
   const sessionUsage = { embeddingTokens: 0, inputTokens: 0, outputTokens: 0 };

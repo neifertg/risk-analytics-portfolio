@@ -70,10 +70,6 @@ jobs:
         with:
           node-version: "20"
       - run: npm ci
-      # TEMPORARY debug step diagnosing a real CI-only LanceDB failure
-      # (works on a fresh local Windows clone, fails here) — removed once
-      # root-caused.
-      - run: node scripts/_debug_lancedb.mjs
       # index/lancedb/ is committed (see README), so eval can run
       # straight against it without an npm run ingest step here.
       - run: npm run eval

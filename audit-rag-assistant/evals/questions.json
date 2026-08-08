@@ -101,5 +101,53 @@
     "question": "Why shouldn't a finding be closed as remediated just because management says it's fixed?",
     "expectedNoteIds": ["audit-committee-reporting-and-issue-tracking"],
     "expectedKeywords": ["independently validated", "root cause"]
+  },
+  {
+    "id": "wire-transfer-callback",
+    "question": "What control catches business-email-compromise fraud specifically during wire transfer testing?",
+    "expectedNoteIds": ["treasury-and-cash-management-testing"],
+    "expectedKeywords": ["callback", "call-back", "phone"]
+  },
+  {
+    "id": "payroll-rate-segregation",
+    "question": "How is segregation of duties tested between who enters a pay rate change and who approves the payroll run?",
+    "expectedNoteIds": ["payroll-and-hr-controls-testing"],
+    "expectedKeywords": ["change log", "user account"]
+  },
+  {
+    "id": "capex-threshold-splitting",
+    "question": "How should a capital project split into several smaller requests to stay under an approval threshold be treated?",
+    "expectedNoteIds": ["fixed-assets-and-capital-expenditure-testing"],
+    "expectedKeywords": ["split", "true scope", "artificially"]
+  },
+  {
+    "id": "itgc-sdlc-and-operations",
+    "question": "Which two IT general control domains does this corpus's ITGC overview cover that aren't already handled by dedicated access-review or change-management procedures?",
+    "expectedNoteIds": ["it-general-controls-overview"],
+    "expectedKeywords": ["development", "operations"]
+  },
+  {
+    "id": "phishing-repeat-clicker",
+    "question": "What should happen when an employee clicks simulated phishing emails across multiple campaigns?",
+    "expectedNoteIds": ["cybersecurity-controls-testing"],
+    "expectedKeywords": ["escalat", "retrain"]
+  },
+  {
+    "id": "cloud-root-mfa",
+    "question": "What cloud identity control should be enforced on every account with administrative or root-level privilege?",
+    "expectedNoteIds": ["cloud-computing-controls-testing"],
+    "expectedKeywords": ["multi-factor", "mfa"]
+  },
+  {
+    "id": "master-data-direct-edits",
+    "question": "How does data governance testing treat a direct, unreviewed edit to shared master data like the chart of accounts?",
+    "expectedNoteIds": ["data-governance-testing"],
+    "expectedKeywords": ["change-request", "approval process", "direct edit"]
+  },
+  {
+    "id": "it-inventory-missing-system",
+    "question": "What happens to a system that's missing from the IT asset inventory used to build the risk assessment?",
+    "expectedNoteIds": ["it-risk-assessment-and-audit-universe"],
+    "expectedKeywords": ["no score", "missing", "inventory"]
   }
 ]

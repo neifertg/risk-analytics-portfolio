@@ -2,152 +2,345 @@
   {
     "id": "two-stage-sampling",
     "question": "Why does the audit sampling methodology use a two-stage approach?",
-    "expectedNoteIds": ["audit-sampling-methodology"],
-    "mustNotCite": ["sox-404-key-controls-walkthrough"],
-    "expectedKeywords": ["stratif", "stratum", "strata"]
+    "expectedNoteIds": [
+      "audit-sampling-methodology"
+    ],
+    "mustNotCite": [
+      "sox-404-key-controls-walkthrough"
+    ],
+    "expectedKeywords": [
+      "stratif",
+      "stratum",
+      "strata"
+    ],
+    "scope": "generic"
   },
   {
     "id": "out-of-scope-tax-deadline",
     "question": "What does this corpus say about individual income tax filing deadlines?",
     "expectedNoteIds": [],
-    "expectGuardrail": true
+    "expectGuardrail": true,
+    "scope": "generic"
   },
   {
     "id": "sox-walkthrough-phase2",
     "question": "What's tested in Phase 2 of the SOX 404 key controls walkthrough?",
-    "expectedNoteIds": ["sox-404-key-controls-walkthrough"],
-    "expectedKeywords": ["operating effectiveness", "operating-effectiveness"]
+    "expectedNoteIds": [
+      "sox-404-key-controls-walkthrough"
+    ],
+    "expectedKeywords": [
+      "operating effectiveness",
+      "operating-effectiveness"
+    ],
+    "scope": "generic"
   },
   {
     "id": "vendor-fraud-indicator",
     "question": "What's a specific fraud indicator to flag during new vendor setup testing?",
-    "expectedNoteIds": ["vendor-master-data-control-testing"],
-    "expectedKeywords": ["employee"]
+    "expectedNoteIds": [
+      "vendor-master-data-control-testing"
+    ],
+    "expectedKeywords": [
+      "employee"
+    ],
+    "scope": "generic"
   },
   {
     "id": "expense-split-transaction",
     "question": "How is split-transaction abuse detected in expense reimbursement testing?",
-    "expectedNoteIds": ["expense-reimbursement-testing"],
-    "expectedKeywords": ["threshold"]
+    "expectedNoteIds": [
+      "expense-reimbursement-testing"
+    ],
+    "expectedKeywords": [
+      "threshold"
+    ],
+    "scope": "generic"
   },
   {
     "id": "it-access-termination",
     "question": "How quickly should system access be removed after an employee is terminated?",
-    "expectedNoteIds": ["it-user-access-review"],
-    "expectedKeywords": ["24", "hour", "window"]
+    "expectedNoteIds": [
+      "it-user-access-review"
+    ],
+    "expectedKeywords": [
+      "24",
+      "hour",
+      "window"
+    ],
+    "scope": "generic"
   },
   {
     "id": "revenue-cutoff-timing",
     "question": "Why is revenue cutoff testing timed around period-end?",
-    "expectedNoteIds": ["revenue-recognition-testing"],
-    "expectedKeywords": ["cluster", "period-end"]
+    "expectedNoteIds": [
+      "revenue-recognition-testing"
+    ],
+    "expectedKeywords": [
+      "cluster",
+      "period-end"
+    ],
+    "scope": "generic"
   },
   {
     "id": "sod-conflict-testing",
     "question": "How are segregation-of-duties conflicts tested against actual system access?",
-    "expectedNoteIds": ["segregation-of-duties-review"],
-    "expectedKeywords": ["conflict matrix"]
+    "expectedNoteIds": [
+      "segregation-of-duties-review"
+    ],
+    "expectedKeywords": [
+      "conflict matrix"
+    ],
+    "scope": "generic"
   },
   {
     "id": "journal-entry-risk-criteria",
     "question": "What risk criteria are used to select journal entries for testing?",
-    "expectedNoteIds": ["journal-entry-testing"],
-    "expectedKeywords": ["round-dollar", "weekend", "same user"]
+    "expectedNoteIds": [
+      "journal-entry-testing"
+    ],
+    "expectedKeywords": [
+      "round-dollar",
+      "weekend",
+      "same user"
+    ],
+    "scope": "generic"
   },
   {
     "id": "erm-assurance-role",
     "question": "Does internal audit own the enterprise risk register, or just provide assurance over it?",
-    "expectedNoteIds": ["enterprise-risk-management-and-risk-appetite"],
-    "expectedKeywords": ["assurance"]
+    "expectedNoteIds": [
+      "enterprise-risk-management-and-risk-appetite"
+    ],
+    "expectedKeywords": [
+      "assurance"
+    ],
+    "scope": "generic"
   },
   {
     "id": "hotline-retaliation-check",
     "question": "How is retaliation against a whistleblower hotline reporter actually tested?",
-    "expectedNoteIds": ["code-of-conduct-and-whistleblower-hotline-testing"],
-    "expectedKeywords": ["performance ratings", "12 months"]
+    "expectedNoteIds": [
+      "code-of-conduct-and-whistleblower-hotline-testing"
+    ],
+    "expectedKeywords": [
+      "performance ratings",
+      "12 months"
+    ],
+    "scope": "generic"
   },
   {
     "id": "emergency-change-approval-window",
     "question": "How quickly must an emergency IT change receive retroactive approval?",
-    "expectedNoteIds": ["it-change-management-testing"],
-    "expectedKeywords": ["24-48 hours", "emergency"]
+    "expectedNoteIds": [
+      "it-change-management-testing"
+    ],
+    "expectedKeywords": [
+      "24-48 hours",
+      "emergency"
+    ],
+    "scope": "generic"
   },
   {
     "id": "vendor-soc2-report-age",
     "question": "How old can a vendor's SOC 2 report be before it's treated as effectively no evidence during third-party risk due diligence?",
-    "expectedNoteIds": ["third-party-vendor-risk-management"],
-    "expectedKeywords": ["12 months"]
+    "expectedNoteIds": [
+      "third-party-vendor-risk-management"
+    ],
+    "expectedKeywords": [
+      "12 months"
+    ],
+    "scope": "generic"
   },
   {
     "id": "bcp-rto-rpo-validation",
     "question": "What two recovery objectives must be validated through an actual tabletop or failover exercise, not just stated in the plan?",
-    "expectedNoteIds": ["business-continuity-and-disaster-recovery-testing"],
-    "expectedKeywords": ["recovery time", "recovery point", "RTO", "RPO"]
+    "expectedNoteIds": [
+      "business-continuity-and-disaster-recovery-testing"
+    ],
+    "expectedKeywords": [
+      "recovery time",
+      "recovery point",
+      "RTO",
+      "RPO"
+    ],
+    "scope": "generic"
   },
   {
     "id": "data-deletion-backup-gap",
     "question": "Why doesn't removing a record from the production database alone satisfy a data subject deletion request?",
-    "expectedNoteIds": ["data-privacy-compliance-testing"],
-    "expectedKeywords": ["backup"]
+    "expectedNoteIds": [
+      "data-privacy-compliance-testing"
+    ],
+    "expectedKeywords": [
+      "backup"
+    ],
+    "scope": "generic"
   },
   {
     "id": "three-way-match-documents",
     "question": "What three documents does a three-way match compare before a purchase invoice can be paid?",
-    "expectedNoteIds": ["procurement-and-purchase-order-matching-controls"],
-    "expectedKeywords": ["purchase order", "receipt", "invoice"]
+    "expectedNoteIds": [
+      "procurement-and-purchase-order-matching-controls"
+    ],
+    "expectedKeywords": [
+      "purchase order",
+      "receipt",
+      "invoice"
+    ],
+    "scope": "generic"
   },
   {
     "id": "finding-closure-validation",
     "question": "Why shouldn't a finding be closed as remediated just because management says it's fixed?",
-    "expectedNoteIds": ["audit-committee-reporting-and-issue-tracking"],
-    "expectedKeywords": ["independently validated", "root cause"]
+    "expectedNoteIds": [
+      "audit-committee-reporting-and-issue-tracking"
+    ],
+    "expectedKeywords": [
+      "independently validated",
+      "root cause"
+    ],
+    "scope": "generic"
   },
   {
     "id": "wire-transfer-callback",
     "question": "What control catches business-email-compromise fraud specifically during wire transfer testing?",
-    "expectedNoteIds": ["treasury-and-cash-management-testing"],
-    "expectedKeywords": ["callback", "call-back", "phone"]
+    "expectedNoteIds": [
+      "treasury-and-cash-management-testing"
+    ],
+    "expectedKeywords": [
+      "callback",
+      "call-back",
+      "phone"
+    ],
+    "scope": "generic"
   },
   {
     "id": "payroll-rate-segregation",
     "question": "How is segregation of duties tested between who enters a pay rate change and who approves the payroll run?",
-    "expectedNoteIds": ["payroll-and-hr-controls-testing"],
-    "expectedKeywords": ["change log", "user account"]
+    "expectedNoteIds": [
+      "payroll-and-hr-controls-testing"
+    ],
+    "expectedKeywords": [
+      "change log",
+      "user account"
+    ],
+    "scope": "generic"
   },
   {
     "id": "capex-threshold-splitting",
     "question": "How should a capital project split into several smaller requests to stay under an approval threshold be treated?",
-    "expectedNoteIds": ["fixed-assets-and-capital-expenditure-testing"],
-    "expectedKeywords": ["split", "true scope", "artificially"]
+    "expectedNoteIds": [
+      "fixed-assets-and-capital-expenditure-testing"
+    ],
+    "expectedKeywords": [
+      "split",
+      "true scope",
+      "artificially"
+    ],
+    "scope": "generic"
   },
   {
     "id": "itgc-sdlc-and-operations",
     "question": "Which two IT general control domains does this corpus's ITGC overview cover that aren't already handled by dedicated access-review or change-management procedures?",
-    "expectedNoteIds": ["it-general-controls-overview"],
-    "expectedKeywords": ["development", "operations"]
+    "expectedNoteIds": [
+      "it-general-controls-overview"
+    ],
+    "expectedKeywords": [
+      "development",
+      "operations"
+    ],
+    "scope": "generic"
   },
   {
     "id": "phishing-repeat-clicker",
     "question": "What should happen when an employee clicks simulated phishing emails across multiple campaigns?",
-    "expectedNoteIds": ["cybersecurity-controls-testing"],
-    "expectedKeywords": ["escalat", "retrain"]
+    "expectedNoteIds": [
+      "cybersecurity-controls-testing"
+    ],
+    "expectedKeywords": [
+      "escalat",
+      "retrain"
+    ],
+    "scope": "generic"
   },
   {
     "id": "cloud-root-mfa",
     "question": "What cloud identity control should be enforced on every account with administrative or root-level privilege?",
-    "expectedNoteIds": ["cloud-computing-controls-testing"],
-    "expectedKeywords": ["multi-factor", "mfa"]
+    "expectedNoteIds": [
+      "cloud-computing-controls-testing"
+    ],
+    "expectedKeywords": [
+      "multi-factor",
+      "mfa"
+    ],
+    "scope": "generic"
   },
   {
     "id": "master-data-direct-edits",
     "question": "How does data governance testing treat a direct, unreviewed edit to shared master data like the chart of accounts?",
-    "expectedNoteIds": ["data-governance-testing"],
-    "expectedKeywords": ["change-request", "approval process", "direct edit"]
+    "expectedNoteIds": [
+      "data-governance-testing"
+    ],
+    "expectedKeywords": [
+      "change-request",
+      "approval process",
+      "direct edit"
+    ],
+    "scope": "generic"
   },
   {
     "id": "it-inventory-missing-system",
     "question": "What happens to a system that's missing from the IT asset inventory used to build the risk assessment?",
-    "expectedNoteIds": ["it-risk-assessment-and-audit-universe"],
-    "expectedKeywords": ["no score", "missing", "inventory"]
+    "expectedNoteIds": [
+      "it-risk-assessment-and-audit-universe"
+    ],
+    "expectedKeywords": [
+      "no score",
+      "missing",
+      "inventory"
+    ],
+    "scope": "generic"
+  },
+  {
+    "id": "access-removal-generic-vs-tailored",
+    "question": "How should building or system access be removed when someone leaves or transfers?",
+    "scopes": {
+      "generic": {
+        "expectedNoteIds": ["it-user-access-review"],
+        "expectedKeywords": ["24", "hour", "window"]
+      },
+      "tailored": {
+        "expectedNoteIds": ["uc-ucla-building-access-procedure"],
+        "expectedKeywords": ["UCPD", "Building Coordinator"]
+      }
+    }
+  },
+  {
+    "id": "admissions-controls-generic-vs-tailored",
+    "question": "What controls exist over undergraduate admissions decisions involving special talent or donor relationships?",
+    "scopes": {
+      "generic": {
+        "expectedNoteIds": [],
+        "expectedKeywords": ["don't", "doesn't", "no", "not"]
+      },
+      "tailored": {
+        "expectedNoteIds": ["uc-audit-report-ucla-undergraduate-admissions"],
+        "expectedKeywords": ["two-step verification", "special-talent"]
+      }
+    }
+  },
+  {
+    "id": "credential-termination-generic-vs-tailored",
+    "question": "What real-world failure illustrates the risk of not terminating access credentials promptly?",
+    "scopes": {
+      "generic": {
+        "expectedNoteIds": ["it-user-access-review"],
+        "expectedKeywords": ["24", "hour", "window"]
+      },
+      "tailored": {
+        "expectedNoteIds": ["uc-audit-report-ucsd-sdsc-it-security"],
+        "expectedKeywords": ["piggyback", "credential", "never expire"]
+      }
+    }
   }
 ]

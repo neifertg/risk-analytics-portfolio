@@ -39,6 +39,13 @@ repo, with disclosed-provenance citations — that real-standards material
 stays out of this public repo by design. What's here is this repo's own
 self-written synthetic corpus, just now covering the same topic areas.
 
+One deliberate exception to "synthetic only": `corpus-tailored/` holds a
+second, small corpus of **real, already-publicly-published** documents
+from one real organization (University of California/UCLA) — publicly
+posted government/public-institution material, summarized with source
+links rather than reproduced, not the same copyright situation as a
+paywalled IIA/COSO standard. See "Tailoring" below.
+
 ## Architecture
 
 ```
@@ -124,13 +131,82 @@ self-contained unit" principle Seth_Wiki's own chunking contract already
 states, just not something I'd seen violated visibly enough to notice
 before running this eval for real.
 
-Both fixes are in this repo's history. `npm run eval` is 25/25 as of this
+Both fixes are in this repo's history. `npm run eval` is 28/28 as of this
 writing (9 original cases, 8 added when the corpus was expanded to cover
-governance topics, and 8 more added with the treasury/payroll/fixed-assets
-and IT-audit-cluster expansion) — check it yourself rather than trusting
-this paragraph, since
+governance topics, 8 more added with the treasury/payroll/fixed-assets and
+IT-audit-cluster expansion, and 3 generic-vs-tailored comparison cases —
+see "Tailoring" below) — check it yourself rather than trusting this
+paragraph, since
 "don't trust the paragraph, run the eval" is the actual lesson both bugs
 taught.
+
+## Tailoring: generic methodology vs. a real organization's own documents
+
+Everything above is this repo's own self-written synthetic corpus — good
+for general audit-methodology questions, but it can't know anything
+specific to a real organization, because no real organization's documents
+are in it. `corpus-tailored/uc-ucla/` adds a second, small corpus of
+**real, publicly published University of California documents** — not
+synthetic, not paraphrased from a secondary source, but the university's
+own actual charter, audit plan, a real campus procedure, and real
+completed audit reports:
+
+- [Internal Audit Charter](https://www.ucop.edu/ethics-compliance-audit-services/audit/internal-audit-charter.html) —
+  UC's real systemwide governing charter.
+- [Internal Audit Plan for 2022-23](https://regents.universityofcalifornia.edu/regmeet/july22/c1attach2.pdf) —
+  UC's real annual risk-based audit plan, with named systemwide audit
+  projects and a real cybersecurity-audit priority list.
+- [UCLA Procedure 825.1](https://www.adminpolicies.ucla.edu/pdf/825-1.pdf) —
+  UCLA's real, currently-effective (April 2025) building-access procedure.
+- Four real completed audit reports pulled from
+  [UC's public audit-report archive](https://auditreports.ucop.edu)
+  (2,600+ real reports, searchable by campus/year): a systemwide foreign-
+  influence audit, UCLA's post-"Varsity Blues" undergraduate admissions
+  audit, UC San Diego's Supercomputer Center IT-security audit, and UC
+  Santa Barbara's third-party IT services audit.
+
+UC/UCLA was picked after actually checking (not assuming) which
+candidate universities publish enough real material to be worth
+grounding on — most schools publish a charter and nothing else; UC's own
+public archive of thousands of real, unredacted completed audit reports
+was the deciding factor. Every one of the reports above was individually
+opened and read before inclusion — two candidates ("no significant
+observations noted" reports) were found and deliberately rejected as too
+thin to be worth citing.
+
+**Why this matters, concretely**: ask the deployed app "how should
+building or system access be removed when someone leaves or transfers?"
+with the corpus scope set to **Both**, and the answer doesn't just recite
+one generic procedure — it explicitly contrasts the generic corpus's
+24–48-hour deprovisioning rule against UCLA's actual named escalation
+path (notify UCPD if a badge or key isn't returned), then cites a real UC
+San Diego audit finding where a data center's access credentials were
+"configured to never expire" as a live illustration of the exact risk the
+generic procedure warns about. That three-way contrast — generic
+guidance, one real organization's own procedure, and a real finding from
+that organization's own audit history — is the actual value proposition
+of tailoring a RAG assistant to a specific company, made concrete instead
+of asserted.
+
+### How the scope toggle works
+
+A **Corpus scope** selector (Generic Methodology / the tailored org's
+name / Both) appears in the app automatically once `corpus-tailored/`
+has real content indexed — it stays hidden otherwise, rather than
+offering a choice with nothing behind one of the options. Under the hood:
+every chunk carries a `corpus` (`"generic"`/`"tailored"`) and
+`corpusSource` field (`scripts/lib.mjs`, `scripts/chunk.mjs`), populated
+by folder convention so none of the 28 generic docs needed any edit;
+`scripts/search.mjs`'s `retrieve(query, { corpus })` filters both
+retrieval stages by scope, applied *before* the existing
+`MAX_CHUNKS_PER_NOTE` diversity cap so that cap needed zero code changes
+to keep working correctly in every scope. Try it yourself:
+
+```bash
+npm run ask -- "what does UCLA's own access procedure require?" --corpus tailored
+npm run search -- "cybersecurity" --corpus generic
+npm run eval    # includes 3 generic-vs-tailored comparison cases
+```
 
 ## Guardrails and observability (this project's own Phase 5)
 

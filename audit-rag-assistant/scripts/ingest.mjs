@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { execFileSync } from "node:child_process";
 import matter from "gray-matter";
-import { walkCorpus, projectRoot } from "./lib.mjs";
+import { walkCorpora, projectRoot } from "./lib.mjs";
 import { chunkNote } from "./chunk.mjs";
 import { embedTexts } from "./embed.mjs";
 import { rebuildTable } from "./vectorstore.mjs";
@@ -39,13 +39,34 @@ async function main() {
   const newStore = new Map();
   let reused = 0;
   let embedded = 0;
+  // Two independently-authored corpora (corpus/ and corpus-tailored/*/)
+  // can collide on `id` — a silent overwrite would drop one doc's chunks
+  // without any error, so this hard-fails instead.
+  const seenIds = new Map();
 
-  for (const file of walkCorpus()) {
+  for (const { file, corpus, corpusSource } of walkCorpora()) {
     const raw = fs.readFileSync(file, "utf8");
     const { data, content } = matter(raw);
     if (!data.id) continue;
 
-    const chunks = chunkNote({ data: { ...data, updated: lastCommitDate(file) }, content });
+    if (seenIds.has(data.id)) {
+      throw new Error(
+        `duplicate note id "${data.id}" in both ${seenIds.get(data.id)} and ${file} — ` +
+          "ids must be unique across corpus/ and corpus-tailored/"
+      );
+    }
+    seenIds.set(data.id, file);
+
+    // A tailored doc's own frontmatter `source` (if set) overrides the
+    // folder-derived label — lets a real org's documents carry their own
+    // exact name instead of a mechanically slugified one.
+    const noteData = {
+      ...data,
+      updated: lastCommitDate(file),
+      corpus,
+      corpusSource: data.source ?? corpusSource,
+    };
+    const chunks = chunkNote({ data: noteData, content });
     const toEmbed = [];
 
     for (const chunk of chunks) {

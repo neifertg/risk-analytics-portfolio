@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import matter from "gray-matter";
 import { fileURLToPath } from "node:url";
-import { walkCorpus } from "./lib.mjs";
+import { walkCorpora } from "./lib.mjs";
 import { getTable } from "./vectorstore.mjs";
 
 // Corpus-coverage stats for the app's sidebar. Document list reads live
@@ -28,18 +28,32 @@ async function countChunks() {
 
 export async function computeStats() {
   const topics = [];
+  // The folder-derived label (e.g. "UC UCLA") identifies the tailored
+  // *scope* as a whole — distinct from each doc's own `corpusSource`,
+  // which individual notes override per-document (e.g. "UCLA — Facilities
+  // Management" vs "UC Irvine Internal Audit Services") for accurate
+  // per-citation attribution. The scope-level UI (app.py's corpus-scope
+  // selector) needs the former, not whichever doc's override happens to
+  // sort first.
+  let tailoredOrgLabel = null;
 
-  for (const file of walkCorpus()) {
+  for (const { file, corpus, corpusSource } of walkCorpora()) {
     const raw = fs.readFileSync(file, "utf8");
     const { data } = matter(raw);
     if (!data.id) continue;
-    topics.push({ id: data.id, title: data.title });
+    if (corpus === "tailored" && !tailoredOrgLabel) tailoredOrgLabel = corpusSource;
+    topics.push({ id: data.id, title: data.title, corpus, corpusSource: data.source ?? corpusSource });
   }
   topics.sort((a, b) => a.title.localeCompare(b.title));
 
   const { totalChunks, sectionChunks } = await countChunks();
 
-  return { totalDocs: topics.length, totalChunks, sectionChunks, topics };
+  const byCorpus = {};
+  for (const t of topics) {
+    byCorpus[t.corpus] = (byCorpus[t.corpus] ?? 0) + 1;
+  }
+
+  return { totalDocs: topics.length, totalChunks, sectionChunks, topics, byCorpus, tailoredOrgLabel };
 }
 
 async function main() {
@@ -52,8 +66,9 @@ async function main() {
   }
 
   console.log(`${stats.totalDocs} documents indexed (${stats.sectionChunks} section chunks):`);
-  for (const { title } of stats.topics) {
-    console.log(`  - ${title}`);
+  console.log(`  by corpus: ${JSON.stringify(stats.byCorpus)}`);
+  for (const { title, corpusSource } of stats.topics) {
+    console.log(`  - (${corpusSource}) ${title}`);
   }
 }
 

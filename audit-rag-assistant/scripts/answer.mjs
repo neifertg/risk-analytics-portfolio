@@ -16,7 +16,11 @@ const LOG_PATH = path.join(projectRoot, "logs", "queries.jsonl");
 export function buildSystemPrompt() {
   return [
     "You are an internal-audit assistant answering questions using only the",
-    "numbered excerpts below, pulled from a synthetic audit-procedures corpus.",
+    "numbered excerpts below. Each excerpt is labeled with its source corpus —",
+    "either general audit methodology or a specific organization's own real",
+    "documents. When excerpts from both appear together, explicitly contrast",
+    "what general methodology says versus what that organization's own",
+    "documents actually say, rather than blending them into one answer.",
     "Rules:",
     "- Answer only from the excerpts. Do not use outside knowledge.",
     "- Cite every claim inline with the excerpt number(s) it came from, like [1] or [2][3].",
@@ -28,7 +32,10 @@ export function buildSystemPrompt() {
 
 export function buildContextBlock(results) {
   return results
-    .map(({ chunk }, i) => `[${i + 1}] (${chunk.type}) ${chunk.title} — ${chunk.heading ?? "Summary"}\n${chunk.text}`)
+    .map(
+      ({ chunk }, i) =>
+        `[${i + 1}] (${chunk.type} · ${chunk.corpusSource}) ${chunk.title} — ${chunk.heading ?? "Summary"}\n${chunk.text}`
+    )
     .join("\n\n");
 }
 
@@ -68,9 +75,12 @@ function logQuery(entry) {
 
 // Core answer path, used by both the CLI and app.py (via --json). Returns
 // { answer, sources, usage, guardrailTriggered } and always logs.
-export async function answerQuestion(question) {
-  const { results, usage: retrievalUsage } = await retrieve(question);
+// `corpus` — "generic" | "tailored" | undefined ("both") — is passed
+// straight through to retrieve().
+export async function answerQuestion(question, { corpus } = {}) {
+  const { results, usage: retrievalUsage } = await retrieve(question, { corpus });
   const topScore = results[0]?.score ?? 0;
+  const scope = corpus ?? "both";
 
   // Phase 5 guardrail: below MIN_RETRIEVAL_SCORE, refuse before spending a
   // generation call at all — a real gate, not just the system prompt's
@@ -82,7 +92,7 @@ export async function answerQuestion(question) {
       "This question doesn't appear to be covered by the audit-procedures corpus this assistant is " +
       "grounded in, so I'm not going to guess. Try a question about the specific audit procedures in " +
       "this demo (SOX walkthroughs, control testing, sampling methodology, etc.).";
-    logQuery({ question, guardrailTriggered: true, topScore, retrievedChunks: [], answer, usage });
+    logQuery({ question, corpus: scope, guardrailTriggered: true, topScore, retrievedChunks: [], answer, usage });
     return {
       answer,
       sources: [],
@@ -99,6 +109,8 @@ export async function answerQuestion(question) {
     heading: chunk.heading ?? "Summary",
     type: chunk.type,
     updated: chunk.updated,
+    corpus: chunk.corpus,
+    corpusSource: chunk.corpusSource,
   }));
   const usage = {
     embeddingTokens: retrievalUsage.embeddingTokens,
@@ -108,6 +120,7 @@ export async function answerQuestion(question) {
 
   logQuery({
     question,
+    corpus: scope,
     guardrailTriggered: false,
     topScore,
     retrievedChunks: results.map(({ chunk, score }) => ({ noteId: chunk.noteId, title: chunk.title, heading: chunk.heading, score })),
@@ -129,16 +142,25 @@ export async function answerQuestion(question) {
   };
 }
 
-async function main() {
-  const args = process.argv.slice(2);
+function parseArgs(args) {
   const asJson = args.includes("--json");
-  const question = args.filter((arg) => arg !== "--json").join(" ").trim();
+  const corpusIdx = args.indexOf("--corpus");
+  const corpus = corpusIdx === -1 ? undefined : args[corpusIdx + 1];
+  const question = args
+    .filter((arg, i) => arg !== "--json" && !(corpusIdx !== -1 && (i === corpusIdx || i === corpusIdx + 1)))
+    .join(" ")
+    .trim();
+  return { asJson, corpus, question };
+}
+
+async function main() {
+  const { asJson, corpus, question } = parseArgs(process.argv.slice(2));
   if (!question) {
-    console.error('answer: usage: npm run ask -- "your question" [--json]');
+    console.error('answer: usage: npm run ask -- "your question" [--json] [--corpus generic|tailored]');
     process.exit(1);
   }
 
-  const result = await answerQuestion(question);
+  const result = await answerQuestion(question, { corpus });
 
   if (asJson) {
     console.log(JSON.stringify(result));
@@ -149,7 +171,9 @@ async function main() {
   if (result.sources.length > 0) {
     console.log("\nSources:");
     result.sources.forEach((source, i) => {
-      console.log(`  [${i + 1}] (${source.type}) ${source.title} — ${source.heading} (updated ${source.updated})`);
+      console.log(
+        `  [${i + 1}] (${source.type} · ${source.corpusSource}) ${source.title} — ${source.heading} (updated ${source.updated})`
+      );
     });
   }
   console.log(`\n${formatUsageLine(result.usage)}`);

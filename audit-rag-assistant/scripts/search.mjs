@@ -24,6 +24,16 @@ function quoteList(values) {
   return values.map((v) => `'${v.replace(/'/g, "''")}'`).join(", ");
 }
 
+function quoteValue(v) {
+  return `'${v.replace(/'/g, "''")}'`;
+}
+
+// `corpus` is "generic" | "tailored" | undefined ("both", the default —
+// no filter at all).
+function corpusFilter(corpus) {
+  return corpus ? ` AND corpus = ${quoteValue(corpus)}` : "";
+}
+
 function capPerNote(scored, maxPerNote, limit) {
   const counts = new Map();
   const kept = [];
@@ -49,14 +59,22 @@ function toChunk(row) {
 // Two-stage retrieval: LanceDB does the ANN ranking now (ported from
 // Seth_Wiki's brute-force in-memory version), capPerNote's diversity cap
 // stays in JS since LanceDB has no "max N per group" primitive.
-export async function retrieve(query) {
+//
+// `corpus` scopes both stages to "generic" or "tailored"; omitted (the
+// default) searches both combined. Scoping happens upstream of the
+// diversity cap, which is what lets capPerNote work unchanged in every
+// scope — for a single-scope request it never sees an out-of-scope chunk,
+// and for the combined "both" scope it applies globally exactly as it did
+// before multi-corpus support existed.
+export async function retrieve(query, { corpus } = {}) {
   const table = await getTable();
   const { embeddings: [queryVector], usage: embedUsage } = await embedTexts([query]);
+  const scopeFilter = corpusFilter(corpus);
 
   const summaryRows = await table
     .search(queryVector)
     .distanceType("cosine")
-    .where("kind = 'summary'")
+    .where(`kind = 'summary'${scopeFilter}`)
     .limit(SUMMARY_CANDIDATES)
     .toArray();
   const candidateNoteIds = [...new Set(summaryRows.map((row) => row.noteId))];
@@ -68,7 +86,7 @@ export async function retrieve(query) {
   const sectionRows = await table
     .search(queryVector)
     .distanceType("cosine")
-    .where(`kind = 'section' AND noteId IN (${quoteList(candidateNoteIds)})`)
+    .where(`kind = 'section' AND noteId IN (${quoteList(candidateNoteIds)})${scopeFilter}`)
     .limit(SECTION_FETCH_LIMIT)
     .toArray();
 
@@ -80,14 +98,22 @@ export async function retrieve(query) {
   return { results, usage: { embeddingTokens: embedUsage.totalTokens } };
 }
 
+function parseCorpusFlag(args) {
+  const idx = args.indexOf("--corpus");
+  if (idx === -1) return { corpus: undefined, rest: args };
+  const rest = [...args.slice(0, idx), ...args.slice(idx + 2)];
+  return { corpus: args[idx + 1], rest };
+}
+
 async function main() {
-  const query = process.argv.slice(2).join(" ").trim();
+  const { corpus, rest } = parseCorpusFlag(process.argv.slice(2));
+  const query = rest.join(" ").trim();
   if (!query) {
-    console.error('search: usage: npm run search -- "your query"');
+    console.error('search: usage: npm run search -- "your query" [--corpus generic|tailored]');
     process.exit(1);
   }
 
-  const { results, usage } = await retrieve(query);
+  const { results, usage } = await retrieve(query, { corpus });
 
   if (results.length === 0) {
     console.log("search: no results.");
@@ -96,7 +122,7 @@ async function main() {
 
   for (const { chunk, score } of results) {
     const preview = chunk.text.replace(/\s+/g, " ").slice(0, 140);
-    console.log(`${score.toFixed(3)}  ${chunk.title} — ${chunk.heading}`);
+    console.log(`${score.toFixed(3)}  (${chunk.corpusSource}) ${chunk.title} — ${chunk.heading}`);
     console.log(`       ${preview}${chunk.text.length > 140 ? "…" : ""}`);
   }
 

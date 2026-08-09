@@ -198,19 +198,46 @@ def get_stats() -> dict:
 
 
 stats = get_stats()
+
+# The tailored corpus's stable, scope-level display name (e.g. "UC UCLA"),
+# distinct from any individual document's own more specific corpusSource
+# override (e.g. "UC Irvine Internal Audit Services") — using a specific
+# document's label here would make the scope selector name the whole
+# tailored corpus after whichever doc happened to sort first. Drives both
+# the coverage line and whether the corpus-scope selector even appears;
+# read from live stats so this app needs no code change the day tailored
+# content is added or removed.
+tailored_label = stats.get("tailoredOrgLabel")
+
 if stats:
-    st.markdown(
-        f'<p class="rag-coverage">Indexed: {stats["totalDocs"]} synthetic '
-        f'procedure documents ({stats["sectionChunks"]} sections).</p>',
-        unsafe_allow_html=True,
-    )
+    by_corpus = stats.get("byCorpus", {})
+    coverage_text = f'Indexed: {stats["totalDocs"]} documents ({stats["sectionChunks"]} sections)'
+    if tailored_label:
+        coverage_text += (
+            f' — {by_corpus.get("generic", 0)} generic methodology, '
+            f'{by_corpus.get("tailored", 0)} {tailored_label}'
+        )
+    coverage_text += "."
+    st.markdown(f'<p class="rag-coverage">{coverage_text}</p>', unsafe_allow_html=True)
     with st.sidebar.expander("Coverage", expanded=False):
         st.caption(f"{stats['totalDocs']} documents indexed")
         for topic in stats.get("topics", []):
-            st.markdown(f"- {topic['title']}")
+            st.markdown(f"- ({topic.get('corpusSource', 'Generic')}) {topic['title']}")
+
+# Corpus-scope selector — only shown once real tailored content exists,
+# so the demo doesn't offer a choice with nothing behind one of the
+# options. Lets a visitor directly compare "generic only" vs. "generic +
+# this real organization's own documents" vs. that org's documents alone.
+corpus_scope = None
+if tailored_label:
+    scope_options = {"Generic Methodology": "generic", tailored_label: "tailored", "Both": None}
+    scope_label = st.radio(
+        "Corpus scope", list(scope_options.keys()), horizontal=True, index=2
+    )
+    corpus_scope = scope_options[scope_label]
 
 
-def ask(question: str) -> dict:
+def ask(question: str, corpus: str | None = None) -> dict:
     env = os.environ.copy()
     # On Streamlit Community Cloud, these come from that app's own Secrets
     # manager (st.secrets), forwarded here as env vars for the Node
@@ -226,8 +253,12 @@ def ask(question: str) -> dict:
     except Exception:
         pass
 
+    cmd = ["node", str(ANSWER_SCRIPT), question, "--json"]
+    if corpus:
+        cmd += ["--corpus", corpus]
+
     result = subprocess.run(
-        ["node", str(ANSWER_SCRIPT), question, "--json"],
+        cmd,
         cwd=PROJECT_ROOT,
         capture_output=True,
         text=True,
@@ -247,7 +278,7 @@ st.session_state.setdefault(QUESTION_COUNT_KEY, 0)
 def run_query(q: str) -> None:
     with st.spinner("Retrieving and generating..."):
         try:
-            result = ask(q)
+            result = ask(q, corpus=corpus_scope)
             st.session_state["result"] = result
             st.session_state["question"] = q
             st.session_state["error"] = None
@@ -318,6 +349,7 @@ elif st.session_state.get("result"):
         if result.get("sources"):
             sources_html = "".join(
                 f"<li><span class=\"source-badge\">{source['type']}</span>"
+                f"<span class=\"source-badge\">{source.get('corpusSource', 'Generic')}</span>"
                 f"[{i}] {source['title']} — {source['heading']} "
                 f"<span class=\"source-date\">(updated {source['updated']})</span></li>"
                 for i, source in enumerate(result["sources"], start=1)

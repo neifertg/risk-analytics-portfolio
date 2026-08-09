@@ -1,5 +1,5 @@
 import crypto from "node:crypto";
-import { parseHeadings } from "./lib.mjs";
+import { parseHeadings, GENERIC_CORPUS_SOURCE } from "./lib.mjs";
 
 // Chunking pipeline, ported from Seth_Wiki: split each doc by H2, falling
 // back to H3 only when a section is unusually long. Pure function — no
@@ -30,6 +30,10 @@ function baseMetadata(data) {
     title: data.title,
     type: data.type,
     updated: data.updated ?? null,
+    // Always populated by ingest.mjs (never nullable, unlike `updated`) —
+    // the fallback here only guards a caller that forgets to set them.
+    corpus: data.corpus ?? "generic",
+    corpusSource: data.corpusSource ?? GENERIC_CORPUS_SOURCE,
   };
 }
 

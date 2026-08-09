@@ -49,7 +49,7 @@ function checkCitations(answer, retrievedNoteIds, testCase) {
 }
 
 async function runCase(testCase) {
-  const graded = await answerQuestion(testCase.question);
+  const graded = await answerQuestion(testCase.question, { corpus: testCase.scope });
   const ungrounded = await callAnthropic(UNGROUNDED_SYSTEM_PROMPT, testCase.question, null);
 
   const retrievalCheck = checkRetrieval(graded.retrievedNoteIds, testCase);
@@ -97,6 +97,51 @@ function printCase({ testCase, retrievalCheck, guardrailCheck, citationCheck, ke
   return pass;
 }
 
+// Comparison case: a question meant to be asked once per named scope
+// (e.g. "generic" vs. "tailored"), each with its own expectations —
+// demonstrates the actual value of multi-corpus support (same question,
+// materially different answer once an org's own documents are in scope)
+// rather than just testing retrieval filtering mechanically.
+async function runComparisonCase(testCase) {
+  const scopeResults = {};
+  const usage = { embeddingTokens: 0, inputTokens: 0, outputTokens: 0 };
+
+  for (const [scopeName, expectations] of Object.entries(testCase.scopes)) {
+    const graded = await answerQuestion(testCase.question, { corpus: scopeName });
+    scopeResults[scopeName] = {
+      retrievalCheck: checkRetrieval(graded.retrievedNoteIds, expectations),
+      keywordCheck: keywordsMatch(graded.answer, expectations.expectedKeywords),
+      answer: graded.answer,
+    };
+    usage.embeddingTokens += graded.usage.embeddingTokens;
+    usage.inputTokens += graded.usage.inputTokens;
+    usage.outputTokens += graded.usage.outputTokens;
+  }
+
+  return { testCase, scopeResults, usage };
+}
+
+function printComparisonCase({ testCase, scopeResults, usage }) {
+  const pass = Object.values(scopeResults).every((r) => r.retrievalCheck.pass && r.keywordCheck);
+  console.log(`\n${"=".repeat(70)}`);
+  console.log(`[${pass ? "PASS" : "FAIL"}] ${testCase.id} — ${testCase.question} (comparison)`);
+
+  for (const [scopeName, r] of Object.entries(scopeResults)) {
+    console.log(`\n  --- scope: ${scopeName} ---`);
+    if (!r.retrievalCheck.pass) {
+      console.log(`  retrieval: missing expected note(s): ${r.retrievalCheck.missing.join(", ")}`);
+    }
+    if (!r.keywordCheck) {
+      const expected = testCase.scopes[scopeName].expectedKeywords ?? [];
+      console.log(`  keywords: none of [${expected.join(", ")}] found in answer`);
+    }
+    console.log(`  ${r.answer.trim().replace(/\n/g, "\n  ")}`);
+  }
+
+  console.log(`\n  ${formatUsageLine(usage)}`);
+  return pass;
+}
+
 async function main() {
   // No explicit index-existence check here — retrieve() (via
   // vectorstore.mjs's getTable()) already throws a clear "no index
@@ -112,11 +157,12 @@ async function main() {
   const results = [];
   const sessionUsage = { embeddingTokens: 0, inputTokens: 0, outputTokens: 0 };
   for (const testCase of questions) {
-    const result = await runCase(testCase);
+    const isComparison = Boolean(testCase.scopes);
+    const result = isComparison ? await runComparisonCase(testCase) : await runCase(testCase);
     sessionUsage.embeddingTokens += result.usage.embeddingTokens;
     sessionUsage.inputTokens += result.usage.inputTokens;
     sessionUsage.outputTokens += result.usage.outputTokens;
-    results.push(printCase(result));
+    results.push(isComparison ? printComparisonCase(result) : printCase(result));
   }
 
   const passed = results.filter(Boolean).length;

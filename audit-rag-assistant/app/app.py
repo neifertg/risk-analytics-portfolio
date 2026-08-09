@@ -236,6 +236,29 @@ if tailored_label:
     )
     corpus_scope = scope_options[scope_label]
 
+    with st.expander(f"Why real {tailored_label} documents?"):
+        st.markdown(
+            f"Everything else in this demo is a **synthetic** corpus — plausible-sounding "
+            f"audit procedures written for this project, not authoritative. This one piece "
+            f"is real: the University of California's own publicly published Internal Audit "
+            f"Charter, its 2022-23 Audit Plan, a current UCLA facilities procedure, and four "
+            f"real completed audit reports pulled from UC's "
+            f"[public archive of 2,600+ audits](https://auditreports.ucop.edu).\n\n"
+            f"Public universities publish this material themselves — it isn't scraped or "
+            f"leaked, and it wasn't picked because it flatters UC; two other audit reports "
+            f"were reviewed and rejected as too thin ('no issues noted') before these were "
+            f"chosen. Every claim traces back to a real, linkable source, so you can check "
+            f"it rather than take the assistant's word for it.\n\n"
+            f"The point isn't UC specifically — it's what tailoring a RAG assistant to one "
+            f"real organization's own documents actually buys. Set scope to **Both** and try "
+            f"the fourth example question below: the assistant contrasts what generic "
+            f"methodology says against what {tailored_label}'s own real documents say, citing "
+            f"a real audit finding along the way, instead of only ever giving a generic "
+            f"answer.\n\n"
+            f"*Independent demo — not an official {tailored_label} tool, and not endorsed by "
+            f"the university.*"
+        )
+
 
 def ask(question: str, corpus: str | None = None) -> dict:
     env = os.environ.copy()
@@ -306,12 +329,20 @@ if st.session_state[QUESTION_COUNT_KEY] >= MAX_QUESTIONS_PER_SESSION:
 else:
     # Pulled straight from evals/questions.json, spanning both flavors of
     # the corpus (fieldwork testing, governance) — known to retrieve well
-    # rather than a placeholder guess at what the corpus covers.
+    # rather than a placeholder guess at what the corpus covers. The
+    # tailored-comparison question only appears once real tailored content
+    # exists, matching the scope selector's own visibility rule — it's the
+    # one example that actually demonstrates what tailoring buys, not just
+    # another generic-corpus lookup.
     EXAMPLE_QUESTIONS = [
         "What's tested in Phase 2 of the SOX 404 key controls walkthrough?",
         "Does internal audit own the enterprise risk register, or just provide assurance over it?",
         "What three documents does a three-way match compare before a purchase invoice can be paid?",
     ]
+    if tailored_label:
+        EXAMPLE_QUESTIONS.append(
+            "How should building or system access be removed when someone leaves or transfers?"
+        )
     st.markdown('<p class="examples-label">Try one:</p>', unsafe_allow_html=True)
     example_cols = st.columns(len(EXAMPLE_QUESTIONS))
     for col, eq in zip(example_cols, EXAMPLE_QUESTIONS):

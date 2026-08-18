@@ -72,6 +72,27 @@ function loadLayout(name) {
   return layoutCache.get(name);
 }
 
+// slide.icon: an optional path to a small line-icon SVG (vendored into the
+// deck's own assets/ folder, same as evidence diagrams). Inlined as raw
+// markup (not a data-URI <img>) so its stroke="currentColor" picks up
+// --color-accent via .slide-icon's `color`, the same trick brand-corner-mark
+// uses for the logo — an <img> can't see the host page's CSS custom
+// properties. See PATTERN.md's "Optional per-slide icon" section.
+function resolveIconMarkup(iconPath, deckDir) {
+  const filePath = path.resolve(deckDir, iconPath);
+  return fs.readFileSync(filePath, 'utf8').trim();
+}
+
+// col.icon / step.icon: an optional badge icon on a comparison column or
+// timeline step (PATTERN.md's "Optional badge icon" section) — a distinct
+// pattern from slide.icon above, not a variant of it. Same inlining
+// approach (raw SVG markup, not a data-URI <img>) for the same currentColor
+// reason, wrapped in .icon-badge instead of .slide-icon.
+function badgeMarkup(iconPath, deckDir) {
+  if (!iconPath) return '';
+  return `<span class="icon-badge">${resolveIconMarkup(iconPath, deckDir)}</span>`;
+}
+
 const renderers = {
   title(slide, ctx) {
     const subtitleHtml = slide.subtitle ? `<p class="subtitle">${esc(slide.subtitle)}</p>` : '';
@@ -132,11 +153,12 @@ const renderers = {
       notesHtml: notesBlock(slide.notes),
     });
   },
-  comparison(slide) {
+  comparison(slide, ctx) {
     const columnsHtml = (slide.columns || [])
       .map((col) => {
         const pointsHtml = (col.points || []).map((p) => `<li>${esc(p)}</li>`).join('');
-        return `<div class="column"><h3>${esc(col.heading)}</h3><ul>${pointsHtml}</ul></div>`;
+        const badge = badgeMarkup(col.icon, ctx.deckDir);
+        return `<div class="column"><h3>${badge}${esc(col.heading)}</h3><ul>${pointsHtml}</ul></div>`;
       })
       .join('\n');
     return substitute(loadLayout('comparison'), {
@@ -144,14 +166,14 @@ const renderers = {
       notesHtml: notesBlock(slide.notes),
     });
   },
-  timeline(slide) {
+  timeline(slide, ctx) {
     const stepsHtml = (slide.steps || [])
-      .map(
-        (s) =>
-          `<div class="step"><div class="label">${esc(s.label)}</div><div class="detail">${esc(
-            s.detail || ''
-          )}</div></div>`
-      )
+      .map((s) => {
+        const badge = badgeMarkup(s.icon, ctx.deckDir);
+        return `<div class="step"><div class="label">${badge}${esc(s.label)}</div><div class="detail">${esc(
+          s.detail || ''
+        )}</div></div>`;
+      })
       .join('\n');
     return substitute(loadLayout('timeline'), {
       headline: esc(slide.headline || ''),
@@ -184,7 +206,14 @@ function renderSlide(slide, index, ctx) {
       ).join(', ')}`
     );
   }
-  return renderer(slide, ctx);
+  const html = renderer(slide, ctx);
+  if (!slide.icon) return html;
+  // Works across every layout without touching each template file: a
+  // positioned, negative-z-index div painted right after <section ...>
+  // sits behind that section's in-flow content (see tokens.css .slide-icon)
+  // regardless of which layout template produced the rest of the markup.
+  const iconMarkup = resolveIconMarkup(slide.icon, ctx.deckDir);
+  return html.replace(/(<section[^>]*>)/, `$1\n  <div class="slide-icon">${iconMarkup}</div>`);
 }
 
 function main() {
@@ -232,6 +261,7 @@ ${sectionsHtml}
     width: 1920,
     height: 1080,
     margin: 0.04,
+    showNotes: false,
     plugins: typeof RevealNotes !== 'undefined' ? [ RevealNotes ] : []
   });
 </script>
@@ -249,6 +279,18 @@ ${sectionsHtml}
     });
   })();
 </script>
+<script>
+  // Solo-review toggle — press "N" to show notes inline on the slide
+  // itself, via reveal.js's own showNotes config rather than the Notes
+  // plugin's speaker-view window.open() (which some browsers/settings
+  // block outright, unlike this). Off by default: a real presentation
+  // still relies on "S" (speaker view) so the audience-facing screen
+  // never shows notes unless this has been explicitly toggled on.
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'n' && e.key !== 'N') return;
+    Reveal.configure({ showNotes: !Reveal.getConfig().showNotes });
+  });
+</script>
 </body>
 </html>
 `;
@@ -257,6 +299,7 @@ ${sectionsHtml}
   fs.writeFileSync(outPath, html, 'utf8');
   console.log(`Rendered ${deck.slides.length} slides -> ${outPath}`);
   console.log(`Press "T" while presenting to cycle color themes (${THEMES.join(' -> ')}).`);
+  console.log(`Press "N" to show speaker notes inline (solo review — off by default).`);
 }
 
 main();

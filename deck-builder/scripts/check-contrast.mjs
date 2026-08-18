@@ -25,7 +25,7 @@ const PAIRS = [
   ['--color-ink', '--color-bg', 'normal', 'body text on light sections'],
   ['--color-ink-inverse', '--color-bg-inverse', 'normal', 'section-divider / closing headline'],
   ['--color-muted', '--color-bg', 'normal', 'captions, subtitles, muted labels'],
-  ['--color-accent', '--color-bg', 'normal', 'agenda numerals, quote marks, big-stat'],
+  ['--color-accent', '--color-bg', 'normal', 'agenda numerals, quote marks, big-stat, timeline connector'],
   ['--color-accent', '--color-accent-soft', 'large', 'comparison column headings'],
   ['--color-accent-on-dark', '--color-bg-inverse', 'normal', 'section-divider label'],
   ['--color-accent-on-dark', '--color-bg-inverse', 'large', 'closing CTA'],

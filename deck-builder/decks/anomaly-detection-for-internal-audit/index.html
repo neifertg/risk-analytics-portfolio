@@ -1,0 +1,767 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Anomaly Detection for Internal Audit</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+<style>
+/*
+  Placeholder brand theme. Swap the values in :root for a real brand later —
+  nothing below this block should ever need to change for a rebrand.
+  See PATTERN.md §5.
+*/
+
+/* Base reset — reveal.js's own CSS sets height:100% on .reveal but never
+   on html/body, so that 100% has no definite ancestor height to resolve
+   against unless the page provides one. Every reveal.js deployment needs
+   this; it was missing here, which is the likely root cause of the
+   evidence-image sizing bugs (percentage heights failing to resolve
+   through an indefinite chain, all the way up from html/body). */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+:root {
+  /* Non-color tokens are theme-independent — every palette below shares them. */
+  --font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+
+  /* Fixed rem, not vw-based clamp(): reveal.js scales its whole 1920x1080
+     logical canvas as a unit via a CSS transform, so a vw-sized font is
+     scaled twice — once by vw resolving against the real browser
+     viewport, again by reveal.js's transform — compounding depending on
+     window size. These values are each the old clamp()'s own max, which
+     is what every one of them already resolved to at a 1920px-wide
+     viewport; reveal.js's transform alone now handles all responsive
+     resizing, the same way it already does for evidence images. */
+  --font-scale-label: 1.15rem;
+  --font-scale-body: 1.6rem;
+  --font-scale-headline: 3.2rem;
+  --font-scale-display: 4.8rem;
+  --font-scale-stat: 9rem;
+
+  --space-unit: 1.25rem;
+  --space-sm: calc(var(--space-unit) * 1);
+  --space-md: calc(var(--space-unit) * 2);
+  --space-lg: calc(var(--space-unit) * 4);
+  --space-xl: calc(var(--space-unit) * 6);
+
+  --radius: 14px;
+}
+
+/* ---------- Color themes ----------
+   The presenter cycles themes at runtime by pressing "T" (toggle script
+   lives in render.mjs, THEMES list). Only the accent triad varies between
+   themes — bg/bg-inverse/ink/ink-inverse stay fixed high-contrast neutrals
+   per the anti-slop guardrails in PATTERN.md §7 (no beige/cream fallback
+   backgrounds, one accent color at a time). Every theme is checked by
+   `npm run check-contrast` (scripts/check-contrast.mjs) against every
+   foreground/background pairing actually used in layouts/ — adding a
+   theme means adding its name to that script's THEMES list too, and to
+   render.mjs's THEMES list so the runtime toggle can reach it. See
+   PATTERN.md §5. */
+
+:root, [data-theme="slate"] {
+  --color-bg: #fbfaf8;
+  --color-bg-inverse: #14161a;
+  --color-ink: #181b20;
+  --color-ink-inverse: #f5f6f7;
+  --color-accent: #3452e1;
+  --color-accent-on-dark: #7d93ee;
+  --color-accent-soft: #e7eafc;
+  --color-muted: #6b7280;
+  --color-border: #e4e2dc;
+}
+
+[data-theme="forest"] {
+  --color-bg: #fbfaf8;
+  --color-bg-inverse: #14161a;
+  --color-ink: #181b20;
+  --color-ink-inverse: #f5f6f7;
+  --color-accent: #1f7a4d;
+  --color-accent-on-dark: #5cbf8e;
+  --color-accent-soft: #e3f2e8;
+  --color-muted: #6b7280;
+  --color-border: #e4e2dc;
+}
+
+[data-theme="copper"] {
+  --color-bg: #fbfaf8;
+  --color-bg-inverse: #14161a;
+  --color-ink: #181b20;
+  --color-ink-inverse: #f5f6f7;
+  --color-accent: #a8522e;
+  --color-accent-on-dark: #e0916d;
+  --color-accent-soft: #f7e6dd;
+  --color-muted: #6b7280;
+  --color-border: #e4e2dc;
+}
+
+/* ---------- Base ---------- */
+
+.reveal {
+  font-family: var(--font-family);
+  color: var(--color-ink);
+}
+
+.reveal .slides section {
+  background: var(--color-bg);
+  text-align: left;
+  padding: var(--space-xl);
+  box-sizing: border-box;
+  /* No position rule here: reveal.js's own stylesheet already sets
+     position: absolute on every .reveal .slides section — that's load-
+     bearing for its slide-stacking/navigation mechanism. An optional
+     .slide-icon (below) anchors fine against that existing positioned
+     ancestor; redeclaring position here (even to "relative") was tried and
+     silently broke reveal's own layout() calculations — slides after the
+     first stopped rendering in place (top offset stuck at a stale stacked
+     value). Confirmed via Reveal.getCurrentSlide().getBoundingClientRect()
+     showing the "present" slide positioned off-canvas. Don't reintroduce
+     a position declaration on this selector. */
+}
+
+/* ---------- optional per-slide icon ---------- */
+/* A single topical accent icon (see PATTERN.md's "Optional per-slide icon"
+   section) — author opt-in via a slide's `icon:` field, never automatic.
+   Low-opacity and z-index:-1 so it reads as background texture behind the
+   slide's real content, never competing with it (PATTERN.md §7 anti-slop:
+   this is content-aligned per-slide texture, not a blanket decorative
+   motif — use sparingly, one relevant icon per slide at most). */
+.slide-icon {
+  position: absolute;
+  top: var(--space-lg);
+  right: var(--space-lg);
+  width: 9rem;
+  height: 9rem;
+  color: var(--color-accent);
+  opacity: 0.1;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.slide-icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.reveal .slides section.dark .slide-icon {
+  color: var(--color-accent-on-dark);
+}
+
+/* ---------- badge icon (comparison columns / timeline steps) ---------- */
+/* A second, independent icon pattern from .slide-icon above — not a variant
+   of it. Author opt-in via a comparison column's or timeline step's `icon`
+   field (PATTERN.md's "Optional badge icon" section). Where .slide-icon is
+   low-opacity background texture for one slide, .icon-badge is a small,
+   full-opacity, meaningful marker for a *recurring category* — it always
+   sits inline next to that category's own text label, never alone, because
+   an icon carrying real meaning (not pure decoration) needs to clear WCAG's
+   3:1 contrast floor and can't be the sole signal (WCAG G207). Full opacity
+   is what that requires; low-opacity texture would fail it.
+   Uses --color-accent on --color-accent-soft — already a checked pair in
+   scripts/check-contrast.mjs's PAIRS list (comparison column headings use
+   the same combination), so no new contrast entry is needed. No dark-surface
+   variant: comparison/timeline never render on the .dark surface today. */
+.icon-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+  flex-shrink: 0;
+}
+
+.icon-badge svg {
+  width: 60%;
+  height: 60%;
+  display: block;
+}
+
+.reveal .slides section.dark {
+  background: var(--color-bg-inverse);
+  color: var(--color-ink-inverse);
+}
+
+.reveal h1, .reveal h2, .reveal h3 {
+  margin: 0 0 var(--space-md) 0;
+  line-height: 1.15;
+  font-weight: 600;
+}
+
+.reveal p {
+  margin: 0 0 var(--space-sm) 0;
+}
+
+.reveal ul, .reveal ol {
+  margin: 0;
+  padding-left: 1.1em;
+}
+
+.brand-corner-mark {
+  position: fixed;
+  right: var(--space-sm);
+  bottom: var(--space-sm);
+  width: 2.2rem;
+  height: 2.2rem;
+  opacity: 0.55;
+  z-index: 5;
+  pointer-events: none;
+  color: var(--color-accent);
+}
+
+.brand-corner-mark svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* ---------- title ---------- */
+
+.layout-title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  height: 100%;
+}
+
+.layout-title .logo {
+  display: block;
+  width: 4.5rem;
+  height: 4.5rem;
+  margin-bottom: var(--space-md);
+  color: var(--color-accent);
+}
+
+.layout-title .logo svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.layout-title h1 {
+  font-size: var(--font-scale-display);
+  color: var(--color-ink);
+}
+
+.layout-title .subtitle {
+  font-size: var(--font-scale-headline);
+  color: var(--color-muted);
+  font-weight: 400;
+}
+
+.layout-title .meta {
+  margin-top: var(--space-md);
+  font-size: var(--font-scale-label);
+  color: var(--color-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ---------- agenda ---------- */
+
+.layout-agenda h2 {
+  font-size: var(--font-scale-headline);
+  color: var(--color-accent);
+}
+
+.layout-agenda ol {
+  list-style: none;
+  padding: 0;
+  counter-reset: agenda;
+}
+
+.layout-agenda ol li {
+  counter-increment: agenda;
+  font-size: var(--font-scale-body);
+  padding: var(--space-sm) 0;
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-sm);
+}
+
+.layout-agenda ol li::before {
+  content: counter(agenda, decimal-leading-zero);
+  color: var(--color-accent);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- section-divider ---------- */
+
+.layout-section-divider {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  /* background/color come from the .dark modifier (see
+     .reveal .slides section.dark) — a plain single class here can't win
+     against .reveal .slides section's higher specificity. */
+}
+
+.layout-section-divider .label {
+  font-size: var(--font-scale-label);
+  color: var(--color-accent-on-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: var(--space-sm);
+}
+
+.layout-section-divider h2 {
+  font-size: var(--font-scale-display);
+  color: var(--color-ink-inverse);
+}
+
+/* ---------- assertion-evidence ---------- */
+
+.layout-assertion-evidence {
+  /* height is an absolute length, not a percentage: per spec, a
+     percentage max-height resolved against a container whose height
+     isn't itself definite computes to "none" (unconstrained) — not
+     "capped at 100%". That's what broke every percentage-based sizing
+     attempt here, no matter how the flex/grid structure was arranged.
+     1080px matches Reveal.initialize({height: 1080}) in render.mjs — the
+     slide's actual fixed logical canvas height, so this is genuinely
+     definite the whole way down. overflow:hidden is a safety net so a
+     miscalculation clips at the slide edge instead of bleeding past the
+     browser viewport.
+     grid-template-rows uses minmax(0, 1fr), not bare 1fr, as defense in
+     depth against the classic CSS Grid "blowout" bug (bare `1fr` is
+     shorthand for `minmax(auto, 1fr)`, whose implicit minimum is the
+     track's min-content size). This alone did not fix the real bug below
+     — see .evidence img's comment. */
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  height: 1080px;
+  overflow: hidden;
+}
+
+.layout-assertion-evidence h2 {
+  font-size: var(--font-scale-headline);
+  color: var(--color-ink);
+}
+
+.layout-assertion-evidence .evidence {
+  /* align-items: flex-end, not center: the evidence row is a flexible
+     (1fr) grid track, so whenever the image's rendered height (capped at
+     560px, see .evidence img below) is less than the row's available
+     height, centering left equal empty space above *and* below the image
+     — pushing the image, and the caption that follows the row, up toward
+     the middle of the slide instead of down near the bottom padding.
+     Bottom-aligning collapses that gap to a single band above the image
+     (between headline and evidence), so the image sits directly on top of
+     its caption and the pair reads as anchored near the slide's bottom
+     edge, closer to how a captioned figure is conventionally read. */
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  min-height: 0;
+  min-width: 0;
+}
+
+.layout-assertion-evidence .evidence img {
+  /* max-height must NOT be a percentage. Confirmed by live measurement
+     (getComputedStyle, pre-transform): with max-height:75% this element's
+     computed height was a constant 819px on every diagram slide,
+     regardless of how much room the row actually had (643.8px on a
+     2-line headline, 702.7px on a 1-line headline) — proof the
+     percentage was never actually applying. Root cause: this element's
+     row is the flexible (1fr) track in a grid whose row-sizing (block
+     axis) is being computed at the same time as this img's own
+     percentage max-height needs to resolve against that same axis — a
+     circular dependency. Per spec, a percentage height that can't
+     resolve computes to "none" (unconstrained), so max-height:75%
+     silently no-opped; the rendered size was 100% a function of
+     max-width:75% (safe — width is always definite here) plus the
+     image's fixed aspect ratio, with zero regard for vertical space.
+     560px is an absolute cap with real margin below the worst measured
+     budget (~644px for a 2-line headline + 1-line caption, less for a
+     rarer 3-line headline or 2-line caption) — see PATTERN.md §4. */
+  max-width: 75%;
+  max-height: 560px;
+  border-radius: var(--radius);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.layout-assertion-evidence .evidence table {
+  border-collapse: collapse;
+  font-size: var(--font-scale-body);
+}
+
+.layout-assertion-evidence .evidence td,
+.layout-assertion-evidence .evidence th {
+  padding: var(--space-sm) var(--space-md);
+  border-bottom: 1px solid var(--color-border);
+  text-align: left;
+}
+
+.layout-assertion-evidence .caption {
+  font-size: var(--font-scale-label);
+  color: var(--color-muted);
+  margin-top: var(--space-sm);
+}
+
+/* ---------- big-stat ---------- */
+
+.layout-big-stat {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  height: 100%;
+}
+
+.layout-big-stat .stat {
+  font-size: var(--font-scale-stat);
+  font-weight: 700;
+  color: var(--color-accent);
+  line-height: 1;
+}
+
+.layout-big-stat .context {
+  margin-top: var(--space-md);
+  font-size: var(--font-scale-headline);
+  color: var(--color-ink);
+}
+
+/* ---------- comparison ---------- */
+
+.layout-comparison {
+  height: 100%;
+}
+
+.layout-comparison .columns {
+  display: flex;
+  gap: var(--space-md);
+  height: 100%;
+}
+
+.layout-comparison .column {
+  flex: 1;
+  background: var(--color-accent-soft);
+  border-radius: var(--radius);
+  padding: var(--space-md);
+}
+
+.layout-comparison .column h3 {
+  font-size: var(--font-scale-headline);
+  color: var(--color-accent);
+  /* display:flex only matters when an .icon-badge is present (see
+     "Optional badge icon", PATTERN.md) — harmless no-op otherwise, since a
+     lone text node still lays out normally as a flex item. */
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.layout-comparison .column ul {
+  list-style: none;
+  padding: 0;
+}
+
+.layout-comparison .column li {
+  font-size: var(--font-scale-body);
+  padding: calc(var(--space-sm) / 2) 0;
+}
+
+/* ---------- timeline ---------- */
+
+.layout-timeline .steps {
+  display: flex;
+  /* Wider than other flex galleries (space-md) so each connector chevron
+     below has visible room between steps instead of touching them. */
+  gap: var(--space-lg);
+  align-items: flex-start;
+  margin-top: var(--space-lg);
+}
+
+.layout-timeline .step {
+  flex: 1;
+  padding-top: var(--space-sm);
+  position: relative;
+}
+
+/* A chevron in the gap after every step but the last — sequence is the
+   whole point of a timeline (PATTERN.md's classification rule for this
+   layout), so the path between steps is drawn, not left implied by a bare
+   numbered row. Pure CSS border-arrow: two borders of a square, rotated
+   45deg, so it inherits --color-accent via border-color and needs no
+   separate icon asset or data URI. */
+.layout-timeline .step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 1.9rem;
+  right: calc(-1 * var(--space-lg) / 2 - 0.45rem);
+  width: 0.9rem;
+  height: 0.9rem;
+  border-top: 3px solid var(--color-accent);
+  border-right: 3px solid var(--color-accent);
+  transform: rotate(45deg);
+}
+
+.reveal .slides section.dark .layout-timeline .step:not(:last-child)::after {
+  border-color: var(--color-accent-on-dark);
+}
+
+.layout-timeline .step .label {
+  font-size: var(--font-scale-body);
+  font-weight: 600;
+  color: var(--color-ink);
+  /* display:flex only matters when an .icon-badge is present (see
+     "Optional badge icon", PATTERN.md) — harmless no-op otherwise. */
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.layout-timeline .step .detail {
+  font-size: var(--font-scale-label);
+  color: var(--color-muted);
+  margin-top: calc(var(--space-sm) / 2);
+}
+
+/* ---------- quote ---------- */
+
+.layout-quote {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  text-align: center;
+}
+
+.layout-quote blockquote {
+  margin: 0;
+  font-size: var(--font-scale-display);
+  font-weight: 500;
+  color: var(--color-ink);
+  max-width: 80%;
+}
+
+.layout-quote blockquote::before {
+  content: '\201C';
+  color: var(--color-accent);
+}
+
+.layout-quote blockquote::after {
+  content: '\201D';
+  color: var(--color-accent);
+}
+
+.layout-quote .attribution {
+  margin-top: var(--space-md);
+  font-size: var(--font-scale-label);
+  color: var(--color-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ---------- closing ---------- */
+
+.layout-closing {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  /* background/color come from the .dark modifier (see
+     .reveal .slides section.dark) — a plain single class here can't win
+     against .reveal .slides section's higher specificity. */
+}
+
+.layout-closing h2 {
+  font-size: var(--font-scale-display);
+  color: var(--color-ink-inverse);
+}
+
+.layout-closing .cta {
+  margin-top: var(--space-md);
+  font-size: var(--font-scale-headline);
+  color: var(--color-accent-on-dark);
+  font-weight: 600;
+}
+
+</style>
+</head>
+<body>
+<div class="reveal">
+  <div class="brand-corner-mark"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <circle cx="32" cy="32" r="30" fill="none" stroke="currentColor" stroke-width="4"/>
+  <path d="M20 40 L32 18 L44 40 Z" fill="currentColor"/>
+</svg></div>
+  <div class="slides">
+<section class="layout-title">
+  <span class="logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <circle cx="32" cy="32" r="30" fill="none" stroke="currentColor" stroke-width="4"/>
+  <path d="M20 40 L32 18 L44 40 Z" fill="currentColor"/>
+</svg></span>
+  <h1>Anomaly Detection for Internal Audit</h1>
+  <p class="subtitle">Finding the transaction that doesn&#39;t look like the rest</p>
+  <p class="meta">Internal Audit — Analytics Training &middot; 2026-08-09</p>
+  <aside class="notes">Delivery: plant the frame lightly and move on — &#39;I&#39;m going to explain four ways to catch a rare bad case the same way you&#39;d explain four ways an airport checkpoint catches the one traveler who doesn&#39;t belong.&#39; Don&#39;t over-explain it yet, just tease it. Let the title sit a beat before advancing.</aside>
+</section>
+
+<section class="layout-quote">
+  <blockquote>Working through this on your own? Press N anytime to reveal these speaker notes, T to cycle color themes — arrow keys or the on-screen controls move between slides.</blockquote>
+  <p class="attribution">How to use this deck</p>
+  <aside class="notes">Delivery: skip this slide entirely when presenting live — it&#39;s for anyone navigating solo later. If skipping, jump straight from the title to the agenda.</aside>
+</section>
+
+<section class="layout-agenda">
+  <h2>Agenda</h2>
+  <ol>
+    <li>Why rule-based testing misses the rare case</li>
+<li>Four techniques, one job: isolate what doesn&#39;t fit</li>
+<li>Picking a technique for the population in front of you</li>
+<li>Where to start: a first pilot this quarter</li>
+  </ol>
+  <aside class="notes">Delivery: don&#39;t read the list verbatim — one clause per line as you point at it. Bridge: &#39;Before any of that, here&#39;s the one picture that makes all four techniques click at once.&#39;</aside>
+</section>
+
+<section class="layout-assertion-evidence">
+  <div class="slide-icon"><!-- Lucide "plane" icon (ISC license), https://lucide.dev — vendored as a
+     static path, no runtime dependency. stroke="currentColor" so it
+     inherits color from .slide-icon in tokens.css (theme-reactive). -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z" />
+</svg></div>
+  <h2>Four ways to catch what doesn&#39;t belong — think of an airport security checkpoint.</h2>
+  <div class="evidence"><table><thead><tr><th>Technique</th><th>Checkpoint analog</th><th>What it&#39;s actually doing</th></tr></thead><tbody><tr><td>Isolation Forest</td><td>The quick random bag-pull</td><td>Isolates anything that stands out fast, no known threat profile needed</td></tr><tr><td>Local Outlier Factor</td><td>Screening relative to this line, right now</td><td>Flags a traveler only if they don&#39;t fit the people around them</td></tr><tr><td>One-Class SVM</td><td>The PreCheck / trusted-traveler lane</td><td>Defines &#39;cleared normal&#39;; anyone outside it gets pulled</td></tr><tr><td>Autoencoder</td><td>The veteran officer&#39;s trained eye</td><td>Learned what normal behavior looks like; flags whatever doesn&#39;t fit it</td></tr></tbody></table></div>
+  <p class="caption">Same job, four different checkpoints — each one catches a different shape of &#39;doesn&#39;t belong.&#39;</p>
+  <aside class="notes">Delivery: &#39;Before I show you the algorithms, here&#39;s what they&#39;re actually doing — think of an airport security checkpoint. Different stations catch different kinds of trouble, and none of them need a photo of the specific thing they&#39;re looking for.&#39; Bridge into Part 1: &#39;Now let&#39;s talk about why that checkpoint instinct is useful in audit work, not just at the airport.&#39; Domain fit: airport screening was chosen over a factory-inspection-line alternative specifically because it doesn&#39;t collide with any single technique&#39;s own textbook example — the autoencoder note&#39;s own illustrative case is a factory defect line, so reusing that domain for the metaphor would have made that one slide feel redundant rather than illuminating. Considered and set aside: medical screening tests (equally valid mechanically, less viscerally familiar to this audience than airport security).</aside>
+</section>
+
+<section class="layout-section-divider dark">
+  <p class="label">Part 1</p>
+  <h2>The Blind Spot in Rule-Based Testing</h2>
+  <aside class="notes">Delivery: bridge from the checkpoint comparison slide — &#39;A checkpoint built only to catch last year&#39;s smuggling method misses this year&#39;s. Most of our rule-based testing has the same blind spot.&#39;</aside>
+</section>
+
+<section class="layout-assertion-evidence">
+  <h2>Rule-based tests only catch the pattern an auditor already thought to write a rule for.</h2>
+  <div class="evidence"><table><thead><tr><th>Rule-based testing</th><th>Anomaly detection</th></tr></thead><tbody><tr><td>Catches only a pattern someone already wrote a rule for</td><td>Learns what &#39;normal&#39; looks like, flags what doesn&#39;t fit</td></tr><tr><td>Needs a known scenario to test for</td><td>No prior label of &#39;bad&#39; required</td></tr><tr><td>Blind to a new or unanticipated scheme</td><td>Can surface a pattern no one has seen before</td></tr></tbody></table></div>
+  <p class="caption">Most fraud schemes don&#39;t announce themselves with a rule you already wrote.</p>
+  <aside class="notes">Delivery: no checkpoint officer gets a photo of tomorrow&#39;s new smuggling method in advance either — they&#39;re trained to notice what doesn&#39;t fit, not to match a known list. This is the core motivation for anomaly detection in audit: fraud/error labels are rare, expensive, or don&#39;t exist yet for a new risk area, and threshold-based rules only catch what someone already anticipated. Two things to set expectations on now, not later: the population still has to be reconciled to a control total before any flag is defensible as audit evidence (wiki: Data Quality for Analytics), and an anomaly-detection finding has to clear the same sufficient-and-appropriate-evidence bar as any other (wiki: IIA Standards). This isn&#39;t shadow IT — treat it that way from slide one.</aside>
+</section>
+
+<section class="layout-section-divider dark">
+  <p class="label">Part 2</p>
+  <h2>Four Ways to Catch the Outlier</h2>
+  <aside class="notes">Delivery: &#39;Now let&#39;s put a name on each checkpoint&#39;s actual mechanism.&#39;</aside>
+</section>
+
+<section class="layout-assertion-evidence">
+  <h2>Isolation Forest isolates the outlier in a few random splits — most points take many more.</h2>
+  <div class="evidence"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MDAgMjYwIj4KICA8cmVjdCB4PSIxIiB5PSIxIiB3aWR0aD0iMzk4IiBoZWlnaHQ9IjI1OCIgcng9IjE0IiBmaWxsPSIjZmJmYWY4IiBzdHJva2U9IiNlNGUyZGMiIHN0cm9rZS13aWR0aD0iMiIvPgoKICA8ZGVmcz4KICAgIDxnIGlkPSJ0cmF2ZWxlciI+CiAgICAgIDxjaXJjbGUgY3g9IjAiIGN5PSItOSIgcj0iNCIvPgogICAgICA8cGF0aCBkPSJNIC02IDcgUSAwIC0zIDYgNyBaIi8+CiAgICA8L2c+CiAgPC9kZWZzPgoKICA8IS0tIERlbnNlIGNyb3dkIOKAlCB0YWtlcyBtYW55IHJhbmRvbSBzcGxpdHMgdG8gaXNvbGF0ZSBhbnkgb25lIHRyYXZlbGVyIC0tPgogIDxnIGZpbGw9IiMyYTZmZGIiIG9wYWNpdHk9IjAuNSIgc3Ryb2tlPSIjMmE2ZmRiIiBzdHJva2Utd2lkdGg9IjEiIHN0cm9rZS1kYXNoYXJyYXk9IjIgMyI+CiAgICA8bGluZSB4MT0iMzAiIHkxPSIxNTAiIHgyPSIxODUiIHkyPSIxNTAiLz4KICAgIDxsaW5lIHgxPSIzMCIgeTE9IjE4MCIgeDI9IjE4NSIgeTI9IjE4MCIvPgogICAgPGxpbmUgeDE9IjcwIiB5MT0iMTMwIiB4Mj0iNzAiIHkyPSIyMzUiLz4KICAgIDxsaW5lIHgxPSIxMTAiIHkxPSIxMzAiIHgyPSIxMTAiIHkyPSIyMzUiLz4KICAgIDxsaW5lIHgxPSIxNDUiIHkxPSIxMzAiIHgyPSIxNDUiIHkyPSIyMzUiLz4KICA8L2c+CiAgPGcgZmlsbD0iIzJhNmZkYiI+CiAgICA8dXNlIGhyZWY9IiN0cmF2ZWxlciIgeD0iNTUiIHk9IjIwNSIvPgogICAgPHVzZSBocmVmPSIjdHJhdmVsZXIiIHg9IjgwIiB5PSIyMjAiLz4KICAgIDx1c2UgaHJlZj0iI3RyYXZlbGVyIiB4PSIxMDAiIHk9IjE5NSIvPgogICAgPHVzZSBocmVmPSIjdHJhdmVsZXIiIHg9IjY1IiB5PSIxNzAiLz4KICAgIDx1c2UgaHJlZj0iI3RyYXZlbGVyIiB4PSIxMjAiIHk9IjIxMCIvPgogICAgPHVzZSBocmVmPSIjdHJhdmVsZXIiIHg9Ijk1IiB5PSIyMjUiLz4KICAgIDx1c2UgaHJlZj0iI3RyYXZlbGVyIiB4PSIxNDAiIHk9IjE5MCIvPgogICAgPHVzZSBocmVmPSIjdHJhdmVsZXIiIHg9IjQ1IiB5PSIxOTAiLz4KICAgIDx1c2UgaHJlZj0iI3RyYXZlbGVyIiB4PSIxNjAiIHk9IjIxNSIvPgogICAgPHVzZSBocmVmPSIjdHJhdmVsZXIiIHg9IjEzMCIgeT0iMTY1Ii8+CiAgPC9nPgogIDx0ZXh0IHg9IjEwNyIgeT0iMTIyIiBmb250LXNpemU9IjEzIiBmaWxsPSIjNmI3MjgwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5tYW55IHNwbGl0czwvdGV4dD4KCiAgPCEtLSBUaGUgaXNvbGF0ZWQgdHJhdmVsZXIg4oCUIHR3byByYW5kb20gc3BsaXRzIGJveCBpdCBvZmYgZnJvbSB0aGUgY3Jvd2QgLS0+CiAgPGcgc3Ryb2tlPSIjYzA2MTFmIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1kYXNoYXJyYXk9IjYgNCIgZmlsbD0ibm9uZSI+CiAgICA8bGluZSB4MT0iMzAwIiB5MT0iMjAiIHgyPSIzMDAiIHkyPSIyNDAiLz4KICAgIDxsaW5lIHgxPSIzMDAiIHkxPSI3MCIgeDI9IjM5MiIgeTI9IjcwIi8+CiAgPC9nPgogIDxnIGZpbGw9IiNjMDYxMWYiPgogICAgPHVzZSBocmVmPSIjdHJhdmVsZXIiIHg9IjM0NSIgeT0iNDUiLz4KICA8L2c+CiAgPHRleHQgeD0iMzQ1IiB5PSIyMCIgZm9udC1zaXplPSIxMyIgZmlsbD0iI2MwNjExZiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+MiBzcGxpdHM8L3RleHQ+Cjwvc3ZnPgo=" alt="A dense crowd of travelers requiring many random partition lines to separate, next to one isolated traveler boxed off by just two random splits" /></div>
+  <p class="caption">Average split count across many random trees — the checkpoint&#39;s quick random pull, formalized.</p>
+  <aside class="notes">Delivery: this is the checkpoint&#39;s fast, random bag-pull line, formalized — pick a random feature, pick a random cutoff, split the data in two, repeat; an anomaly gets isolated in just a couple of splits because it doesn&#39;t sit buried in the crowd. Audit use: fast first pass on a large tabular population, e.g. transaction amounts, with no labeled fraud to train on. Limit: isolates on global structure, so it misses outliers that are only unusual relative to a nearby cluster or peer group — that&#39;s Local Outlier Factor&#39;s job, next. Source: wiki resources/isolation-forest.md. Good fit: large datasets, higher-dimensional data, minimal tuning (contamination is usually the only knob worth setting). Poor fit: very small datasets, or when the anomaly is only locally strange.</aside>
+</section>
+
+<section class="layout-assertion-evidence">
+  <h2>Local Outlier Factor flags a point only when it&#39;s sparser than its own neighbors.</h2>
+  <div class="evidence"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MDAgMjYwIj4KICA8cmVjdCB4PSIxIiB5PSIxIiB3aWR0aD0iMzk4IiBoZWlnaHQ9IjI1OCIgcng9IjE0IiBmaWxsPSIjZmJmYWY4IiBzdHJva2U9IiNlNGUyZGMiIHN0cm9rZS13aWR0aD0iMiIvPgoKICA8ZGVmcz4KICAgIDxnIGlkPSJ0cmF2ZWxlciI+CiAgICAgIDxjaXJjbGUgY3g9IjAiIGN5PSItOSIgcj0iNCIvPgogICAgICA8cGF0aCBkPSJNIC02IDcgUSAwIC0zIDYgNyBaIi8+CiAgICA8L2c+CiAgPC9kZWZzPgoKICA8IS0tIERlbnNlIGxpbmUg4oCUIGEgYnVzeSBjaGVja3BvaW50LCB0aWdodGx5IHBhY2tlZCwgaGlnaCBsb2NhbCBkZW5zaXR5IC0tPgogIDxnIGZpbGw9IiMyYTZmZGIiPgogICAgPHVzZSBocmVmPSIjdHJhdmVsZXIiIHg9IjU1IiB5PSIyMTAiLz4KICAgIDx1c2UgaHJlZj0iI3RyYXZlbGVyIiB4PSI3MiIgeT0iMjIyIi8+CiAgICA8dXNlIGhyZWY9IiN0cmF2ZWxlciIgeD0iODgiIHk9IjIwNSIvPgogICAgPHVzZSBocmVmPSIjdHJhdmVsZXIiIHg9IjYzIiB5PSIxOTAiLz4KICAgIDx1c2UgaHJlZj0iI3RyYXZlbGVyIiB4PSI4MiIgeT0iMTg4Ii8+CiAgICA8dXNlIGhyZWY9IiN0cmF2ZWxlciIgeD0iMTAwIiB5PSIyMjAiLz4KICAgIDx1c2UgaHJlZj0iI3RyYXZlbGVyIiB4PSI0NSIgeT0iMjIyIi8+CiAgPC9nPgogIDxjaXJjbGUgY3g9IjcyIiBjeT0iMjA1IiByPSIzNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNmI3MjgwIiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLWRhc2hhcnJheT0iMyAzIi8+CiAgPHRleHQgeD0iNzIiIHk9IjI0OCIgZm9udC1zaXplPSIxMyIgZmlsbD0iIzZiNzI4MCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+ZGVuc2UgbmVpZ2hib3Job29kPC90ZXh0PgoKICA8IS0tIFF1aWV0IGxpbmUg4oCUIGEgc2xvdyBjaGVja3BvaW50LCB0cmF2ZWxlcnMgbmF0dXJhbGx5IG1vcmUgc3ByZWFkIG91dCAtLT4KICA8ZyBmaWxsPSIjMmE2ZmRiIj4KICAgIDx1c2UgaHJlZj0iI3RyYXZlbGVyIiB4PSIyNTAiIHk9IjU1Ii8+CiAgICA8dXNlIGhyZWY9IiN0cmF2ZWxlciIgeD0iMzAwIiB5PSI0NSIvPgogICAgPHVzZSBocmVmPSIjdHJhdmVsZXIiIHg9IjI4MCIgeT0iOTAiLz4KICAgIDx1c2UgaHJlZj0iI3RyYXZlbGVyIiB4PSIzMzAiIHk9Ijc1Ii8+CiAgPC9nPgoKICA8IS0tIFRoZSBmbGFnZ2VkIHRyYXZlbGVyIOKAlCBpdHMgbmVhcmVzdCBuZWlnaGJvciBpcyBtdWNoIGZhcnRoZXIgdGhhbiBhbnkgZ2FwIGluc2lkZSB0aGUgcXVpZXQgbGluZSBpdHNlbGYgLS0+CiAgPGcgZmlsbD0iI2MwNjExZiI+CiAgICA8dXNlIGhyZWY9IiN0cmF2ZWxlciIgeD0iMzIwIiB5PSIxNjAiLz4KICA8L2c+CiAgPGNpcmNsZSBjeD0iMzIwIiBjeT0iMTYwIiByPSI1MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjYzA2MTFmIiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLWRhc2hhcnJheT0iMyAzIi8+CiAgPHRleHQgeD0iMzIwIiB5PSIyMjIiIGZvbnQtc2l6ZT0iMTMiIGZpbGw9IiNjMDYxMWYiIHRleHQtYW5jaG9yPSJtaWRkbGUiPnNwYXJzZXIgdGhhbiBuZWlnaGJvcnM8L3RleHQ+Cjwvc3ZnPgo=" alt="A tightly packed dense checkpoint line, a naturally quieter line, and one traveler flagged because their local neighborhood is sparser than their neighbors&#39; neighborhoods" /></div>
+  <p class="caption">Local density ratio vs. nearby points — screening relative to who&#39;s in this line right now, not everyone who&#39;s ever flown.</p>
+  <aside class="notes">Delivery: this is screening relative to who&#39;s actually standing in this line right now, not the airport&#39;s entire population for the year — the checkpoint&#39;s context-aware read. Audit use: catches anomalies that are normal for the population overall but off for a specific peer group — a transaction that&#39;s ordinary for one merchant but wildly off for a given customer&#39;s usual pattern. Limit: needs a real distance metric, so it degrades in high-dimensional data and scales poorly to very large populations — Isolation Forest is the cheaper first pass. Source: wiki resources/local-outlier-factor.md. Good fit: density varies naturally across the dataset, peer-group-relative anomalies. Poor fit: very large or high-dimensional populations.</aside>
+</section>
+
+<section class="layout-assertion-evidence">
+  <h2>One-Class SVM draws a boundary around normal behavior; anything outside gets pulled.</h2>
+  <div class="evidence"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MDAgMjYwIj4KICA8cmVjdCB4PSIxIiB5PSIxIiB3aWR0aD0iMzk4IiBoZWlnaHQ9IjI1OCIgcng9IjE0IiBmaWxsPSIjZmJmYWY4IiBzdHJva2U9IiNlNGUyZGMiIHN0cm9rZS13aWR0aD0iMiIvPgoKICA8ZGVmcz4KICAgIDxnIGlkPSJ0cmF2ZWxlciI+CiAgICAgIDxjaXJjbGUgY3g9IjAiIGN5PSItOSIgcj0iNCIvPgogICAgICA8cGF0aCBkPSJNIC02IDcgUSAwIC0zIDYgNyBaIi8+CiAgICA8L2c+CiAgPC9kZWZzPgoKICA8IS0tIFRoZSB0cnVzdGVkLXRyYXZlbGVyIGJvdW5kYXJ5IOKAlCBsZWFybmVkIHRpZ2h0bHkgYXJvdW5kIG5vcm1hbCBiZWhhdmlvciAtLT4KICA8cGF0aCBkPSJNIDkwIDgwIEMgMTQwIDU1LCAyMDAgNjAsIDIzMCA5NSBDIDI2MCAxMjUsIDI1MCAxODUsIDIwNSAyMTUKICAgICAgICAgICBDIDE2NSAyNDUsIDEwMCAyMzIsIDcyIDE5MiBDIDUwIDE1OCwgNTggMTA4LCA5MCA4MCBaIgogICAgICAgIGZpbGw9IiMyYTZmZGIiIGZpbGwtb3BhY2l0eT0iMC4wOCIgc3Ryb2tlPSIjMmE2ZmRiIiBzdHJva2Utd2lkdGg9IjIuNSIvPgogIDx0ZXh0IHg9IjE1MCIgeT0iNDUiIGZvbnQtc2l6ZT0iMTMiIGZpbGw9IiMyYTZmZGIiIHRleHQtYW5jaG9yPSJtaWRkbGUiPmNsZWFyZWQgLyBub3JtYWw8L3RleHQ+CgogIDwhLS0gVHJhdmVsZXJzIGluc2lkZSB0aGUgYm91bmRhcnkg4oCUIGNsZWFyZWQgLS0+CiAgPGcgZmlsbD0iIzJhNmZkYiI+CiAgICA8dXNlIGhyZWY9IiN0cmF2ZWxlciIgeD0iMTIwIiB5PSIxNDAiLz4KICAgIDx1c2UgaHJlZj0iI3RyYXZlbGVyIiB4PSIxNTAiIHk9IjExMCIvPgogICAgPHVzZSBocmVmPSIjdHJhdmVsZXIiIHg9IjE3MCIgeT0iMTYwIi8+CiAgICA8dXNlIGhyZWY9IiN0cmF2ZWxlciIgeD0iMTMwIiB5PSIxODUiLz4KICAgIDx1c2UgaHJlZj0iI3RyYXZlbGVyIiB4PSIxODUiIHk9IjEzMCIvPgogICAgPHVzZSBocmVmPSIjdHJhdmVsZXIiIHg9IjEwMCIgeT0iMTY1Ii8+CiAgICA8dXNlIGhyZWY9IiN0cmF2ZWxlciIgeD0iMTYwIiB5PSIxOTUiLz4KICA8L2c+CgogIDwhLS0gRmxhZ2dlZCB0cmF2ZWxlciDigJQgZmFsbHMgb3V0c2lkZSB0aGUgbGVhcm5lZCBib3VuZGFyeSAtLT4KICA8ZyBmaWxsPSIjYzA2MTFmIj4KICAgIDx1c2UgaHJlZj0iI3RyYXZlbGVyIiB4PSIzMzUiIHk9IjcwIi8+CiAgPC9nPgogIDx0ZXh0IHg9IjMzNSIgeT0iMTAwIiBmb250LXNpemU9IjEzIiBmaWxsPSIjYzA2MTFmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5wdWxsZWQgYXNpZGU8L3RleHQ+Cjwvc3ZnPgo=" alt="A tight boundary curve enclosing a cluster of cleared travelers, with one traveler outside the boundary pulled aside" /></div>
+  <p class="caption">Maximum-margin boundary around normal data — the trusted-traveler lane&#39;s boundary, drawn in feature space.</p>
+  <aside class="notes">Delivery: this is the PreCheck trusted-traveler lane — decide what &#39;cleared normal&#39; looks like from clean training data, then anyone whose profile falls outside that boundary gets pulled for a second look. Audit use: cases needing an explicit, defensible boundary rather than a ranked score — a hard novelty gate. Limit: assumes the training population is already mostly clean; sensitive to kernel and hyperparameter choices; doesn&#39;t scale well to large populations. Source: wiki resources/one-class-svm.md. Good fit: mostly-clean training data, nonlinear normal behavior, medium-sized populations. Poor fit: large populations, training data already contaminated with anomalies, limited time to tune.</aside>
+</section>
+
+<section class="layout-assertion-evidence">
+  <h2>An autoencoder reconstructs normal patterns well, and anomalies badly.</h2>
+  <div class="evidence"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MDAgMjYwIj4KICA8cmVjdCB4PSIxIiB5PSIxIiB3aWR0aD0iMzk4IiBoZWlnaHQ9IjI1OCIgcng9IjE0IiBmaWxsPSIjZmJmYWY4IiBzdHJva2U9IiNlNGUyZGMiIHN0cm9rZS13aWR0aD0iMiIvPgoKICA8ZGVmcz4KICAgIDxnIGlkPSJ0cmF2ZWxlciI+CiAgICAgIDxjaXJjbGUgY3g9IjAiIGN5PSItOSIgcj0iNCIvPgogICAgICA8cGF0aCBkPSJNIC02IDcgUSAwIC0zIDYgNyBaIi8+CiAgICA8L2c+CiAgPC9kZWZzPgoKICA8IS0tIFRoZSBsZWFybmVkIG9mZmljZXI6IGNvbXByZXNzIHRvIGEgZ3V0IHJlYWQsIHRoZW4gY2hlY2sgaXQgcmVjb25zdHJ1Y3RzIC0tPgogIDx0ZXh0IHg9IjIwMCIgeT0iMjAiIGZvbnQtc2l6ZT0iMTMiIGZpbGw9IiM2YjcyODAiIHRleHQtYW5jaG9yPSJtaWRkbGUiPnRyYWluZWQgb24gb3JkaW5hcnkgdHJhdmVsZXJzIG9ubHk8L3RleHQ+CgogIDwhLS0gUm93IDE6IGEgbm9ybWFsIHRyYXZlbGVyIHJlY29uc3RydWN0cyBjbGVhbmx5IC0tPgogIDxnIGZpbGw9IiMyYTZmZGIiPgogICAgPHVzZSBocmVmPSIjdHJhdmVsZXIiIHg9IjM1IiB5PSI3NSIvPgogIDwvZz4KICA8bGluZSB4MT0iNDgiIHkxPSI3MCIgeDI9IjkwIiB5Mj0iNzAiIHN0cm9rZT0iIzlhYTBhOCIgc3Ryb2tlLXdpZHRoPSIxLjUiLz4KICA8cG9seWdvbiBwb2ludHM9IjkwLDU1IDEzMCw2MyAxMzAsNzcgOTAsODUiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzZiNzI4MCIgc3Ryb2tlLXdpZHRoPSIxLjUiLz4KICA8bGluZSB4MT0iMTMwIiB5MT0iNzAiIHgyPSIxNTIiIHkyPSI3MCIgc3Ryb2tlPSIjOWFhMGE4IiBzdHJva2Utd2lkdGg9IjEuNSIvPgogIDxjaXJjbGUgY3g9IjE2NSIgY3k9IjcwIiByPSI4IiBmaWxsPSIjNmI3MjgwIi8+CiAgPGxpbmUgeDE9IjE3OCIgeTE9IjcwIiB4Mj0iMjAwIiB5Mj0iNzAiIHN0cm9rZT0iIzlhYTBhOCIgc3Ryb2tlLXdpZHRoPSIxLjUiLz4KICA8cG9seWdvbiBwb2ludHM9IjIwMCw2MyAyNDAsNTUgMjQwLDg1IDIwMCw3NyIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNmI3MjgwIiBzdHJva2Utd2lkdGg9IjEuNSIvPgogIDxsaW5lIHgxPSIyNDAiIHkxPSI3MCIgeDI9IjI2MiIgeTI9IjcwIiBzdHJva2U9IiM5YWEwYTgiIHN0cm9rZS13aWR0aD0iMS41Ii8+CiAgPGcgZmlsbD0iIzJhNmZkYiI+CiAgICA8dXNlIGhyZWY9IiN0cmF2ZWxlciIgeD0iMjc4IiB5PSI3NSIvPgogIDwvZz4KICA8dGV4dCB4PSIzMzAiIHk9Ijc5IiBmb250LXNpemU9IjEzIiBmaWxsPSIjMmE2ZmRiIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5zbWFsbCBlcnJvcjwvdGV4dD4KCiAgPCEtLSBSb3cgMjogYW4gYW5vbWFseSB0aGUgbmV0d29yayBuZXZlciBsZWFybmVkIHRvIGNvbXByZXNzIC0tPgogIDxnIGZpbGw9IiNjMDYxMWYiPgogICAgPHVzZSBocmVmPSIjdHJhdmVsZXIiIHg9IjM1IiB5PSIxOTUiLz4KICA8L2c+CiAgPGxpbmUgeDE9IjQ4IiB5MT0iMTkwIiB4Mj0iOTAiIHkyPSIxOTAiIHN0cm9rZT0iIzlhYTBhOCIgc3Ryb2tlLXdpZHRoPSIxLjUiLz4KICA8cG9seWdvbiBwb2ludHM9IjkwLDE3NSAxMzAsMTgzIDEzMCwxOTcgOTAsMjA1IiBmaWxsPSJub25lIiBzdHJva2U9IiM2YjcyODAiIHN0cm9rZS13aWR0aD0iMS41Ii8+CiAgPGxpbmUgeDE9IjEzMCIgeTE9IjE5MCIgeDI9IjE1MiIgeTI9IjE5MCIgc3Ryb2tlPSIjOWFhMGE4IiBzdHJva2Utd2lkdGg9IjEuNSIvPgogIDxjaXJjbGUgY3g9IjE2NSIgY3k9IjE5MCIgcj0iOCIgZmlsbD0iIzZiNzI4MCIvPgogIDxsaW5lIHgxPSIxNzgiIHkxPSIxOTAiIHgyPSIyMDAiIHkyPSIxOTAiIHN0cm9rZT0iIzlhYTBhOCIgc3Ryb2tlLXdpZHRoPSIxLjUiLz4KICA8cG9seWdvbiBwb2ludHM9IjIwMCwxODMgMjQwLDE3NSAyNDAsMjA1IDIwMCwxOTciIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzZiNzI4MCIgc3Ryb2tlLXdpZHRoPSIxLjUiLz4KICA8bGluZSB4MT0iMjQwIiB5MT0iMTkwIiB4Mj0iMjYyIiB5Mj0iMTkwIiBzdHJva2U9IiM5YWEwYTgiIHN0cm9rZS13aWR0aD0iMS41Ii8+CiAgPGcgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjYzA2MTFmIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1kYXNoYXJyYXk9IjIgMiI+CiAgICA8dXNlIGhyZWY9IiN0cmF2ZWxlciIgeD0iMjc4IiB5PSIxOTUiLz4KICA8L2c+CiAgPHRleHQgeD0iMzMwIiB5PSIxOTkiIGZvbnQtc2l6ZT0iMTMiIGZpbGw9IiNjMDYxMWYiIHRleHQtYW5jaG9yPSJtaWRkbGUiPmxhcmdlIGVycm9yPC90ZXh0Pgo8L3N2Zz4K" alt="A normal traveler passing cleanly through a compress-and-rebuild pipeline with a small error, next to an anomalous traveler whose reconstruction comes out badly wrong with a large error" /></div>
+  <p class="caption">Reconstruction error through a compressed bottleneck — the veteran officer&#39;s eye for &#39;that&#39;s not how a normal traveler acts.&#39;</p>
+  <aside class="notes">Delivery: this is the veteran officer who&#39;s seen thousands of ordinary travelers and now just knows, in the gut, when someone doesn&#39;t reconstruct as &#39;normal&#39; — even without a rule that names why. Audit use: high-dimensional or unstructured data — sensor streams, images, complex multivariate logs — where the normal pattern is genuinely nonlinear. Limit: needs more data and tuning than the other three; a reconstruction-error flag is the hardest of the four to explain to a stakeholder (&#39;this took only two splits to isolate&#39; is an easier story than &#39;the reconstruction error was high&#39;). Source: wiki resources/autoencoders.md. Good fit: high-dimensional/complex data, enough normal-only training data to fit a network properly. Poor fit: small datasets, or simple tabular data a cheaper method already handles well.</aside>
+</section>
+
+<section class="layout-assertion-evidence">
+  <h2>The right technique depends on how much you know about &#39;normal&#39; and population size.</h2>
+  <div class="evidence"><table><thead><tr><th>Technique</th><th>Best audit fit</th><th>Watch out for</th></tr></thead><tbody><tr><td>Isolation Forest</td><td>Large populations, no labeled fraud</td><td>Misses peer-relative outliers</td></tr><tr><td>Local Outlier Factor</td><td>Peer-group-relative anomalies</td><td>Slow at large scale</td></tr><tr><td>One-Class SVM</td><td>Clean known-normal training data</td><td>Tuning-heavy, doesn&#39;t scale</td></tr><tr><td>Autoencoder</td><td>High-dimensional or unstructured data</td><td>Needs more data; hard to explain a flag</td></tr></tbody></table></div>
+  <p class="caption">Start with Isolation Forest unless the data says otherwise — cheapest, and least tuning.</p>
+  <aside class="notes">Delivery: last call-back to the checkpoint before we get practical — the random pull, the context-aware line, the trusted-traveler lane, the veteran officer&#39;s eye, now with their real names side by side. Choosing among the four is mostly about how much clean &#39;normal&#39; data you have and how large the population is. These four are the machinery underneath the fraud red-flag catalog (wiki: Fraud Analytics and Red Flags) — that note says what to look for (duplicate/split payments, ghost vendors, round-dollar bias); these techniques are how you&#39;d actually score a population for it without hand-writing a rule for every variant.</aside>
+</section>
+
+<section class="layout-section-divider dark">
+  <p class="label">Part 3</p>
+  <h2>Piloting It Here</h2>
+  <aside class="notes">Delivery: &#39;The checkpoint metaphor&#39;s done its job — let&#39;s talk about what you&#39;d actually run this quarter.&#39;</aside>
+</section>
+
+<section class="layout-timeline">
+  <h2>A first anomaly-detection pilot, end to end</h2>
+  <div class="steps">
+    <div class="step"><div class="label">1. Pick a population</div><div class="detail">No existing fraud label, tied out to a control total first</div></div>
+<div class="step"><div class="label">2. Choose features</div><div class="detail">Fields grounded in known red flags — amount, timing, vendor tenure</div></div>
+<div class="step"><div class="label">3. Run Isolation Forest</div><div class="detail">Cheapest, least tuning; flag the top ~5% most anomalous records</div></div>
+<div class="step"><div class="label">4. Investigate, don&#39;t conclude</div><div class="detail">Treat flags as leads for existing substantive procedures</div></div>
+  </div>
+  <aside class="notes">Delivery: this is planning the checkpoint shift itself. Decide who&#39;s coming through today (population), what you&#39;re actually screening for (features grounded in fraud red flags — wiki: Fraud Analytics and Red Flags — not generic behavior fields), run the fast random-pull line first (Isolation Forest, before reaching for the other three), then actually act on who got pulled aside. Population still has to be reconciled to a control total first (wiki: Data Quality for Analytics) — a flawless model run against an unreconciled population is a confidently wrong one.</aside>
+</section>
+
+<section class="layout-assertion-evidence">
+  <h2>A flagged record is a lead to investigate, not a finding on its own.</h2>
+  <div class="evidence"><table><thead><tr><th>Risk</th><th>How to manage it</th></tr></thead><tbody><tr><td>False positives dominate an untuned first pass</td><td>Expect it — that&#39;s normal, not a failed pilot</td></tr><tr><td>A flag has no built-in explanation of &#39;why&#39;</td><td>Document the features and threshold used before reporting</td></tr><tr><td>Scoring an incomplete population misleads</td><td>Tie out to a control total first</td></tr></tbody></table></div>
+  <p class="caption">Anomaly detection changes what gets a second look — not what counts as audit evidence.</p>
+  <aside class="notes">Delivery: even the veteran officer&#39;s gut read doesn&#39;t end the story at the checkpoint — it starts a bag search. Same here: a flag is where the actual audit procedure begins, not where it ends. Set the false-positive expectation with the room before anyone runs anything — a first untuned pass flagging mostly-normal records is the expected cost of the technique, not a sign it failed (wiki: Continuous Auditing and Monitoring). Source: same standards discipline as any other analytic — IIA Standards&#39; sufficient-and-appropriate-evidence bar still applies to a flag that came out of a model.</aside>
+</section>
+
+<section class="layout-closing dark">
+  <h2>Anomaly detection turns &#39;we wouldn&#39;t know where to look&#39; into a ranked, testable list.</h2>
+  <p class="cta">Pick one unlabeled population and run a first Isolation Forest pass this quarter.</p>
+  <aside class="notes">Delivery: close on the checkpoint image one last time — you don&#39;t need a photo of the specific threat in advance to notice who doesn&#39;t belong in the line. Start small: one population, one technique (Isolation Forest), run in whatever tool you already have, one review of the flagged group with someone who owns the process. Worth naming if the room is skeptical: IIA&#39;s current data-analytics guidance and ISACA&#39;s AAIA credential both treat this as standards-sanctioned skill-building, not shadow IT.</aside>
+</section>
+
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    width: 1920,
+    height: 1080,
+    margin: 0.04,
+    showNotes: false,
+    plugins: typeof RevealNotes !== 'undefined' ? [ RevealNotes ] : []
+  });
+</script>
+<script>
+  // Presenter-only color-theme toggle — press "T" to cycle. No on-screen
+  // control by design (PATTERN.md §7's no-decorative-chrome rule).
+  (function () {
+    var THEMES = ["slate","forest","copper"];
+    var root = document.documentElement;
+    root.dataset.theme = root.dataset.theme || THEMES[0];
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== 't' && e.key !== 'T') return;
+      var i = THEMES.indexOf(root.dataset.theme);
+      root.dataset.theme = THEMES[(i + 1) % THEMES.length];
+    });
+  })();
+</script>
+<script>
+  // Solo-review toggle — press "N" to show notes inline on the slide
+  // itself, via reveal.js's own showNotes config rather than the Notes
+  // plugin's speaker-view window.open() (which some browsers/settings
+  // block outright, unlike this). Off by default: a real presentation
+  // still relies on "S" (speaker view) so the audience-facing screen
+  // never shows notes unless this has been explicitly toggled on.
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'n' && e.key !== 'N') return;
+    Reveal.configure({ showNotes: !Reveal.getConfig().showNotes });
+  });
+</script>
+</body>
+</html>

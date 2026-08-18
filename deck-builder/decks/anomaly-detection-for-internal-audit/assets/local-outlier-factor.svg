@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260">
+  <rect x="1" y="1" width="398" height="258" rx="14" fill="#fbfaf8" stroke="#e4e2dc" stroke-width="2"/>
+
+  <defs>
+    <g id="traveler">
+      <circle cx="0" cy="-9" r="4"/>
+      <path d="M -6 7 Q 0 -3 6 7 Z"/>
+    </g>
+  </defs>
+
+  <!-- Dense line — a busy checkpoint, tightly packed, high local density -->
+  <g fill="#2a6fdb">
+    <use href="#traveler" x="55" y="210"/>
+    <use href="#traveler" x="72" y="222"/>
+    <use href="#traveler" x="88" y="205"/>
+    <use href="#traveler" x="63" y="190"/>
+    <use href="#traveler" x="82" y="188"/>
+    <use href="#traveler" x="100" y="220"/>
+    <use href="#traveler" x="45" y="222"/>
+  </g>
+  <circle cx="72" cy="205" r="34" fill="none" stroke="#6b7280" stroke-width="1.5" stroke-dasharray="3 3"/>
+  <text x="72" y="248" font-size="13" fill="#6b7280" text-anchor="middle">dense neighborhood</text>
+
+  <!-- Quiet line — a slow checkpoint, travelers naturally more spread out -->
+  <g fill="#2a6fdb">
+    <use href="#traveler" x="250" y="55"/>
+    <use href="#traveler" x="300" y="45"/>
+    <use href="#traveler" x="280" y="90"/>
+    <use href="#traveler" x="330" y="75"/>
+  </g>
+
+  <!-- The flagged traveler — its nearest neighbor is much farther than any gap inside the quiet line itself -->
+  <g fill="#c0611f">
+    <use href="#traveler" x="320" y="160"/>
+  </g>
+  <circle cx="320" cy="160" r="50" fill="none" stroke="#c0611f" stroke-width="1.5" stroke-dasharray="3 3"/>
+  <text x="320" y="222" font-size="13" fill="#c0611f" text-anchor="middle">sparser than neighbors</text>
+</svg>

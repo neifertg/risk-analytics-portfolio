@@ -103,6 +103,77 @@ html, body {
   text-align: left;
   padding: var(--space-xl);
   box-sizing: border-box;
+  /* No position rule here: reveal.js's own stylesheet already sets
+     position: absolute on every .reveal .slides section — that's load-
+     bearing for its slide-stacking/navigation mechanism. An optional
+     .slide-icon (below) anchors fine against that existing positioned
+     ancestor; redeclaring position here (even to "relative") was tried and
+     silently broke reveal's own layout() calculations — slides after the
+     first stopped rendering in place (top offset stuck at a stale stacked
+     value). Confirmed via Reveal.getCurrentSlide().getBoundingClientRect()
+     showing the "present" slide positioned off-canvas. Don't reintroduce
+     a position declaration on this selector. */
+}
+
+/* ---------- optional per-slide icon ---------- */
+/* A single topical accent icon (see PATTERN.md's "Optional per-slide icon"
+   section) — author opt-in via a slide's `icon:` field, never automatic.
+   Low-opacity and z-index:-1 so it reads as background texture behind the
+   slide's real content, never competing with it (PATTERN.md §7 anti-slop:
+   this is content-aligned per-slide texture, not a blanket decorative
+   motif — use sparingly, one relevant icon per slide at most). */
+.slide-icon {
+  position: absolute;
+  top: var(--space-lg);
+  right: var(--space-lg);
+  width: 9rem;
+  height: 9rem;
+  color: var(--color-accent);
+  opacity: 0.1;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.slide-icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.reveal .slides section.dark .slide-icon {
+  color: var(--color-accent-on-dark);
+}
+
+/* ---------- badge icon (comparison columns / timeline steps) ---------- */
+/* A second, independent icon pattern from .slide-icon above — not a variant
+   of it. Author opt-in via a comparison column's or timeline step's `icon`
+   field (PATTERN.md's "Optional badge icon" section). Where .slide-icon is
+   low-opacity background texture for one slide, .icon-badge is a small,
+   full-opacity, meaningful marker for a *recurring category* — it always
+   sits inline next to that category's own text label, never alone, because
+   an icon carrying real meaning (not pure decoration) needs to clear WCAG's
+   3:1 contrast floor and can't be the sole signal (WCAG G207). Full opacity
+   is what that requires; low-opacity texture would fail it.
+   Uses --color-accent on --color-accent-soft — already a checked pair in
+   scripts/check-contrast.mjs's PAIRS list (comparison column headings use
+   the same combination), so no new contrast entry is needed. No dark-surface
+   variant: comparison/timeline never render on the .dark surface today. */
+.icon-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+  flex-shrink: 0;
+}
+
+.icon-badge svg {
+  width: 60%;
+  height: 60%;
+  display: block;
 }
 
 .reveal .slides section.dark {
@@ -271,8 +342,18 @@ html, body {
 }
 
 .layout-assertion-evidence .evidence {
+  /* align-items: flex-end, not center: the evidence row is a flexible
+     (1fr) grid track, so whenever the image's rendered height (capped at
+     560px, see .evidence img below) is less than the row's available
+     height, centering left equal empty space above *and* below the image
+     — pushing the image, and the caption that follows the row, up toward
+     the middle of the slide instead of down near the bottom padding.
+     Bottom-aligning collapses that gap to a single band above the image
+     (between headline and evidence), so the image sits directly on top of
+     its caption and the pair reads as anchored near the slide's bottom
+     edge, closer to how a captioned figure is conventionally read. */
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
   min-height: 0;
   min-width: 0;
@@ -365,6 +446,12 @@ html, body {
 .layout-comparison .column h3 {
   font-size: var(--font-scale-headline);
   color: var(--color-accent);
+  /* display:flex only matters when an .icon-badge is present (see
+     "Optional badge icon", PATTERN.md) — harmless no-op otherwise, since a
+     lone text node still lays out normally as a flex item. */
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
 }
 
 .layout-comparison .column ul {
@@ -381,7 +468,9 @@ html, body {
 
 .layout-timeline .steps {
   display: flex;
-  gap: var(--space-md);
+  /* Wider than other flex galleries (space-md) so each connector chevron
+     below has visible room between steps instead of touching them. */
+  gap: var(--space-lg);
   align-items: flex-start;
   margin-top: var(--space-lg);
 }
@@ -389,12 +478,40 @@ html, body {
 .layout-timeline .step {
   flex: 1;
   padding-top: var(--space-sm);
+  position: relative;
+}
+
+/* A chevron in the gap after every step but the last — sequence is the
+   whole point of a timeline (PATTERN.md's classification rule for this
+   layout), so the path between steps is drawn, not left implied by a bare
+   numbered row. Pure CSS border-arrow: two borders of a square, rotated
+   45deg, so it inherits --color-accent via border-color and needs no
+   separate icon asset or data URI. */
+.layout-timeline .step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 1.9rem;
+  right: calc(-1 * var(--space-lg) / 2 - 0.45rem);
+  width: 0.9rem;
+  height: 0.9rem;
+  border-top: 3px solid var(--color-accent);
+  border-right: 3px solid var(--color-accent);
+  transform: rotate(45deg);
+}
+
+.reveal .slides section.dark .layout-timeline .step:not(:last-child)::after {
+  border-color: var(--color-accent-on-dark);
 }
 
 .layout-timeline .step .label {
   font-size: var(--font-scale-body);
   font-weight: 600;
   color: var(--color-ink);
+  /* display:flex only matters when an .icon-badge is present (see
+     "Optional badge icon", PATTERN.md) — harmless no-op otherwise. */
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
 }
 
 .layout-timeline .step .detail {

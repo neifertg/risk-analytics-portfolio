@@ -1,0 +1,144 @@
+title: "Anomaly Detection for Internal Audit"
+objective: "Give internal audit staff enough working knowledge of four anomaly-detection techniques, and a concrete first pilot, to launch one on real audit data this quarter."
+audience: "Internal/IT audit staff with some analytics exposure but not a data-scientist background; a live internal training session."
+slides:
+  - layout: title
+    title: "Anomaly Detection for Internal Audit"
+    subtitle: "Finding the transaction that doesn't look like the rest"
+    author: "Internal Audit — Analytics Training"
+    date: "2026-08-09"
+    notes: "Delivery: plant the frame lightly and move on — 'I'm going to explain four ways to catch a rare bad case the same way you'd explain four ways an airport checkpoint catches the one traveler who doesn't belong.' Don't over-explain it yet, just tease it. Let the title sit a beat before advancing."
+
+  - layout: quote
+    quote: "Working through this on your own? Press N anytime to reveal these speaker notes, T to cycle color themes — arrow keys or the on-screen controls move between slides."
+    attribution: "How to use this deck"
+    notes: "Delivery: skip this slide entirely when presenting live — it's for anyone navigating solo later. If skipping, jump straight from the title to the agenda."
+
+  - layout: agenda
+    title: "Agenda"
+    items:
+      - "Why rule-based testing misses the rare case"
+      - "Four techniques, one job: isolate what doesn't fit"
+      - "Picking a technique for the population in front of you"
+      - "Where to start: a first pilot this quarter"
+    notes: "Delivery: don't read the list verbatim — one clause per line as you point at it. Bridge: 'Before any of that, here's the one picture that makes all four techniques click at once.'"
+
+  - layout: assertion-evidence
+    icon: "assets/icon-plane.svg"
+    headline: "Four ways to catch what doesn't belong — think of an airport security checkpoint."
+    evidence:
+      type: table
+      rows:
+        - ["Technique", "Checkpoint analog", "What it's actually doing"]
+        - ["Isolation Forest", "The quick random bag-pull", "Isolates anything that stands out fast, no known threat profile needed"]
+        - ["Local Outlier Factor", "Screening relative to this line, right now", "Flags a traveler only if they don't fit the people around them"]
+        - ["One-Class SVM", "The PreCheck / trusted-traveler lane", "Defines 'cleared normal'; anyone outside it gets pulled"]
+        - ["Autoencoder", "The veteran officer's trained eye", "Learned what normal behavior looks like; flags whatever doesn't fit it"]
+    caption: "Same job, four different checkpoints — each one catches a different shape of 'doesn't belong.'"
+    notes: "Delivery: 'Before I show you the algorithms, here's what they're actually doing — think of an airport security checkpoint. Different stations catch different kinds of trouble, and none of them need a photo of the specific thing they're looking for.' Bridge into Part 1: 'Now let's talk about why that checkpoint instinct is useful in audit work, not just at the airport.' Domain fit: airport screening was chosen over a factory-inspection-line alternative specifically because it doesn't collide with any single technique's own textbook example — the autoencoder note's own illustrative case is a factory defect line, so reusing that domain for the metaphor would have made that one slide feel redundant rather than illuminating. Considered and set aside: medical screening tests (equally valid mechanically, less viscerally familiar to this audience than airport security)."
+
+  - layout: section-divider
+    label: "Part 1"
+    title: "The Blind Spot in Rule-Based Testing"
+    notes: "Delivery: bridge from the checkpoint comparison slide — 'A checkpoint built only to catch last year's smuggling method misses this year's. Most of our rule-based testing has the same blind spot.'"
+
+  - layout: assertion-evidence
+    headline: "Rule-based tests only catch the pattern an auditor already thought to write a rule for."
+    evidence:
+      type: table
+      rows:
+        - ["Rule-based testing", "Anomaly detection"]
+        - ["Catches only a pattern someone already wrote a rule for", "Learns what 'normal' looks like, flags what doesn't fit"]
+        - ["Needs a known scenario to test for", "No prior label of 'bad' required"]
+        - ["Blind to a new or unanticipated scheme", "Can surface a pattern no one has seen before"]
+    caption: "Most fraud schemes don't announce themselves with a rule you already wrote."
+    notes: "Delivery: no checkpoint officer gets a photo of tomorrow's new smuggling method in advance either — they're trained to notice what doesn't fit, not to match a known list. This is the core motivation for anomaly detection in audit: fraud/error labels are rare, expensive, or don't exist yet for a new risk area, and threshold-based rules only catch what someone already anticipated. Two things to set expectations on now, not later: the population still has to be reconciled to a control total before any flag is defensible as audit evidence (wiki: Data Quality for Analytics), and an anomaly-detection finding has to clear the same sufficient-and-appropriate-evidence bar as any other (wiki: IIA Standards). This isn't shadow IT — treat it that way from slide one."
+
+  - layout: section-divider
+    label: "Part 2"
+    title: "Four Ways to Catch the Outlier"
+    notes: "Delivery: 'Now let's put a name on each checkpoint's actual mechanism.'"
+
+  - layout: assertion-evidence
+    headline: "Isolation Forest isolates the outlier in a few random splits — most points take many more."
+    evidence:
+      type: diagram
+      src: "assets/isolation-forest.svg"
+      alt: "A dense crowd of travelers requiring many random partition lines to separate, next to one isolated traveler boxed off by just two random splits"
+    caption: "Average split count across many random trees — the checkpoint's quick random pull, formalized."
+    notes: "Delivery: this is the checkpoint's fast, random bag-pull line, formalized — pick a random feature, pick a random cutoff, split the data in two, repeat; an anomaly gets isolated in just a couple of splits because it doesn't sit buried in the crowd. Audit use: fast first pass on a large tabular population, e.g. transaction amounts, with no labeled fraud to train on. Limit: isolates on global structure, so it misses outliers that are only unusual relative to a nearby cluster or peer group — that's Local Outlier Factor's job, next. Source: wiki resources/isolation-forest.md. Good fit: large datasets, higher-dimensional data, minimal tuning (contamination is usually the only knob worth setting). Poor fit: very small datasets, or when the anomaly is only locally strange."
+
+  - layout: assertion-evidence
+    headline: "Local Outlier Factor flags a point only when it's sparser than its own neighbors."
+    evidence:
+      type: diagram
+      src: "assets/local-outlier-factor.svg"
+      alt: "A tightly packed dense checkpoint line, a naturally quieter line, and one traveler flagged because their local neighborhood is sparser than their neighbors' neighborhoods"
+    caption: "Local density ratio vs. nearby points — screening relative to who's in this line right now, not everyone who's ever flown."
+    notes: "Delivery: this is screening relative to who's actually standing in this line right now, not the airport's entire population for the year — the checkpoint's context-aware read. Audit use: catches anomalies that are normal for the population overall but off for a specific peer group — a transaction that's ordinary for one merchant but wildly off for a given customer's usual pattern. Limit: needs a real distance metric, so it degrades in high-dimensional data and scales poorly to very large populations — Isolation Forest is the cheaper first pass. Source: wiki resources/local-outlier-factor.md. Good fit: density varies naturally across the dataset, peer-group-relative anomalies. Poor fit: very large or high-dimensional populations."
+
+  - layout: assertion-evidence
+    headline: "One-Class SVM draws a boundary around normal behavior; anything outside gets pulled."
+    evidence:
+      type: diagram
+      src: "assets/one-class-svm.svg"
+      alt: "A tight boundary curve enclosing a cluster of cleared travelers, with one traveler outside the boundary pulled aside"
+    caption: "Maximum-margin boundary around normal data — the trusted-traveler lane's boundary, drawn in feature space."
+    notes: "Delivery: this is the PreCheck trusted-traveler lane — decide what 'cleared normal' looks like from clean training data, then anyone whose profile falls outside that boundary gets pulled for a second look. Audit use: cases needing an explicit, defensible boundary rather than a ranked score — a hard novelty gate. Limit: assumes the training population is already mostly clean; sensitive to kernel and hyperparameter choices; doesn't scale well to large populations. Source: wiki resources/one-class-svm.md. Good fit: mostly-clean training data, nonlinear normal behavior, medium-sized populations. Poor fit: large populations, training data already contaminated with anomalies, limited time to tune."
+
+  - layout: assertion-evidence
+    headline: "An autoencoder reconstructs normal patterns well, and anomalies badly."
+    evidence:
+      type: diagram
+      src: "assets/autoencoders.svg"
+      alt: "A normal traveler passing cleanly through a compress-and-rebuild pipeline with a small error, next to an anomalous traveler whose reconstruction comes out badly wrong with a large error"
+    caption: "Reconstruction error through a compressed bottleneck — the veteran officer's eye for 'that's not how a normal traveler acts.'"
+    notes: "Delivery: this is the veteran officer who's seen thousands of ordinary travelers and now just knows, in the gut, when someone doesn't reconstruct as 'normal' — even without a rule that names why. Audit use: high-dimensional or unstructured data — sensor streams, images, complex multivariate logs — where the normal pattern is genuinely nonlinear. Limit: needs more data and tuning than the other three; a reconstruction-error flag is the hardest of the four to explain to a stakeholder ('this took only two splits to isolate' is an easier story than 'the reconstruction error was high'). Source: wiki resources/autoencoders.md. Good fit: high-dimensional/complex data, enough normal-only training data to fit a network properly. Poor fit: small datasets, or simple tabular data a cheaper method already handles well."
+
+  - layout: assertion-evidence
+    headline: "The right technique depends on how much you know about 'normal' and population size."
+    evidence:
+      type: table
+      rows:
+        - ["Technique", "Best audit fit", "Watch out for"]
+        - ["Isolation Forest", "Large populations, no labeled fraud", "Misses peer-relative outliers"]
+        - ["Local Outlier Factor", "Peer-group-relative anomalies", "Slow at large scale"]
+        - ["One-Class SVM", "Clean known-normal training data", "Tuning-heavy, doesn't scale"]
+        - ["Autoencoder", "High-dimensional or unstructured data", "Needs more data; hard to explain a flag"]
+    caption: "Start with Isolation Forest unless the data says otherwise — cheapest, and least tuning."
+    notes: "Delivery: last call-back to the checkpoint before we get practical — the random pull, the context-aware line, the trusted-traveler lane, the veteran officer's eye, now with their real names side by side. Choosing among the four is mostly about how much clean 'normal' data you have and how large the population is. These four are the machinery underneath the fraud red-flag catalog (wiki: Fraud Analytics and Red Flags) — that note says what to look for (duplicate/split payments, ghost vendors, round-dollar bias); these techniques are how you'd actually score a population for it without hand-writing a rule for every variant."
+
+  - layout: section-divider
+    label: "Part 3"
+    title: "Piloting It Here"
+    notes: "Delivery: 'The checkpoint metaphor's done its job — let's talk about what you'd actually run this quarter.'"
+
+  - layout: timeline
+    headline: "A first anomaly-detection pilot, end to end"
+    steps:
+      - label: "1. Pick a population"
+        detail: "No existing fraud label, tied out to a control total first"
+      - label: "2. Choose features"
+        detail: "Fields grounded in known red flags — amount, timing, vendor tenure"
+      - label: "3. Run Isolation Forest"
+        detail: "Cheapest, least tuning; flag the top ~5% most anomalous records"
+      - label: "4. Investigate, don't conclude"
+        detail: "Treat flags as leads for existing substantive procedures"
+    notes: "Delivery: this is planning the checkpoint shift itself. Decide who's coming through today (population), what you're actually screening for (features grounded in fraud red flags — wiki: Fraud Analytics and Red Flags — not generic behavior fields), run the fast random-pull line first (Isolation Forest, before reaching for the other three), then actually act on who got pulled aside. Population still has to be reconciled to a control total first (wiki: Data Quality for Analytics) — a flawless model run against an unreconciled population is a confidently wrong one."
+
+  - layout: assertion-evidence
+    headline: "A flagged record is a lead to investigate, not a finding on its own."
+    evidence:
+      type: table
+      rows:
+        - ["Risk", "How to manage it"]
+        - ["False positives dominate an untuned first pass", "Expect it — that's normal, not a failed pilot"]
+        - ["A flag has no built-in explanation of 'why'", "Document the features and threshold used before reporting"]
+        - ["Scoring an incomplete population misleads", "Tie out to a control total first"]
+    caption: "Anomaly detection changes what gets a second look — not what counts as audit evidence."
+    notes: "Delivery: even the veteran officer's gut read doesn't end the story at the checkpoint — it starts a bag search. Same here: a flag is where the actual audit procedure begins, not where it ends. Set the false-positive expectation with the room before anyone runs anything — a first untuned pass flagging mostly-normal records is the expected cost of the technique, not a sign it failed (wiki: Continuous Auditing and Monitoring). Source: same standards discipline as any other analytic — IIA Standards' sufficient-and-appropriate-evidence bar still applies to a flag that came out of a model."
+
+  - layout: closing
+    headline: "Anomaly detection turns 'we wouldn't know where to look' into a ranked, testable list."
+    cta: "Pick one unlabeled population and run a first Isolation Forest pass this quarter."
+    notes: "Delivery: close on the checkpoint image one last time — you don't need a photo of the specific threat in advance to notice who doesn't belong in the line. Start small: one population, one technique (Isolation Forest), run in whatever tool you already have, one review of the flagged group with someone who owns the process. Worth naming if the room is skeptical: IIA's current data-analytics guidance and ISACA's AAIA credential both treat this as standards-sanctioned skill-building, not shadow IT."

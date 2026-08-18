@@ -24,6 +24,10 @@ const CONTENT_SLIDE_WARN = 15;
 const TABLE_CELL_WARN = 70;
 const EVIDENCE_RATIO_MIN = 1.1;
 const EVIDENCE_RATIO_MAX = 2.4;
+// Layouts whose own shape is already a visual break from a plain claim +
+// text — see the "visual rhythm" warning below (PATTERN.md §4).
+const INHERENTLY_VISUAL_LAYOUTS = new Set(['big-stat', 'comparison', 'timeline', 'quote']);
+const VISUAL_RHYTHM_STREAK_WARN = 4;
 
 function isBlank(value) {
   return value === undefined || value === null || value === '';
@@ -98,6 +102,32 @@ function main() {
     }
 
     let contentCount = 0;
+    // label (trimmed) -> Map<iconPath, slideNumber[]>, across every
+    // comparison column / timeline step that sets an icon — used below to
+    // catch a recurring category using a different badge icon in different
+    // places (PATTERN.md's "Optional badge icon" section).
+    const badgeIconsByLabel = new Map();
+    let rhythmStreak = 0;
+    let rhythmStreakStart = null;
+    let rhythmWarned = false;
+
+    function checkBadgeIcon(icon, label, kind, n) {
+      if (!icon) return;
+      if (isLocalEvidencePath(icon)) {
+        const iconPath = path.resolve(deckDir, icon);
+        if (!fs.existsSync(iconPath)) {
+          errors.push(`slide ${n}: ${kind} "${label}" icon "${icon}" does not resolve to a file (looked for ${iconPath})`);
+        }
+      }
+      if (label) {
+        const key = label.trim();
+        if (!badgeIconsByLabel.has(key)) badgeIconsByLabel.set(key, new Map());
+        const pathsForLabel = badgeIconsByLabel.get(key);
+        if (!pathsForLabel.has(icon)) pathsForLabel.set(icon, []);
+        pathsForLabel.get(icon).push(n);
+      }
+    }
+
     slides.forEach((slide, i) => {
       const n = i + 1;
       const required = REQUIRED_FIELDS[slide.layout];
@@ -137,6 +167,20 @@ function main() {
         });
       }
 
+      if (slide.icon && isLocalEvidencePath(slide.icon)) {
+        const iconPath = path.resolve(deckDir, slide.icon);
+        if (!fs.existsSync(iconPath)) {
+          errors.push(`slide ${n}: icon "${slide.icon}" does not resolve to a file (looked for ${iconPath})`);
+        }
+      }
+
+      if (slide.layout === 'comparison' && Array.isArray(slide.columns)) {
+        slide.columns.forEach((col) => checkBadgeIcon(col.icon, col.heading, 'comparison column', n));
+      }
+      if (slide.layout === 'timeline' && Array.isArray(slide.steps)) {
+        slide.steps.forEach((s) => checkBadgeIcon(s.icon, s.label, 'timeline step', n));
+      }
+
       if (
         (slide.evidence?.type === 'image' || slide.evidence?.type === 'diagram') &&
         isLocalEvidencePath(slide.evidence.src)
@@ -157,8 +201,44 @@ function main() {
         }
       }
 
-      if (!NON_CONTENT_LAYOUTS.has(slide.layout)) contentCount += 1;
+      if (NON_CONTENT_LAYOUTS.has(slide.layout)) {
+        // title/agenda/section-divider/closing already read as a visual
+        // break in their own right — reset the rhythm streak here too.
+        rhythmStreak = 0;
+        rhythmWarned = false;
+      } else {
+        contentCount += 1;
+        const hasVisualWeight =
+          INHERENTLY_VISUAL_LAYOUTS.has(slide.layout) ||
+          (slide.layout === 'assertion-evidence' &&
+            (slide.evidence?.type === 'image' || slide.evidence?.type === 'diagram')) ||
+          Boolean(slide.icon);
+        if (hasVisualWeight) {
+          rhythmStreak = 0;
+          rhythmWarned = false;
+        } else {
+          if (rhythmStreak === 0) rhythmStreakStart = n;
+          rhythmStreak += 1;
+          if (rhythmStreak >= VISUAL_RHYTHM_STREAK_WARN && !rhythmWarned) {
+            warnings.push(
+              `slides ${rhythmStreakStart}-${n}: ${rhythmStreak} consecutive slides with no visual variety (no image/diagram evidence, no icon, not big-stat/comparison/timeline/quote) — consider an icon or a structural break (PATTERN.md §4, visual rhythm)`
+            );
+            rhythmWarned = true;
+          }
+        }
+      }
     });
+
+    for (const [label, pathsForLabel] of badgeIconsByLabel.entries()) {
+      if (pathsForLabel.size > 1) {
+        const detail = [...pathsForLabel.entries()]
+          .map(([iconPath, slideNums]) => `"${iconPath}" (slide${slideNums.length > 1 ? 's' : ''} ${slideNums.join(', ')})`)
+          .join(' vs. ');
+        warnings.push(
+          `category "${label}" uses different badge icons across the deck: ${detail} — a recurring category should reuse the same icon everywhere it appears (PATTERN.md's "Optional badge icon" section)`
+        );
+      }
+    }
 
     if (contentCount > CONTENT_SLIDE_WARN) {
       warnings.push(

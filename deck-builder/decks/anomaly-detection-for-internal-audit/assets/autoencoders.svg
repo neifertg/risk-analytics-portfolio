@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260">
+  <rect x="1" y="1" width="398" height="258" rx="14" fill="#fbfaf8" stroke="#e4e2dc" stroke-width="2"/>
+
+  <defs>
+    <g id="traveler">
+      <circle cx="0" cy="-9" r="4"/>
+      <path d="M -6 7 Q 0 -3 6 7 Z"/>
+    </g>
+  </defs>
+
+  <!-- The learned officer: compress to a gut read, then check it reconstructs -->
+  <text x="200" y="20" font-size="13" fill="#6b7280" text-anchor="middle">trained on ordinary travelers only</text>
+
+  <!-- Row 1: a normal traveler reconstructs cleanly -->
+  <g fill="#2a6fdb">
+    <use href="#traveler" x="35" y="75"/>
+  </g>
+  <line x1="48" y1="70" x2="90" y2="70" stroke="#9aa0a8" stroke-width="1.5"/>
+  <polygon points="90,55 130,63 130,77 90,85" fill="none" stroke="#6b7280" stroke-width="1.5"/>
+  <line x1="130" y1="70" x2="152" y2="70" stroke="#9aa0a8" stroke-width="1.5"/>
+  <circle cx="165" cy="70" r="8" fill="#6b7280"/>
+  <line x1="178" y1="70" x2="200" y2="70" stroke="#9aa0a8" stroke-width="1.5"/>
+  <polygon points="200,63 240,55 240,85 200,77" fill="none" stroke="#6b7280" stroke-width="1.5"/>
+  <line x1="240" y1="70" x2="262" y2="70" stroke="#9aa0a8" stroke-width="1.5"/>
+  <g fill="#2a6fdb">
+    <use href="#traveler" x="278" y="75"/>
+  </g>
+  <text x="330" y="79" font-size="13" fill="#2a6fdb" text-anchor="middle">small error</text>
+
+  <!-- Row 2: an anomaly the network never learned to compress -->
+  <g fill="#c0611f">
+    <use href="#traveler" x="35" y="195"/>
+  </g>
+  <line x1="48" y1="190" x2="90" y2="190" stroke="#9aa0a8" stroke-width="1.5"/>
+  <polygon points="90,175 130,183 130,197 90,205" fill="none" stroke="#6b7280" stroke-width="1.5"/>
+  <line x1="130" y1="190" x2="152" y2="190" stroke="#9aa0a8" stroke-width="1.5"/>
+  <circle cx="165" cy="190" r="8" fill="#6b7280"/>
+  <line x1="178" y1="190" x2="200" y2="190" stroke="#9aa0a8" stroke-width="1.5"/>
+  <polygon points="200,183 240,175 240,205 200,197" fill="none" stroke="#6b7280" stroke-width="1.5"/>
+  <line x1="240" y1="190" x2="262" y2="190" stroke="#9aa0a8" stroke-width="1.5"/>
+  <g fill="none" stroke="#c0611f" stroke-width="2" stroke-dasharray="2 2">
+    <use href="#traveler" x="278" y="195"/>
+  </g>
+  <text x="330" y="199" font-size="13" fill="#c0611f" text-anchor="middle">large error</text>
+</svg>

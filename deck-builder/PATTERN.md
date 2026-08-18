@@ -31,7 +31,7 @@ in the same change — it must never drift from what the code actually does.
   used in any one deck. Reusing a small set of layouts is itself part of
   what makes a deck read as "designed" rather than "assembled."
 
-## 2. The five rules
+## 2. The six rules
 
 1. **One assertion per slide.** The headline is a complete, plain sentence
    stating a claim — not a topic label ("Q3 Results") and not a fragment.
@@ -64,6 +64,95 @@ in the same change — it must never drift from what the code actually does.
    `brand/tokens.css`. Contrast/hierarchy/whitespace (Duarte's tools) are
    encoded once, there, so every layout inherits them automatically instead
    of each layout re-deciding what "looks good" means.
+6. **One metaphor slide grounds newcomers.** Every deck includes exactly one
+   metaphor-mapping slide: borrow a concrete, everyday domain that shares
+   the deck's actual structure, and map each key concept onto its analog
+   there. This is a different move from the `decompose`-driven grounding
+   slide in the process below — that one decomposes the *real* subject into
+   its own real pieces; this one substitutes a familiar frame the audience
+   already has intuition for, precisely because the real subject doesn't
+   come with one built in. Domain is chosen by structural fit *and* audience
+   fit, not a fixed list — start from the deck's structural shape, then pick
+   whatever concrete domain in that shape's family will actually land with
+   the stated `audience`:
+   - Flat, unordered grouping (a fixed number of buckets decided up front)
+     → e.g. a **kitchen/pantry** sort, a **farm** sorting produce into bins,
+     a **sports draft** assigning players to fixed roster slots.
+   - Nested/hierarchical structure (small pieces merge upward, or one whole
+     splits downward) → e.g. a **library**'s card-catalog/Dewey-Decimal
+     tree, a **family tree**, a **corporate org chart**.
+   - Ordered sequence or process (steps, phases, cause leading to effect)
+     → e.g. a **historical narrative**, a **road trip**, an **assembly
+     line**, a **sports season**.
+   - Interacting/interdependent parts (each piece needs the others to work)
+     → e.g. a **car engine**, a **sports team's positions**, a **kitchen
+     brigade** (line cook / sous chef / expediter).
+   - None of the above fit cleanly → pick the nearest analog for the shape
+     that's actually there, and say why in the slide's `notes`, rather than
+     forcing a bad fit.
+   These categories are examples of each shape's family, not an exhaustive
+   menu — the test is "does this domain's own structure match the deck's,
+   and would this specific audience recognize it fast," not "is it one of
+   the ones listed here."
+   Domain selection is not a silent, single-shot pick — propose 2-3
+   candidate domains from the applicable family, each with a one-line
+   reason it fits this deck's shape and this specific audience, and get the
+   user's pick before mapping concepts onto it. If a candidate's real-world
+   mechanics matter to the mapping (e.g. an assembly line's actual station
+   order, a kitchen brigade's actual reporting structure) and aren't
+   something you're confident about, verify them before offering the
+   candidate — a metaphor built on a wrong mental model misleads the
+   audience worse than no metaphor at all. This mirrors the objective/
+   audience interview at the top of the process: cheap to pause on before
+   the mapping exists, expensive to unwind after callback lines (and, if
+   full integration is used, reskinned evidence) have been written into
+   every later slide.
+   Placed after `agenda` (or after `title` if the deck has no agenda) and
+   before the first content section — the audience gets the roadmap, then
+   the mental model to hang it on, then the content itself. The mapping
+   isn't a tenth layout: classify it like any other content, most often
+   `comparison` (2-4 named things being mapped, one column per thing) or
+   `assertion-evidence` with a table (a single mechanism, one row per
+   concept).
+
+   **Every slide gets at least a spoken callback — the default lives in
+   `notes`, never the headline.** Once the metaphor slide has established
+   the mapping, every later slide gets a one-line callback: a `Delivery:`
+   line in that slide's `notes` the presenter says aloud (e.g. "this is the
+   host's seating chart, formalized"). The headline stays the real
+   technical claim per rule 1 in every case, full integration or not — a
+   headline reading "K-Means sorts records into a fixed number of segments"
+   must keep saying that, or the deck loses the actual assertion the
+   audience needs to walk away with. Slides with nothing natural to hook
+   (a tooling comparison, a pure logistics timeline) don't need to strain
+   for a callback — a one-line, explicit retirement of the metaphor ("the
+   metaphor's done its job — here's what you'll actually click") is a
+   better move than forcing it, and is itself part of giving the motif a
+   deliberate arc rather than an abrupt drop.
+
+   **Full integration — evidence and caption carry the metaphor too — is
+   available for the slides the metaphor slide itself mapped, at the
+   deck author's discretion.** Beyond the baseline callback, a slide
+   teaching one of the metaphor's directly-mapped concepts may also reskin
+   its **evidence** (same underlying technical diagram — same data shape,
+   same structure — restyled with the metaphor's imagery and labels) and
+   blend its **caption** (technical term paired with the metaphor term,
+   e.g. "Nearest-centroid assignment — the host's 'nearest table,'
+   reshuffled until it settles"). This is heavier authoring investment than
+   the baseline callback, so treat it as a deliberate per-deck choice, not
+   a default every deck must reach for. Two guardrails keep it from
+   sliding into the anti-slop failure mode (§7, cute framing standing in
+   for substance):
+   - The headline is exempt even here — see above.
+   - **Evidence standing in for real-world data stays literal, never
+     reskinned.** A slide illustrating an actual population (real vendor
+     payments, real access logs — not the technique's own teaching
+     example) keeps its literal evidence even in a fully-integrated deck.
+     Costuming a stand-in for real data as party imagery blurs "this is
+     illustrative real data" into "this is more metaphor" — precisely the
+     assertion-match failure `review-evidence` (§8) exists to catch. Those
+     slides still get the baseline spoken callback, just not a reskinned
+     image.
 
 ## 3. Layout taxonomy
 
@@ -77,8 +166,8 @@ wins:
 | `section-divider` | Content marks a narrative pivot to a new part/act, not a claim itself. | `label` (e.g. "Part 1"), `title`, `notes` |
 | `assertion-evidence` | Default. Anything that is a claim + something to show. This is the workhorse — most slides land here. | `headline`, `evidence: {type: image\|diagram\|table, src, alt}`, `notes` |
 | `big-stat` | The headline fact reduces to a single number or metric. | `stat`, `context`, `notes` |
-| `comparison` | Content is 2-3 named options/items being weighed side by side. | `columns: [{heading, points: [string]}]`, `notes` |
-| `timeline` | Content is ordered steps, phases, or dates. | `steps: [{label, detail}]`, `notes` |
+| `comparison` | Content is 2-3 named options/items being weighed side by side. | `columns: [{heading, points: [string], icon?}]`, `notes` |
+| `timeline` | Content is ordered steps, phases, or dates. Steps are connected by a default chevron between each pair — sequence is the point (see below). | `steps: [{label, detail, icon?}]`, `notes` |
 | `quote` | Content is a verbatim attributed statement. | `quote`, `attribution`, `notes` |
 | `closing` | Always the last slide. Recaps the deck's core assertion + a call to action. | `headline`, `cta`, `notes` |
 
@@ -98,6 +187,113 @@ URI at render time (`scripts/render.mjs`'s `resolveEvidenceSrc`) so the
 rendered `index.html` stays a single self-contained file — decks never
 depend on relative file paths surviving being moved, emailed, or opened
 from a different folder.
+
+### Optional per-slide icon
+
+Any slide, on any layout, may set an `icon` field — a relative path to a
+small line-icon SVG in the deck's own `assets/` folder (e.g.
+`assets/icon-plane.svg`), rendered as a low-opacity topical accent in the
+slide's corner. This is author opt-in per slide, never automatic — most
+slides don't need one; reach for it when a slide's real content (a table,
+a metaphor mapping, a claim) has an obvious concrete object behind it and
+nothing else on the slide is already carrying that visual (an
+`assertion-evidence` slide whose evidence is already a diagram doesn't
+usually need one too).
+
+- **Sourcing**: vendor the icon from a permissively-licensed open set
+  (Lucide, ISC — the one used so far) rather than hand-drawing one-off
+  icons or linking a CDN/icon font. Fetch the raw SVG (e.g.
+  `https://unpkg.com/lucide-static@latest/icons/<name>.svg`), save it into
+  the deck's `assets/` folder with a `# vendored from ...` comment noting
+  the source and license, and reference it via `icon:`. This keeps the
+  rendered deck fully self-contained (no runtime CDN dependency for the
+  icon, same as evidence diagrams) while still drawing on a real,
+  professionally-drawn icon library instead of ad hoc line art.
+- **Selection is a research-and-approval checkpoint, the same pattern as
+  metaphor domain selection (rule 6 below)**: propose 2-4 candidate icons
+  that fit the slide's content, show the user a visual preview at deck
+  scale/color (an Artifact gallery works well for this), and get their
+  pick before wiring one in — don't silently choose one. Icon *scope*
+  (just this one slide, vs. adding icons to several slides) is also worth
+  confirming rather than assuming, the first time in a given deck.
+- **Rendering**: `scripts/render.mjs` inlines the SVG's raw markup (not a
+  data-URI `<img>`) into a `.slide-icon` wrapper injected right after the
+  slide's opening `<section>` tag — this works uniformly across every
+  layout without touching each layout's own template file. Inlining
+  (rather than an `<img>`) is what lets the icon's `stroke="currentColor"`
+  pick up `--color-accent` via `.slide-icon`'s `color`, the same trick
+  `brand-corner-mark` uses for the logo, so it responds to the runtime
+  theme toggle automatically.
+- **Anti-slop guardrail**: keep it low-opacity background texture (`brand/
+  tokens.css`'s `.slide-icon` ships at `opacity: 0.1`), never a bold
+  foreground graphic — an icon competing with the slide's real evidence
+  for attention is exactly the decorative-filler failure mode rule 7
+  warns about. One icon per slide at most; this is deliberately not a
+  blanket per-slide default the way the brand corner mark is.
+
+### Optional badge icon (comparison/timeline)
+
+A second, independent icon pattern from the per-slide icon above — not a
+variant of it, and answering a different question. The per-slide icon is
+low-opacity background texture for *one* slide; a badge icon is a small,
+full-opacity marker for a **recurring category** — the same named thing
+(a technique, a phase) that reappears across two or more `comparison`
+columns or `timeline` steps in the same deck. Set it via that column's or
+step's own `icon` field (`columns: [{heading, points, icon}]`, `steps:
+[{label, detail, icon}]`) — same relative-path-into-`assets/` convention as
+every other icon/evidence field.
+
+- **Rendering**: `scripts/render.mjs` inlines the SVG (same `resolveIconMarkup`
+  trick as the per-slide icon, for the same `currentColor` reason) into a
+  `<span class="icon-badge">` prepended inside that column's `<h3>` or that
+  step's `.label`. `brand/tokens.css`'s `.icon-badge` renders it as a small
+  filled circle: `--color-accent-soft` background, `--color-accent` icon,
+  **full opacity** — unlike the per-slide icon's 0.1, because this icon
+  carries real meaning rather than being pure decoration. A meaningful icon
+  needs to clear WCAG's 3:1 contrast floor and can never be the sole
+  signal (WCAG G207) — a badge always sits inline next to its category's
+  own text label, never alone.
+- **No new contrast-check entry needed**: `--color-accent` on
+  `--color-accent-soft` is already in `scripts/check-contrast.mjs`'s
+  `PAIRS` list (comparison column headings use the same combination) and
+  passes. Re-run `npm run check-contrast` after adding a badge to confirm
+  rather than assume, the same as any other color-token change.
+- **The rule that makes this wayfinding instead of decoration: a recurring
+  category reuses the same icon file everywhere it appears in the deck.**
+  `validate-deck.mjs` checks this mechanically — it warns if the same
+  column heading or step label is seen with two different icon paths
+  anywhere in the deck.
+- **Selection is the same research-and-approval checkpoint** as the
+  per-slide icon and the metaphor domain pick — propose candidates, preview
+  at real size/color, get the user's pick before wiring in. `.claude/skills/
+  select-icons/SKILL.md` in this repo owns this process for both icon
+  patterns; `make-deck` invokes it as a step.
+- Only worth proposing when a deck actually has 2+ recurring named
+  categories spanning multiple `comparison`/`timeline` slides — not for
+  one-off content, and not on `agenda` (which already has its own numeral
+  motif; adding a second one there would violate the anti-slop "one
+  repeated motif" rule in §7).
+
+### Timeline connector
+
+`timeline` steps render with a small chevron (`›`) in the gap after every
+step but the last — a pure-CSS border arrow in `brand/tokens.css`
+(`.layout-timeline .step::after`), not a separate icon or asset. This is
+the layout's own default, not a per-deck opt-in: a timeline's whole reason
+for existing is that order matters (see the layout's classification rule),
+so the path between steps is drawn rather than left implied by a bare
+numbered row. No `deck.yaml` field controls this — it always renders when
+a `timeline` slide has more than one step.
+
+**Do not set `position` on `.reveal .slides section` in `tokens.css`.**
+reveal.js's own stylesheet already sets `position: absolute` there — that
+positioning is load-bearing for reveal's slide-stacking/navigation
+mechanism. Overriding it (even to `relative`, which seems harmless)
+silently breaks `Reveal.slide()`/keyboard navigation: slides past the
+first stop being laid out at their intended position. `.slide-icon` above
+anchors correctly against that existing positioned ancestor without any
+extra rule — confirmed via `Reveal.getCurrentSlide().getBoundingClientRect()`
+showing a "present" slide stuck off-canvas before this was reverted.
 
 Classification heuristics for the skill (in priority order — evaluate each
 slide-candidate content unit against these before defaulting to
@@ -162,6 +358,19 @@ to check evidence against without them.
   give it a genuine header (e.g. `["Aspect", "In practice"]`) that names
   what the columns mean, rather than letting whichever fact happens to come
   first get arbitrary visual emphasis.
+- **Visual rhythm**: `validate-deck.mjs` warns on 4 or more consecutive
+  content slides with no independent visual weight — no image/diagram
+  evidence, no icon, and not one of the layouts whose own shape is already
+  a visual break (`big-stat`, `comparison`, `timeline`, `quote`). This is
+  based on attention-curve research: audience attention drops off over a
+  *stretch* with no visual variety, not because of any single slide's
+  content, so the check looks at the sequence rather than one slide in
+  isolation. `title`/`agenda`/`section-divider`/`closing` reset the streak,
+  since each already reads as its own visual break. The fix is a per-slide
+  icon, a restructure into one of the inherently-visual layouts, or real
+  evidence on one of the flagged slides — not suppressing the warning.
+  `.claude/skills/select-icons/SKILL.md` is the process that acts on this
+  warning.
 
 ## 5. Brand tokens
 
@@ -234,6 +443,21 @@ Rules for adding or changing a theme:
   `tokens.css`). Don't hand-pick an accent hue and skip the check — the
   slate/forest/copper values were chosen by testing candidates against the
   formula, not by eye.
+
+### Inline notes toggle (solo-review, off by default)
+
+Pressing "N" calls `Reveal.configure({ showNotes: true })` at runtime,
+which renders each slide's notes directly on the page — no popup window,
+unlike "S" (speaker view, via the Notes plugin's `window.open()`, which
+some browsers/settings block outright). This exists specifically for
+reviewing a deck solo, where waiting on a popup is friction, not a
+feature. It defaults to **off** and stays a keypress, not an on-screen
+control (same anti-slop reasoning as the theme toggle above) — a deck
+actually being projected to a live audience still relies on "S" alone, so
+notes never appear on the shared screen unless "N" is deliberately
+pressed. Don't change the default to `true`; that would put presenter-only
+content (caveats, delivery cues) in front of every audience by default,
+undoing the separation rule 3 documents.
 
 ## 6. Non-goals
 

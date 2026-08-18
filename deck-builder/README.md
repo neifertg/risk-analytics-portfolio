@@ -20,43 +20,40 @@ Day to day, this is driven by a Claude Code skill (`make-deck`) that authors
 the `deck.yaml` from a rough outline or a set of source notes. It also works
 by hand: write a `deck.yaml`, run `validate`, run `render`.
 
-## The example deck: Clustering for Audit Analytics
+## The example deck: Anomaly Detection for Internal Audit
 
-`decks/clustering-for-audit/` is a real internal-training deck — 17 slides
-walking through K-Means, Hierarchical Clustering, DBSCAN, and Gaussian
-Mixture Models, each framed as an audit question ("which segment doesn't
-look like the rest," "which account doesn't match its peers") rather than
-as abstract ML theory. Built from the clustering resource notes in my
-personal AI/ML learning wiki, with two worked audit examples (vendor-payment
-clustering, access-log clustering) added specifically for this deck.
+`decks/anomaly-detection-for-internal-audit/` is a real internal-training
+deck — 16 slides walking staff through four anomaly-detection techniques
+(Isolation Forest, Local Outlier Factor, One-Class SVM, Autoencoders),
+each mapped to a single running metaphor (an airport security checkpoint)
+so the "same job, different mechanism" framing carries across the whole
+deck instead of resetting per slide, and closing on a concrete first pilot
+staff can actually run this quarter. Built from the anomaly-detection
+resource notes in my personal AI/ML learning wiki.
 
-**[Open the live deck](decks/clustering-for-audit/index.html)** — click
-through with arrow keys or on-screen controls.
+A second real deck, `decks/clustering-for-audit/` (17 slides on K-Means,
+Hierarchical Clustering, DBSCAN, and Gaussian Mixture Models), is also
+committed here and builds/renders the same way — not currently the
+featured example, but worth a look for a second data point on the same
+layout set.
 
-## Honest gaps
-
-Two known, low-priority cosmetic issues carried over from the deck's build
-history, neither fixed here since they don't affect readability:
-
-- No automated check yet catches a contrast problem baked into an SVG
-  diagram's own colors (as opposed to the page's CSS, which *is* checked
-  by `scripts/check-contrast.mjs`) — a manual pass caught and fixed this
-  once already; it isn't mechanically enforced.
-- One diagram's rounded-rect card border renders twice (once from the SVG
-  asset, once from the surrounding CSS) — visually harmless, not fixed.
+**[Open the live deck](decks/anomaly-detection-for-internal-audit/index.html)**
+— click through with arrow keys or on-screen controls.
 
 ## Running it
 
 ```bash
 npm install
-npm run validate -- decks/clustering-for-audit/deck.yaml
-npm run render -- decks/clustering-for-audit/deck.yaml
+npm run validate -- decks/anomaly-detection-for-internal-audit/deck.yaml
+npm run render -- decks/anomaly-detection-for-internal-audit/deck.yaml
+npm run check-contrast
 ```
 
-`render` writes `decks/clustering-for-audit/index.html` (already committed
-here, so the live link above works without a build step) and prints a
-reminder that pressing "T" while presenting cycles between three
-WCAG-checked color themes (slate/forest/copper).
+`render` writes `decks/anomaly-detection-for-internal-audit/index.html`
+(already committed here, so the live link above works without a build
+step) and prints a reminder that pressing "T" while presenting cycles
+between three WCAG-checked color themes (slate/forest/copper), and "N"
+toggles inline speaker notes for solo review.
 
 `npm run new-deck -- --title "My Deck" --slug my-deck` scaffolds a new
 `deck.yaml` against the same layout set.

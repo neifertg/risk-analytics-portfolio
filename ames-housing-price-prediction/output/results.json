@@ -1,0 +1,79 @@
+{
+  "dataset": {
+    "source": "Kaggle 'House Prices: Advanced Regression Techniques' (Ames Housing, De Cock 2011) \u2014 public competition dataset",
+    "n_rows": 1460,
+    "n_features_after_one_hot_encoding": 259,
+    "train_rows": 1168,
+    "holdout_rows": 292,
+    "target": "log1p(SalePrice)",
+    "evaluation_note": "80/20 held-out split of the labeled training set (random_state=42), not the original Kaggle leaderboard score \u2014 no access to the unlabeled competition test set here."
+  },
+  "models": [
+    {
+      "model": "Ridge",
+      "holdout_rmse_log_saleprice": 0.15289,
+      "holdout_r2": 0.8747,
+      "holdout_mae_dollars": 17079.41,
+      "best_alpha": 354.563,
+      "cv_rmse_log_saleprice": 0.1393
+    },
+    {
+      "model": "Lasso",
+      "holdout_rmse_log_saleprice": 0.15556,
+      "holdout_r2": 0.8703,
+      "holdout_mae_dollars": 16754.42,
+      "best_alpha": 0.00429,
+      "cv_rmse_log_saleprice": 0.1419,
+      "features_zeroed_out": 151,
+      "features_total": 259
+    },
+    {
+      "model": "Random Forest",
+      "holdout_rmse_log_saleprice": 0.14767,
+      "holdout_r2": 0.8831,
+      "holdout_mae_dollars": 17595.01,
+      "top_10_features": [
+        {
+          "feature": "OverallQual",
+          "importance": 0.5454
+        },
+        {
+          "feature": "GrLivArea",
+          "importance": 0.115
+        },
+        {
+          "feature": "TotalBsmtSF",
+          "importance": 0.0433
+        },
+        {
+          "feature": "GarageCars",
+          "importance": 0.0379
+        },
+        {
+          "feature": "GarageArea",
+          "importance": 0.0269
+        },
+        {
+          "feature": "BsmtFinSF1",
+          "importance": 0.0224
+        },
+        {
+          "feature": "1stFlrSF",
+          "importance": 0.0207
+        },
+        {
+          "feature": "CentralAir_Y",
+          "importance": 0.0153
+        },
+        {
+          "feature": "LotArea",
+          "importance": 0.0152
+        },
+        {
+          "feature": "YearBuilt",
+          "importance": 0.0151
+        }
+      ]
+    }
+  ]
+}

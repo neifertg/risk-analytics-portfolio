@@ -73,3 +73,10 @@ exclude:
   - sampling-calculator/README.md
   - sampling-calculator/requirements.txt
   - sampling-calculator/.gitignore
+  - ames-housing-price-prediction/.venv
+  - ames-housing-price-prediction/data
+  - ames-housing-price-prediction/output
+  - ames-housing-price-prediction/train_model.py
+  - ames-housing-price-prediction/README.md
+  - ames-housing-price-prediction/requirements.txt
+  - ames-housing-price-prediction/.gitignore

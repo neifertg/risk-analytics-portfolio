@@ -80,3 +80,13 @@ exclude:
   - ames-housing-price-prediction/README.md
   - ames-housing-price-prediction/requirements.txt
   - ames-housing-price-prediction/.gitignore
+  - imdb-review-text-analytics/.venv
+  - imdb-review-text-analytics/raw
+  - imdb-review-text-analytics/nltk_data
+  - imdb-review-text-analytics/data
+  - imdb-review-text-analytics/output
+  - imdb-review-text-analytics/prepare_data.py
+  - imdb-review-text-analytics/analyze_text.py
+  - imdb-review-text-analytics/README.md
+  - imdb-review-text-analytics/requirements.txt
+  - imdb-review-text-analytics/.gitignore

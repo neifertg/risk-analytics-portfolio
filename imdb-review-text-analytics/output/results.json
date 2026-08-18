@@ -1,0 +1,318 @@
+{
+  "dataset": {
+    "source": "Stanford Large Movie Review Dataset (Maas et al. 2011), https://ai.stanford.edu/~amaas/data/sentiment/ \u2014 substituted for the original 2021 coursework's unrecoverable Amazon Musical Instruments review corpus (see README)",
+    "n_reviews": 5000,
+    "class_balance": {
+      "1": 2500,
+      "0": 2500
+    },
+    "mean_review_length_chars_by_class": {
+      "negative": 1257.8,
+      "positive": 1299.3
+    }
+  },
+  "document_term_matrix": {
+    "raw_dtm": {
+      "n_documents": 5000,
+      "n_terms": 38092,
+      "sparsity": 0.9964
+    },
+    "cleaned_dtm_stopwords_removed_stemmed": {
+      "n_documents": 5000,
+      "n_terms": 25557,
+      "sparsity": 0.9964
+    }
+  },
+  "top_words_stopwords_removed_stemmed": [
+    {
+      "term": "movi",
+      "count": 10295
+    },
+    {
+      "term": "film",
+      "count": 9544
+    },
+    {
+      "term": "one",
+      "count": 5551
+    },
+    {
+      "term": "like",
+      "count": 4476
+    },
+    {
+      "term": "time",
+      "count": 3152
+    },
+    {
+      "term": "good",
+      "count": 3070
+    },
+    {
+      "term": "make",
+      "count": 3012
+    },
+    {
+      "term": "see",
+      "count": 2855
+    },
+    {
+      "term": "get",
+      "count": 2838
+    },
+    {
+      "term": "charact",
+      "count": 2768
+    }
+  ],
+  "lda_topic_modeling": {
+    "perplexity": 3121.95,
+    "topics": [
+      {
+        "topic": 1,
+        "top_terms": [
+          {
+            "term": "play",
+            "probability": 0.0046
+          },
+          {
+            "term": "one",
+            "probability": 0.0045
+          },
+          {
+            "term": "get",
+            "probability": 0.004
+          },
+          {
+            "term": "film",
+            "probability": 0.0034
+          },
+          {
+            "term": "man",
+            "probability": 0.003
+          },
+          {
+            "term": "like",
+            "probability": 0.0025
+          },
+          {
+            "term": "good",
+            "probability": 0.0024
+          },
+          {
+            "term": "time",
+            "probability": 0.0023
+          }
+        ]
+      },
+      {
+        "topic": 2,
+        "top_terms": [
+          {
+            "term": "film",
+            "probability": 0.0109
+          },
+          {
+            "term": "music",
+            "probability": 0.0073
+          },
+          {
+            "term": "perform",
+            "probability": 0.0064
+          },
+          {
+            "term": "play",
+            "probability": 0.005
+          },
+          {
+            "term": "great",
+            "probability": 0.0046
+          },
+          {
+            "term": "best",
+            "probability": 0.0044
+          },
+          {
+            "term": "love",
+            "probability": 0.0037
+          },
+          {
+            "term": "cast",
+            "probability": 0.0037
+          }
+        ]
+      },
+      {
+        "topic": 3,
+        "top_terms": [
+          {
+            "term": "film",
+            "probability": 0.0122
+          },
+          {
+            "term": "perform",
+            "probability": 0.0037
+          },
+          {
+            "term": "play",
+            "probability": 0.0036
+          },
+          {
+            "term": "one",
+            "probability": 0.0035
+          },
+          {
+            "term": "american",
+            "probability": 0.0032
+          },
+          {
+            "term": "best",
+            "probability": 0.003
+          },
+          {
+            "term": "scene",
+            "probability": 0.0029
+          },
+          {
+            "term": "star",
+            "probability": 0.0027
+          }
+        ]
+      },
+      {
+        "topic": 4,
+        "top_terms": [
+          {
+            "term": "movi",
+            "probability": 0.0259
+          },
+          {
+            "term": "film",
+            "probability": 0.0183
+          },
+          {
+            "term": "one",
+            "probability": 0.0116
+          },
+          {
+            "term": "like",
+            "probability": 0.0105
+          },
+          {
+            "term": "good",
+            "probability": 0.007
+          },
+          {
+            "term": "time",
+            "probability": 0.007
+          },
+          {
+            "term": "watch",
+            "probability": 0.0069
+          },
+          {
+            "term": "see",
+            "probability": 0.0066
+          }
+        ]
+      },
+      {
+        "topic": 5,
+        "top_terms": [
+          {
+            "term": "film",
+            "probability": 0.0161
+          },
+          {
+            "term": "one",
+            "probability": 0.0058
+          },
+          {
+            "term": "life",
+            "probability": 0.0051
+          },
+          {
+            "term": "man",
+            "probability": 0.0038
+          },
+          {
+            "term": "stori",
+            "probability": 0.0037
+          },
+          {
+            "term": "world",
+            "probability": 0.0036
+          },
+          {
+            "term": "also",
+            "probability": 0.0036
+          },
+          {
+            "term": "live",
+            "probability": 0.0033
+          }
+        ]
+      }
+    ]
+  },
+  "bing_liu_lexicon_sentiment": {
+    "naive_net_gt_zero_rule_accuracy": 0.7192,
+    "mean_net_score_positive_reviews": 4.08,
+    "mean_net_score_negative_reviews": -2.89
+  },
+  "naive_bayes_classifier": {
+    "train_rows": 3500,
+    "test_rows": 1500,
+    "accuracy": 0.8307,
+    "precision": 0.8407,
+    "recall": 0.816,
+    "confusion_matrix": {
+      "true_neg": 634,
+      "false_pos": 116,
+      "false_neg": 138,
+      "true_pos": 612
+    }
+  },
+  "pos_tagged_top_proper_nouns_100_review_sample": [
+    {
+      "term": "Michael",
+      "count": 14
+    },
+    {
+      "term": "Ted",
+      "count": 11
+    },
+    {
+      "term": "Nazario",
+      "count": 11
+    },
+    {
+      "term": "DVD",
+      "count": 10
+    },
+    {
+      "term": "Claire",
+      "count": 10
+    },
+    {
+      "term": "Andy",
+      "count": 10
+    },
+    {
+      "term": "Andara",
+      "count": 10
+    },
+    {
+      "term": "Lubitsch",
+      "count": 9
+    },
+    {
+      "term": "Dennis",
+      "count": 8
+    },
+    {
+      "term": "Bu\u00f1uel",
+      "count": 8
+    }
+  ]
+}

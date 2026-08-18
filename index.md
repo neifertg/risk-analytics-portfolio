@@ -168,6 +168,36 @@ expansion-factor sub-table, documented honestly rather than guessed at.
 
 [Source, findings & real output](https://github.com/neifertg/risk-analytics-portfolio/tree/main/sampling-calculator)
 
+### Ames Housing Price Prediction
+
+![Model comparison bar chart — Ridge 0.153, Lasso 0.156, Random Forest 0.148 holdout RMSE — and Random Forest top-10 feature importances led by OverallQual and GrLivArea](assets/ames-housing-chart.png)
+
+General applied-ML breadth, not audit-specific: predicts home sale prices
+from structural/quality features using Ridge, Lasso, and Random Forest,
+compared head to head on the same held-out data. Rebuilt in Python from
+real 2021 grad-school coursework, re-verified rather than carried forward
+as fact. Run against the real, public Kaggle Ames Housing dataset (1,460
+homes): Random Forest wins on RMSE (0.148) and R² (0.883), though Lasso
+actually has the lowest dollar-denominated error ($16,754 MAE) — a real
+metric-choice nuance reported rather than smoothed into one "winner."
+
+[Source, findings & real output](https://github.com/neifertg/risk-analytics-portfolio/tree/main/ames-housing-price-prediction)
+
+### IMDB Review Text Analytics
+
+![Comparative word clouds for positive and negative movie reviews](assets/text-analytics-wordcloud.png)
+
+General applied-ML breadth, not audit-specific: classical (pre-LLM) NLP —
+document-term matrices, LDA topic modeling, Bing Liu lexicon sentiment
+scoring, and a trained Naive Bayes classifier — rebuilt in Python from real
+2021 grad-school coursework. Run against 5,000 real IMDB movie reviews: a
+trained Naive Bayes classifier reaches 83.1% accuracy, well ahead of a
+naive lexicon-based sentiment rule's 71.9% (validated against real labels,
+which the original coursework never did) — a real, quantified case for why
+a trained model beats a fixed word list.
+
+[Source, findings & real output](https://github.com/neifertg/risk-analytics-portfolio/tree/main/imdb-review-text-analytics)
+
 ---
 
 ## 📄 Contact

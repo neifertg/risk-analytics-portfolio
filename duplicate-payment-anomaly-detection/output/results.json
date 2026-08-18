@@ -1,0 +1,64 @@
+{
+  "dataset": {
+    "source": "duplicate-vendor-payment-checker/data/{ledger.csv,ground_truth.json} (same repo, synthetic, seeded ground truth) \u2014 copied here unchanged",
+    "n_payments": 919,
+    "n_true_anomalous_payments": 107,
+    "true_anomaly_rate": 0.1164,
+    "assumed_anomaly_rate_used_for_primary_runs": 0.1
+  },
+  "features": [
+    "amount",
+    "log_amount",
+    "vendor_payment_count",
+    "same_vendor_same_amount_count",
+    "min_days_to_other_payment_same_vendor",
+    "amount_zscore_within_vendor",
+    "best_fuzzy_match_score_to_other_vendor"
+  ],
+  "comparison": {
+    "rule_based": {
+      "unit_of_analysis": "seeded group (52 groups), not individual payment",
+      "recall": 0.981,
+      "precision": 1.0,
+      "source": "duplicate-vendor-payment-checker/output/flagged.json, re-run 2026-08-18 against the identical ledger.csv/ground_truth.json copied into this project's data/"
+    },
+    "isolation_forest": {
+      "primary": {
+        "precision": 0.4783,
+        "recall": 0.4112,
+        "f1": 0.4422,
+        "confusion_matrix": {
+          "true_neg": 764,
+          "false_pos": 48,
+          "false_neg": 63,
+          "true_pos": 44
+        },
+        "contamination_used": 0.1
+      },
+      "label_tuned_upper_bound": {
+        "contamination": 0.21,
+        "f1": 0.6133
+      }
+    },
+    "dbscan": {
+      "primary": {
+        "precision": 0.4118,
+        "recall": 0.1963,
+        "f1": 0.2658,
+        "confusion_matrix": {
+          "true_neg": 782,
+          "false_pos": 30,
+          "false_neg": 86,
+          "true_pos": 21
+        },
+        "eps_used": 0.851,
+        "min_samples_used": 3,
+        "pct_flagged_as_noise": 0.0555
+      },
+      "label_tuned_upper_bound": {
+        "eps": 0.632,
+        "f1": 0.3491
+      }
+    }
+  }
+}

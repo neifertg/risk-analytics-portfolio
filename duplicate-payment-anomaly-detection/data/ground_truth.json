@@ -1,0 +1,423 @@
+[
+  {
+    "type": "exact_duplicate",
+    "confidence": "duplicate",
+    "payment_ids": [
+      "PMT-00428",
+      "PMT-00851"
+    ]
+  },
+  {
+    "type": "exact_duplicate",
+    "confidence": "duplicate",
+    "payment_ids": [
+      "PMT-00620",
+      "PMT-00852"
+    ]
+  },
+  {
+    "type": "exact_duplicate",
+    "confidence": "duplicate",
+    "payment_ids": [
+      "PMT-00015",
+      "PMT-00853"
+    ]
+  },
+  {
+    "type": "exact_duplicate",
+    "confidence": "duplicate",
+    "payment_ids": [
+      "PMT-00732",
+      "PMT-00854"
+    ]
+  },
+  {
+    "type": "exact_duplicate",
+    "confidence": "duplicate",
+    "payment_ids": [
+      "PMT-00270",
+      "PMT-00855"
+    ]
+  },
+  {
+    "type": "exact_duplicate",
+    "confidence": "duplicate",
+    "payment_ids": [
+      "PMT-00343",
+      "PMT-00856"
+    ]
+  },
+  {
+    "type": "exact_duplicate",
+    "confidence": "duplicate",
+    "payment_ids": [
+      "PMT-00010",
+      "PMT-00857"
+    ]
+  },
+  {
+    "type": "exact_duplicate",
+    "confidence": "duplicate",
+    "payment_ids": [
+      "PMT-00584",
+      "PMT-00858"
+    ]
+  },
+  {
+    "type": "exact_duplicate",
+    "confidence": "duplicate",
+    "payment_ids": [
+      "PMT-00725",
+      "PMT-00859"
+    ]
+  },
+  {
+    "type": "exact_duplicate",
+    "confidence": "duplicate",
+    "payment_ids": [
+      "PMT-00586",
+      "PMT-00860"
+    ]
+  },
+  {
+    "type": "exact_duplicate",
+    "confidence": "duplicate",
+    "payment_ids": [
+      "PMT-00510",
+      "PMT-00861"
+    ]
+  },
+  {
+    "type": "exact_duplicate",
+    "confidence": "duplicate",
+    "payment_ids": [
+      "PMT-00011",
+      "PMT-00862"
+    ]
+  },
+  {
+    "type": "exact_duplicate",
+    "confidence": "duplicate",
+    "payment_ids": [
+      "PMT-00656",
+      "PMT-00863"
+    ]
+  },
+  {
+    "type": "exact_duplicate",
+    "confidence": "duplicate",
+    "payment_ids": [
+      "PMT-00035",
+      "PMT-00864"
+    ]
+  },
+  {
+    "type": "exact_duplicate",
+    "confidence": "duplicate",
+    "payment_ids": [
+      "PMT-00254",
+      "PMT-00865"
+    ]
+  },
+  {
+    "type": "threshold_split",
+    "confidence": "duplicate",
+    "payment_ids": [
+      "PMT-00866",
+      "PMT-00867"
+    ]
+  },
+  {
+    "type": "threshold_split",
+    "confidence": "duplicate",
+    "payment_ids": [
+      "PMT-00868",
+      "PMT-00869"
+    ]
+  },
+  {
+    "type": "threshold_split",
+    "confidence": "duplicate",
+    "payment_ids": [
+      "PMT-00870",
+      "PMT-00871"
+    ]
+  },
+  {
+    "type": "threshold_split",
+    "confidence": "duplicate",
+    "payment_ids": [
+      "PMT-00872",
+      "PMT-00873"
+    ]
+  },
+  {
+    "type": "threshold_split",
+    "confidence": "duplicate",
+    "payment_ids": [
+      "PMT-00874",
+      "PMT-00875",
+      "PMT-00876"
+    ]
+  },
+  {
+    "type": "threshold_split",
+    "confidence": "duplicate",
+    "payment_ids": [
+      "PMT-00877",
+      "PMT-00878"
+    ]
+  },
+  {
+    "type": "threshold_split",
+    "confidence": "duplicate",
+    "payment_ids": [
+      "PMT-00879",
+      "PMT-00880",
+      "PMT-00881"
+    ]
+  },
+  {
+    "type": "threshold_split",
+    "confidence": "duplicate",
+    "payment_ids": [
+      "PMT-00882",
+      "PMT-00883",
+      "PMT-00884"
+    ]
+  },
+  {
+    "type": "threshold_split",
+    "confidence": "duplicate",
+    "payment_ids": [
+      "PMT-00885",
+      "PMT-00886"
+    ]
+  },
+  {
+    "type": "threshold_split",
+    "confidence": "duplicate",
+    "payment_ids": [
+      "PMT-00887",
+      "PMT-00888"
+    ]
+  },
+  {
+    "type": "threshold_split",
+    "confidence": "duplicate",
+    "payment_ids": [
+      "PMT-00889",
+      "PMT-00890",
+      "PMT-00891"
+    ]
+  },
+  {
+    "type": "threshold_split",
+    "confidence": "duplicate",
+    "payment_ids": [
+      "PMT-00892",
+      "PMT-00893",
+      "PMT-00894"
+    ]
+  },
+  {
+    "type": "vendor_master_duplicate",
+    "confidence": "duplicate",
+    "payment_ids": [
+      "PMT-00249",
+      "PMT-00895"
+    ]
+  },
+  {
+    "type": "vendor_master_duplicate",
+    "confidence": "duplicate",
+    "payment_ids": [
+      "PMT-00803",
+      "PMT-00896"
+    ]
+  },
+  {
+    "type": "vendor_master_duplicate",
+    "confidence": "duplicate",
+    "payment_ids": [
+      "PMT-00282",
+      "PMT-00897"
+    ]
+  },
+  {
+    "type": "vendor_master_duplicate",
+    "confidence": "duplicate",
+    "payment_ids": [
+      "PMT-00586",
+      "PMT-00898"
+    ]
+  },
+  {
+    "type": "vendor_master_duplicate",
+    "confidence": "duplicate",
+    "payment_ids": [
+      "PMT-00467",
+      "PMT-00899"
+    ]
+  },
+  {
+    "type": "vendor_master_duplicate",
+    "confidence": "duplicate",
+    "payment_ids": [
+      "PMT-00113",
+      "PMT-00900"
+    ]
+  },
+  {
+    "type": "vendor_master_duplicate",
+    "confidence": "duplicate",
+    "payment_ids": [
+      "PMT-00076",
+      "PMT-00901"
+    ]
+  },
+  {
+    "type": "vendor_master_duplicate",
+    "confidence": "duplicate",
+    "payment_ids": [
+      "PMT-00432",
+      "PMT-00902"
+    ]
+  },
+  {
+    "type": "vendor_master_duplicate",
+    "confidence": "duplicate",
+    "payment_ids": [
+      "PMT-00611",
+      "PMT-00903"
+    ]
+  },
+  {
+    "type": "vendor_master_duplicate",
+    "confidence": "duplicate",
+    "payment_ids": [
+      "PMT-00511",
+      "PMT-00904"
+    ]
+  },
+  {
+    "type": "round_trip_near_duplicate",
+    "confidence": "review_candidate",
+    "payment_ids": [
+      "PMT-00398",
+      "PMT-00905"
+    ]
+  },
+  {
+    "type": "round_trip_near_duplicate",
+    "confidence": "review_candidate",
+    "payment_ids": [
+      "PMT-00759",
+      "PMT-00906"
+    ]
+  },
+  {
+    "type": "round_trip_near_duplicate",
+    "confidence": "review_candidate",
+    "payment_ids": [
+      "PMT-00390",
+      "PMT-00907"
+    ]
+  },
+  {
+    "type": "round_trip_near_duplicate",
+    "confidence": "review_candidate",
+    "payment_ids": [
+      "PMT-00067",
+      "PMT-00908"
+    ]
+  },
+  {
+    "type": "round_trip_near_duplicate",
+    "confidence": "review_candidate",
+    "payment_ids": [
+      "PMT-00201",
+      "PMT-00909"
+    ]
+  },
+  {
+    "type": "round_trip_near_duplicate",
+    "confidence": "review_candidate",
+    "payment_ids": [
+      "PMT-00484",
+      "PMT-00910"
+    ]
+  },
+  {
+    "type": "round_trip_near_duplicate",
+    "confidence": "review_candidate",
+    "payment_ids": [
+      "PMT-00289",
+      "PMT-00911"
+    ]
+  },
+  {
+    "type": "round_trip_near_duplicate",
+    "confidence": "review_candidate",
+    "payment_ids": [
+      "PMT-00266",
+      "PMT-00912"
+    ]
+  },
+  {
+    "type": "round_trip_near_duplicate",
+    "confidence": "review_candidate",
+    "payment_ids": [
+      "PMT-00142",
+      "PMT-00913"
+    ]
+  },
+  {
+    "type": "round_trip_near_duplicate",
+    "confidence": "review_candidate",
+    "payment_ids": [
+      "PMT-00404",
+      "PMT-00914"
+    ]
+  },
+  {
+    "type": "round_trip_near_duplicate",
+    "confidence": "review_candidate",
+    "payment_ids": [
+      "PMT-00196",
+      "PMT-00915"
+    ]
+  },
+  {
+    "type": "round_trip_near_duplicate",
+    "confidence": "review_candidate",
+    "payment_ids": [
+      "PMT-00711",
+      "PMT-00916"
+    ]
+  },
+  {
+    "type": "round_trip_near_duplicate",
+    "confidence": "review_candidate",
+    "payment_ids": [
+      "PMT-00295",
+      "PMT-00917"
+    ]
+  },
+  {
+    "type": "round_trip_near_duplicate",
+    "confidence": "review_candidate",
+    "payment_ids": [
+      "PMT-00270",
+      "PMT-00918"
+    ]
+  },
+  {
+    "type": "round_trip_near_duplicate",
+    "confidence": "review_candidate",
+    "payment_ids": [
+      "PMT-00301",
+      "PMT-00919"
+    ]
+  }
+]

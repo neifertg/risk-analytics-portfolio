@@ -91,6 +91,21 @@ a hidden flaw.
 
 [Source, findings & real output](https://github.com/neifertg/risk-analytics-portfolio/tree/main/duplicate-vendor-payment-checker)
 
+### Duplicate Payment Anomaly Detection (Unsupervised ML)
+
+![Bar chart comparing rule-based heuristics (100% precision, 98% recall) against Isolation Forest (48% precision, 41% recall) and DBSCAN (41% precision, 20% recall)](assets/anomaly-detection-comparison-chart.png)
+
+A genuine trained-ML companion to the checker above, on the same seeded
+ledger: Isolation Forest and DBSCAN, evaluated against the same ground
+truth, with no domain rules or hand-picked thresholds. Isolation Forest
+recovers real signal (48% precision, ~4x better than chance against an
+11.6% true anomaly rate) but comes nowhere near the four hand-built
+heuristics' 100%/98% — the honest, expected result, and a real
+transparency/defensibility trade-off between packaged detection and rules
+an auditor can walk a reviewer through step by step.
+
+[Source, findings & real output](https://github.com/neifertg/risk-analytics-portfolio/tree/main/duplicate-payment-anomaly-detection)
+
 ### Presentation Deck Builder
 
 ![A Gaussian Mixture Models slide from the Clustering for Audit Analytics training deck, showing each record assigned a probability of risk instead of a hard yes/no label](assets/deck-builder-demo.png)

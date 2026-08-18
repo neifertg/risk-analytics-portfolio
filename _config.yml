@@ -90,3 +90,10 @@ exclude:
   - imdb-review-text-analytics/README.md
   - imdb-review-text-analytics/requirements.txt
   - imdb-review-text-analytics/.gitignore
+  - duplicate-payment-anomaly-detection/.venv
+  - duplicate-payment-anomaly-detection/data
+  - duplicate-payment-anomaly-detection/output
+  - duplicate-payment-anomaly-detection/detect_anomalies.py
+  - duplicate-payment-anomaly-detection/README.md
+  - duplicate-payment-anomaly-detection/requirements.txt
+  - duplicate-payment-anomaly-detection/.gitignore

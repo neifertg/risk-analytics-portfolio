@@ -12,7 +12,14 @@ supervisor has to reconcile two specialists that don't fully agree.
 [Live demo](https://audit-engagement-co-pilot.onrender.com) — a small
 static page (`scripts/public/index.html`, no framework, same ethos as the
 rest of this project) with example question chips and a text box that
-calls `POST /ask` directly; or hit the API yourself:
+calls `POST /ask` directly. Every answer shows its sources (real citations
+pulled out of the RAG tool calls, deduped and ranked by relevance) and an
+expandable trace of exactly what happened to produce it — which
+specialist(s) ran, on which model, which MCP tool(s) each one called with
+what input/output, per-call cost, and each specialist's own answer before
+the supervisor's synthesis (`scripts/trace-summary.mjs` builds this from
+the same trace `logs/queries.jsonl` already captured, nothing new is
+computed to support it). Or hit the API yourself:
 
 ```
 curl https://audit-engagement-co-pilot.onrender.com/ask -X POST \

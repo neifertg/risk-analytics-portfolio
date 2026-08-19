@@ -7,6 +7,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { runSupervisor } from "./supervisor.mjs";
+import { summarizeRun } from "./trace-summary.mjs";
 
 const PORT = process.env.PORT || 8080;
 const MAX_BODY_BYTES = 10_000;
@@ -123,11 +124,14 @@ const server = http.createServer(async (req, res) => {
 
   try {
     const result = await runSupervisor(question.trim());
+    const { steps, citations } = summarizeRun(result);
     sendJson(res, 200, {
       answer: result.answer,
       dispatched: result.dispatched,
       turns: result.turns,
       usage: result.usage,
+      steps,
+      citations,
     });
   } catch (err) {
     console.error("server: /ask failed:", err);

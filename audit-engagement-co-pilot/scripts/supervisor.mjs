@@ -81,7 +81,7 @@ const DISPATCH_TOOLS = [
   },
 ];
 
-const AGENT_KEY_BY_TOOL = {
+export const AGENT_KEY_BY_TOOL = {
   dispatch_sampling: "sampling",
   dispatch_fraud_risk: "fraud-risk",
   dispatch_standards: "standards",

@@ -130,19 +130,20 @@ an auditor can walk a reviewer through step by step.
 
 ### Presentation Deck Builder
 
-![A Gaussian Mixture Models slide from the Clustering for Audit Analytics training deck, showing each record assigned a probability of risk instead of a hard yes/no label](assets/deck-builder-demo.png)
+![An Isolation Forest slide from the Anomaly Detection for Internal Audit training deck: a dense crowd of travelers requiring many random partition lines to separate, next to one isolated traveler boxed off by just two random splits](deck-builder/decks/anomaly-detection-for-internal-audit/assets/isolation-forest.svg)
 
 A generator for branded, self-contained reveal.js training decks — content
 authored as structured `deck.yaml`, rendered through a fixed set of layouts
 and design tokens so every deck stays visually consistent without hand-tuned
-CSS per talk. The example here, "Clustering for Audit Analytics," is a real
-17-slide internal-training deck walking through K-Means, Hierarchical
-Clustering, DBSCAN, and Gaussian Mixture Models, each framed as an audit
-question rather than abstract ML theory, with two worked examples (vendor-
-payment clustering, access-log clustering).
+CSS per talk. The example here, "Anomaly Detection for Internal Audit," is a
+real 16-slide internal-training deck walking through four techniques
+(Isolation Forest, Local Outlier Factor, One-Class SVM, autoencoders) via an
+airport-security-checkpoint framing, closing with a concrete four-step pilot
+plan (pick a population, choose features grounded in known red flags, run
+Isolation Forest first, investigate flags rather than conclude from them).
 
 [Source & write-up](https://github.com/neifertg/risk-analytics-portfolio/tree/main/deck-builder)
-&middot; [Live demo](deck-builder/decks/clustering-for-audit/index.html)
+&middot; [Live demo](deck-builder/decks/anomaly-detection-for-internal-audit/index.html)
 
 ### Journal Entry Testing Analyzer
 

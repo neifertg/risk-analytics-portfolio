@@ -97,3 +97,12 @@ exclude:
   - duplicate-payment-anomaly-detection/README.md
   - duplicate-payment-anomaly-detection/requirements.txt
   - duplicate-payment-anomaly-detection/.gitignore
+  - audit-engagement-co-pilot/node_modules
+  - audit-engagement-co-pilot/scripts
+  - audit-engagement-co-pilot/evals
+  - audit-engagement-co-pilot/logs
+  - audit-engagement-co-pilot/Dockerfile
+  - audit-engagement-co-pilot/README.md
+  - audit-engagement-co-pilot/package.json
+  - audit-engagement-co-pilot/package-lock.json
+  - audit-engagement-co-pilot/.gitignore

@@ -1,45 +1,149 @@
 # Audit Engagement Co-Pilot
 
-**Status: Phase 5 of 6 (Docker + deployment) — done. Not yet a full
-project.** Full build story, architecture reasoning, and phase plan live in
-this portfolio's parent wiki, not duplicated here — this README will be
-replaced with the real project writeup in Phase 6 (portfolio placement).
+A hierarchical multi-agent audit assistant: a supervisor decomposes a
+plain-language audit question and dispatches it to specialist sub-agents,
+each wrapping a tool that already existed and already worked elsewhere in
+this portfolio — a RAG assistant, a Benford's Law analyzer, two
+duplicate-payment detectors, a statistical sampling calculator — behind a
+real MCP server. The point isn't any one tool; it's that this is the first
+project in this portfolio where the tools talk to each other, and where a
+supervisor has to reconcile two specialists that don't fully agree.
 
-## What's real right now
+[Live demo](https://audit-engagement-co-pilot.onrender.com)
 
-A working MCP server (`@modelcontextprotocol/sdk`) exposing 7 tools over
-`InMemoryTransport.createLinkedPair()`, each wrapping an existing, already-
-shipped tool elsewhere in this portfolio rather than reimplementing it:
+```
+curl https://audit-engagement-co-pilot.onrender.com/ask -X POST \
+  -H "Content-Type: application/json" \
+  -d '{"question": "Are there any duplicate payment flags in the AP ledger?"}'
+```
 
-- `search_audit_standards` / `ask_audit_assistant` — import `retrieve()` /
-  `answerQuestion()` directly from `../audit-rag-assistant/scripts/`.
-- `check_duplicate_payments`, `get_benfords_analysis`,
-  `get_fraud_ml_comparison` — read already-committed `output/*.json` from
-  `../duplicate-vendor-payment-checker/`, `../benfords-law-analyzer/`, and
-  `../duplicate-payment-anomaly-detection/` respectively. Deliberately
-  static, not live re-execution — see `scripts/tools.mjs`'s header comment
-  for why.
-- `plan_audit_sample` / `evaluate_audit_sample` — call a small new
-  `sampling_cli.py` shim (in `../sampling-calculator/`) that wraps
-  `sampling.py`'s existing pure functions over a stdin-JSON/stdout-JSON
-  contract.
+The free-tier host sleeps after 15 minutes idle — the first request after a
+gap takes 30-60s to wake up.
 
-Run `npm run test-tools` to verify: connects a real `Client` to the real
-`Server`, calls every tool with valid input, and induces one real failure
-per tool (bad schema input, a real `sampling.py` business-logic error, a
-missing file) to confirm each one resolves to a well-formed error rather
-than crashing.
+## Architecture
 
-On top of the tools: a hand-rolled tool-use loop (`scripts/agent-loop.mjs`),
-three Haiku sub-agents (`scripts/sub-agents.mjs`), and a Sonnet supervisor
-(`scripts/supervisor.mjs`) that dispatches to them — never the raw MCP
-tools directly — with full multi-agent trace logging. `npm run
-test-agents` (13/13) and `npm run test-supervisor` (8/8) verify these
-against the real Anthropic API. `npm run eval` (6/6) runs the multi-agent
-eval suite: dispatch discipline, the static-tool "pre-computed on a seeded
-synthetic dataset" framing surfacing into final answers, a genuine
-fan-out + reconciliation case, and a real induced failure that degrades
-gracefully instead of crashing.
+```
+Question
+   │
+   ▼
+Supervisor (Sonnet)  ──dispatch_sampling──▶  Sampling sub-agent (Haiku)
+   │                  ──dispatch_fraud_risk──▶  Fraud-risk sub-agent (Haiku)
+   │                  ──dispatch_standards──▶  Standards sub-agent (Haiku)
+   ▼                                              │
+Synthesized, cited answer  ◀──────────────────────┘
+                                                   │
+                                          MCP Server (7 tools)
+                                     wrapping 5 already-shipped
+                                       projects in this portfolio
+```
+
+The supervisor never calls the raw MCP tools directly — its only tools are
+one `dispatch_*` per sub-agent. A `dispatch_*` call runs a full nested
+Haiku tool-use loop; the sub-agent's final answer becomes the `tool_result`
+the supervisor sees. Each sub-agent is scoped to only its own MCP
+tools — the sampling sub-agent literally cannot call `check_duplicate_payments`,
+because it's never told the tool exists.
+
+**Real fan-out + reconciliation, not staged.** A question that touches both
+fraud risk and standards dispatches to both sub-agents in the same turn and
+gets synthesized, with disagreement stated explicitly rather than papered
+over. From a real run (`logs/queries.jsonl`, not fabricated for this
+README):
+
+> **Q:** *"Our duplicate-payment checker flagged several payments in the AP
+> ledger. Given that finding, what does COSO/IIA say we should do about a
+> control deficiency like this, and does the fraud-risk data actually show
+> a real problem?"*
+>
+> Dispatched to: `fraud-risk`, `standards` (2 supervisor turns, $0.092 total)
+>
+> **Fraud-risk specialist:** "Yes, credibly so... 52 of 919 payments
+> (~5.7%)... 98.1% recall, 100% precision against the seeded ground
+> truth... this is a seeded synthetic dataset used for demonstration
+> purposes, not your live production ledger."
+>
+> **Standards specialist:** "The corpus does **not** contain the actual
+> COSO Internal Control framework component/principle language or IIA IPPF
+> standard citations you asked for" — flagged the gap explicitly instead of
+> inventing a citation, then answered from what the corpus *did* contain
+> (SOX 404-oriented deficiency-classification guidance).
+>
+> **Supervisor's synthesis** stated both: a credible, well-corroborated
+> fraud-risk finding *and* a real limitation in what the standards corpus
+> could confirm — not blended into one confident-sounding answer.
+
+## Static vs. dynamic tools — drawn honestly, not assumed
+
+Of the 7 MCP tools, four are genuinely dynamic (`search_audit_standards`,
+`ask_audit_assistant` import `retrieve()`/`answerQuestion()` directly from
+the RAG assistant; `plan_audit_sample`/`evaluate_audit_sample` call a new
+`sampling_cli.py` shim over the sampling calculator's existing pure
+functions). Three are static reads of already-committed `output/*.json`:
+`check_duplicate_payments`, `get_benfords_analysis`,
+`get_fraud_ml_comparison`. That last one was originally scoped to re-run
+its underlying script live — design review found the script has no
+per-query input variation (always reads the same hardcoded ledger) and
+unconditionally overwrites its own output on every call, so "live"
+execution would produce identical output to the committed file, at the
+cost of a write-race under concurrent requests. Every static tool's
+description says so in words the model surfaces, and it does — see the
+fraud-risk specialist's answer above, which says "seeded synthetic
+dataset" unprompted, not because the question asked for that caveat.
+
+## What a framework would give me for free
+
+No LangGraph, no CrewAI — the tool-use loop (`agent-loop.mjs`) is hand-rolled,
+matching this portfolio's RAG assistant's own no-framework RAG pipeline.
+What that costs, stated plainly rather than left undocumented: no automatic
+retry/backoff on a transport error, a fixed max-turn cap (6) rather than
+adaptive budgeting, and no built-in context compaction for a very long
+multi-turn trace. For a project this size the tradeoff is worth it —
+building the loop by hand is the actual point, not a framework dependency
+padding a skills list.
+
+## Two real bugs, found live by genuine concurrent load
+
+Building the multi-agent eval suite (Phase 4) was the first time this
+project's own tool calls ran genuinely in parallel — no earlier phase's
+tests exercised it, and it surfaced two real problems in one afternoon,
+neither staged:
+
+1. **A race condition** in the RAG assistant's Voyage embedding rate-limit
+   throttle — a module-level `lastCallAt` timestamp read-then-written
+   non-atomically, so two concurrent embedding calls (e.g. a sub-agent's
+   own parallel `search_audit_standards` + `ask_audit_assistant` tool_use)
+   could both see "clear to send" before either updated it, racing past the
+   throttle and tripping Voyage's rate limit. Fixed by serializing every
+   embedding call through a promise-chain mutex.
+2. That fix then exposed a **second, distinct bug**: the MCP SDK's default
+   60-second per-call timeout became too short once a second concurrent
+   tool call had to wait behind the first one's full
+   throttle-plus-retry duration. Confirmed by direct trace inspection —
+   the actual error was `MCP error -32001: Request timed out`, not the
+   rate-limit error the first fix's mutex would suggest — before writing a
+   fix for it. Fixed with a generous 5-minute client-side timeout, since
+   it's an in-process call with no real network hop.
+
+## Multi-agent evals
+
+`npm run eval` — 6/6 passing, extending the RAG assistant's own
+deterministic keyword-matching pattern (no LLM-judge). What's new here
+isn't retrieval quality, it's the multi-step trace:
+
+- Two single-specialist cases assert **exact** dispatch (no gratuitous
+  fan-out when a question doesn't need it).
+- Two cases assert the static-tool "pre-computed on a seeded synthetic
+  dataset" framing actually surfaces in the final synthesized answer, not
+  just in the tool's own description.
+- One genuine fan-out + reconciliation case (the example above).
+- One real induced failure — a `sampling.py` business-logic error
+  (expected misstatement exceeding tolerable misstatement) — asserting the
+  run degrades to a coherent explanation instead of crashing.
+
+Every phase has its own real test suite: 7 MCP tools (`npm run test-tools`,
+13/13, one induced failure per tool), the 3 sub-agents in isolation
+(`npm run test-agents`, 13/13, real Anthropic API calls), the supervisor
+(`npm run test-supervisor`, 8/8), and the eval suite above.
 
 ## Running locally
 
@@ -48,43 +152,15 @@ npm run ask-supervisor -- "your question"   # CLI
 npm start                                    # node:http server on :8080
 ```
 
-`npm start` needs `ANTHROPIC_API_KEY` and `VOYAGE_API_KEY` in the
-environment (or `~/.claude/secrets.yaml`, same resolution as everywhere
-else in this portfolio — see `audit-rag-assistant/scripts/secrets.mjs`).
-Once running:
+Needs `ANTHROPIC_API_KEY` and `VOYAGE_API_KEY` — env var or
+`~/.claude/secrets.yaml`, same resolution as everywhere else in this
+portfolio.
 
-```
-curl http://localhost:8080/                                          # health check
-curl http://localhost:8080/ask -X POST -H "Content-Type: application/json" \
-  -d '{"question": "Are there any duplicate payment flags in the AP ledger?"}'
-```
+## Deployment
 
-The server caps questions at 5 per IP per hour — a cheap deterrent for a
-public demo's API spend, same ethos as the RAG assistant's Streamlit app
-capping questions per browser session, not real abuse protection.
-
-## Deployment (Docker + Render)
-
-`Dockerfile` is new here and needs the **portfolio root**
-(`risk-analytics-portfolio/`) as its build context, not this folder —
-this project imports `audit-rag-assistant`'s scripts in-process and reads
-static `output/*.json` from three sibling projects, so the image needs all
-of them. From `risk-analytics-portfolio/`:
-
-```
-docker build -f audit-engagement-co-pilot/Dockerfile -t audit-engagement-co-pilot .
-docker run -p 8080:8080 -e ANTHROPIC_API_KEY=... -e VOYAGE_API_KEY=... audit-engagement-co-pilot
-```
-
-On Render (a Web Service, Docker runtime): set **Root Directory** to the
-repo root and **Dockerfile Path** to `audit-engagement-co-pilot/Dockerfile`
-— same split as the local `-f` flag above, via the dashboard instead.
-Health check path is `/`. Set `ANTHROPIC_API_KEY` and `VOYAGE_API_KEY` as
-environment variables in the Render dashboard (never commit them). Render
-sets `PORT` itself; `server.mjs` already reads it via `process.env.PORT`.
-
-## Not built yet
-
-Phase 6 (portfolio placement — this README's real writeup, an `index.md`
-card in this portfolio, and the `ai-engineer-portfolio-signal.md` update)
-— see the parent wiki's implementation plan for what's next.
+Docker + a minimal `node:http` server, no Express — a single `POST /ask`
+plus a health check, with a per-IP cost cap (5 questions/hour) matching the
+RAG assistant's Streamlit demo's per-session cap. Live on Render; see
+`Dockerfile` for the build (portfolio-root context, since this project
+imports the RAG assistant's scripts in-process and reads static output
+from three sibling projects).

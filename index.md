@@ -44,6 +44,26 @@ projects as they ship — nothing here is a mockup or a hypothetical.
 
 ## 🔍 Projects
 
+### Audit Engagement Co-Pilot
+
+A hierarchical multi-agent audit assistant: a Sonnet supervisor decomposes
+a plain-language question and dispatches it to three specialist sub-agents
+(sampling, fraud-risk, standards) over a real MCP server wrapping five
+other projects in this portfolio, rather than reimplementing them. The
+differentiator is genuine fan-out with reconciliation — a question that
+needs both fraud-risk data and standards guidance gets dispatched to both
+specialists in parallel and synthesized, with disagreement stated
+explicitly rather than blended into one confident-sounding answer. Backed
+by a 6/6 multi-agent eval suite (dispatch discipline, the static-tool
+"pre-computed on a seeded synthetic dataset" framing actually surfacing in
+final answers, fan-out reconciliation, a real induced sampling-methodology
+failure that degrades gracefully instead of crashing) and two real
+concurrency bugs found and fixed live while building it. Deployed via
+Docker on Render.
+
+[Source, architecture & a real trace example](https://github.com/neifertg/risk-analytics-portfolio/tree/main/audit-engagement-co-pilot)
+&middot; [Live demo](https://audit-engagement-co-pilot.onrender.com)
+
 ### Audit Procedures RAG Assistant
 
 ![Audit Procedures RAG Assistant answering a question with cited sources and per-session cost tracking](assets/audit-rag-assistant-demo.png)

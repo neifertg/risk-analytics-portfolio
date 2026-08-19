@@ -1,0 +1,19 @@
+{
+  "name": "audit-engagement-co-pilot",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Hierarchical multi-agent audit assistant: a supervisor agent dispatching to specialist sub-agents over a real MCP server wrapping existing audit-analytics tools in this portfolio.",
+  "type": "module",
+  "scripts": {
+    "test-tools": "node scripts/test-tools.mjs",
+    "test-agents": "node scripts/test-agents.mjs",
+    "test-supervisor": "node scripts/test-supervisor.mjs",
+    "ask-supervisor": "node scripts/supervisor.mjs",
+    "eval": "node scripts/eval.mjs",
+    "start": "node scripts/server.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "zod": "^3.24.0"
+  }
+}

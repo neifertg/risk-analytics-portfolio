@@ -1,0 +1,42 @@
+[
+  {
+    "id": "sampling-attribute-basic",
+    "question": "I need a sample size for attribute sampling: population of 5000 items, 95% confidence, tolerable deviation rate 5%, expected deviation rate 1%.",
+    "expectedDispatch": ["sampling"],
+    "expectedKeywords": ["sample size", "sample"]
+  },
+  {
+    "id": "standards-sox-walkthrough",
+    "question": "What is typically tested during a SOX walkthrough?",
+    "expectedDispatch": ["standards"],
+    "expectedKeywords": ["walkthrough", "control"]
+  },
+  {
+    "id": "fraud-risk-duplicates-static-framing",
+    "question": "Are there any duplicate or split-payment flags in our AP ledger?",
+    "expectedDispatch": ["fraud-risk"],
+    "expectedKeywords": ["duplicate", "flag"],
+    "expectStaticCaveat": true
+  },
+  {
+    "id": "fraud-risk-benfords-static-framing",
+    "question": "Does our financial data conform to Benford's Law?",
+    "expectedDispatch": ["fraud-risk"],
+    "expectedKeywords": ["benford"],
+    "expectStaticCaveat": true
+  },
+  {
+    "id": "fanout-duplicate-payments-and-coso-response",
+    "question": "Our duplicate-payment checker flagged several payments in the AP ledger. Given that finding, what does COSO/IIA say we should do about a control deficiency like this, and does the fraud-risk data actually show a real problem?",
+    "expectedDispatch": ["fraud-risk", "standards"],
+    "expectedKeywords": ["coso", "deficiency", "control"]
+  },
+  {
+    "id": "induced-failure-mus-plan-invalid-input",
+    "question": "I need a monetary-unit sample size at 95% confidence, population value $2,000,000, tolerable misstatement of $10,000, and based on my walkthrough I expect $20,000 of misstatement. What sample size do I need?",
+    "expectedDispatch": ["sampling"],
+    "strictDispatch": false,
+    "expectedKeywords": ["exceed", "tolerable", "less than", "cannot"],
+    "induceFailure": true
+  }
+]

@@ -1,0 +1,12 @@
+# Applies repo-wide since the Docker build context for
+# audit-engagement-co-pilot/Dockerfile is the portfolio root (it needs
+# several sibling projects in context -- see that Dockerfile's header
+# comment). Each project's own node_modules/.venv is rebuilt fresh inside
+# the image for the right platform/architecture rather than copied in.
+**/node_modules
+**/.venv
+**/__pycache__
+**/logs
+**/.git
+**/*.pyc
+audit-rag-assistant/app/.venv

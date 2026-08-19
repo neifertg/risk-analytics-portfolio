@@ -8,6 +8,18 @@ const MIN_INTERVAL_MS = 21_000;
 const MAX_RETRIES = 5;
 let lastCallAt = 0;
 
+// Serializes every embedTexts() call process-wide. Found live via
+// audit-engagement-co-pilot's Phase 4 multi-agent evals: two concurrent
+// tool_use calls in the same turn (e.g. a sub-agent calling both
+// search_audit_standards and ask_audit_assistant in parallel) could each
+// read lastCallAt as "clear to send" before either updated it, racing past
+// the throttle below and tripping Voyage's free-tier rate limit even
+// though MIN_INTERVAL_MS was never actually violated from a single
+// caller's perspective. This project's own ingest.mjs/search.mjs only ever
+// called embedTexts() sequentially, so the race never surfaced until a
+// second caller (a real multi-agent system) started firing concurrently.
+let queue = Promise.resolve();
+
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -29,7 +41,13 @@ async function callVoyage(texts) {
 }
 
 // Returns { embeddings, usage } — usage.totalTokens from Voyage's response.
-export async function embedTexts(texts) {
+export function embedTexts(texts) {
+  const run = queue.then(() => embedTextsExclusive(texts));
+  queue = run.catch(() => {});
+  return run;
+}
+
+async function embedTextsExclusive(texts) {
   if (texts.length === 0) return { embeddings: [], usage: { totalTokens: 0 } };
 
   for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {

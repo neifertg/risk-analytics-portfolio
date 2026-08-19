@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Audit Engagement Co-Pilot</title>
+<meta name="description" content="Ask an audit question and watch a supervisor agent dispatch it to sampling, fraud-risk, and standards specialists over a real MCP server.">
+<style>
+  /* Brand tokens -- "Heraldic Ground", same palette as neifertg.github.io
+     (assets/css/style.scss). Dark ground only here; this is a single-purpose
+     demo page, not the full site, so no light-mode toggle. */
+  :root {
+    --color-ink: #121716;
+    --color-gold: #B08A46;
+    --color-gold-lift: #C9A257;
+    --color-red: #BB2722;
+    --color-text-on-dark: #EAE2CF;
+    --surface: #1a1f1d;
+    --surface-raised: #212824;
+    --border: rgba(176, 138, 70, 0.35);
+    --font-ui: 'Arial Nova', Arial, 'Helvetica Neue', sans-serif;
+    --font-display: Cambria, Georgia, 'Times New Roman', serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--color-ink);
+    color: var(--color-text-on-dark);
+    font-family: var(--font-ui);
+    font-size: 1.05rem;
+    line-height: 1.6;
+  }
+
+  main {
+    max-width: 42rem;
+    margin: 0 auto;
+    padding: 3rem 1.5rem 5rem;
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 1.3rem + 1.8vw, 2.25rem);
+    margin: 0 0 0.75rem;
+  }
+
+  .tagline { margin: 0 0 0.5rem; opacity: 0.95; }
+
+  .meta {
+    font-size: 0.85rem;
+    opacity: 0.7;
+    margin: 0 0 2rem;
+  }
+  .meta a { color: var(--color-gold-lift); }
+  .meta a:hover { color: var(--color-gold); }
+
+  .examples {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  .examples-label {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    opacity: 0.6;
+    margin-right: 0.25rem;
+  }
+  .chip {
+    font-family: var(--font-ui);
+    font-size: 0.85rem;
+    background: var(--surface);
+    color: var(--color-text-on-dark);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.4rem 0.9rem;
+    cursor: pointer;
+  }
+  .chip:hover { border-color: var(--color-gold); color: var(--color-gold-lift); }
+
+  form { margin-bottom: 0.5rem; }
+
+  label.sr-only {
+    position: absolute;
+    width: 1px; height: 1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+  }
+
+  textarea {
+    width: 100%;
+    background: var(--surface);
+    color: var(--color-text-on-dark);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.85rem 1rem;
+    font-family: inherit;
+    font-size: 1rem;
+    resize: vertical;
+  }
+  textarea:focus, .chip:focus-visible, button:focus-visible {
+    outline: 2px solid var(--color-gold-lift);
+    outline-offset: 2px;
+  }
+
+  .form-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.6rem;
+    gap: 1rem;
+  }
+
+  .hint { font-size: 0.8rem; opacity: 0.6; margin: 0; }
+
+  button#submit-btn {
+    font-family: var(--font-ui);
+    font-weight: 700;
+    background: var(--color-gold);
+    color: var(--color-ink);
+    border: none;
+    border-radius: 6px;
+    padding: 0.6rem 1.4rem;
+    font-size: 0.95rem;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  button#submit-btn:hover:not(:disabled) { background: var(--color-gold-lift); }
+  button#submit-btn:disabled { opacity: 0.55; cursor: default; }
+
+  #result { margin-top: 2rem; }
+
+  .state-loading, .state-error, .answer-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.25rem 1.4rem;
+    background: var(--surface);
+  }
+
+  .state-loading {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    opacity: 0.9;
+  }
+  .spinner {
+    width: 1.1rem; height: 1.1rem;
+    border: 2px solid var(--border);
+    border-top-color: var(--color-gold-lift);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    flex-shrink: 0;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .state-error {
+    border-color: rgba(187, 39, 34, 0.5);
+    color: var(--color-text-on-dark);
+  }
+  .state-error strong { color: #e8746f; }
+
+  .answer-text { margin: 0 0 1rem; }
+  .answer-text > *:first-child { margin-top: 0; }
+  .answer-text > *:last-child { margin-bottom: 0; }
+  .answer-text p { margin: 0 0 0.9rem; }
+  .answer-text h4 {
+    font-family: var(--font-display);
+    color: var(--color-gold-lift);
+    font-size: 1.05rem;
+    margin: 1.2rem 0 0.5rem;
+  }
+  .answer-text ul, .answer-text ol { margin: 0 0 0.9rem; padding-left: 1.4rem; }
+  .answer-text li { margin-bottom: 0.3rem; }
+  .answer-text code {
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 0.1rem 0.35rem;
+    font-size: 0.9em;
+  }
+  .answer-text table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 0 1rem;
+    font-size: 0.9rem;
+  }
+  .answer-text th, .answer-text td {
+    border: 1px solid var(--border);
+    padding: 0.4rem 0.6rem;
+    text-align: left;
+  }
+  .answer-text th {
+    background: var(--surface-raised);
+    color: var(--color-gold-lift);
+  }
+
+  .badges { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.75rem; }
+  .badge {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    color: var(--color-gold-lift);
+    border-radius: 999px;
+    padding: 0.2rem 0.65rem;
+  }
+
+  .answer-meta {
+    font-size: 0.8rem;
+    opacity: 0.6;
+    margin: 0;
+    border-top: 1px solid var(--border);
+    padding-top: 0.75rem;
+  }
+</style>
+</head>
+<body>
+<main>
+  <h1>Audit Engagement Co-Pilot</h1>
+  <p class="tagline">Ask an audit question. A supervisor agent (Sonnet) dispatches it to specialist sub-agents (Haiku) &mdash; sampling, fraud-risk, standards &mdash; over a real MCP server, then synthesizes a cited answer.</p>
+  <p class="meta">
+    <a href="https://github.com/neifertg/risk-analytics-portfolio/tree/main/audit-engagement-co-pilot">Source &amp; architecture</a>
+    &middot; capped at 5 questions/hour per visitor to keep the demo sustainable
+  </p>
+
+  <div class="examples">
+    <span class="examples-label">Try:</span>
+    <button class="chip" type="button" data-q="Are there any duplicate payment flags in the AP ledger?">Duplicate payments</button>
+    <button class="chip" type="button" data-q="Plan an audit sample for testing 3,200 invoice line items at a 95% confidence level.">Plan a sample</button>
+    <button class="chip" type="button" data-q="Our duplicate-payment checker flagged several payments in the AP ledger. Given that finding, what does COSO/IIA say we should do about a control deficiency like this, and does the fraud-risk data actually show a real problem?">Fan-out + reconcile</button>
+  </div>
+
+  <form id="ask-form">
+    <label class="sr-only" for="question">Your audit question</label>
+    <textarea id="question" rows="3" maxlength="2000" placeholder="e.g. What does COSO say about classifying a control deficiency?" required></textarea>
+    <div class="form-row">
+      <p class="hint">First request after idle time can take 30&ndash;60s to wake the server.</p>
+      <button id="submit-btn" type="submit">Ask</button>
+    </div>
+  </form>
+
+  <div id="result" aria-live="polite"></div>
+</main>
+
+<script>
+  const form = document.getElementById("ask-form");
+  const textarea = document.getElementById("question");
+  const submitBtn = document.getElementById("submit-btn");
+  const result = document.getElementById("result");
+
+  document.querySelectorAll(".chip").forEach((chip) => {
+    chip.addEventListener("click", () => {
+      textarea.value = chip.dataset.q;
+      textarea.focus();
+    });
+  });
+
+  function escapeHtml(str) {
+    const div = document.createElement("div");
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  // Sub-agent/supervisor answers come back as markdown (headers, bold,
+  // tables, lists). No markdown library -- this is a small, self-contained
+  // renderer covering just what these agents' prompts actually produce,
+  // matching the page's zero-dependency ethos. Escapes first, then only
+  // ever emits tags this function itself writes, so it can't be used to
+  // inject arbitrary HTML via a crafted answer.
+  function inlineMd(text) {
+    return text
+      .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+      .replace(/`([^`]+)`/g, "<code>$1</code>");
+  }
+
+  function tableToHtml(rows) {
+    const dataRows = rows.filter((r) => !/^\|[\s:|-]+\|$/.test(r));
+    if (!dataRows.length) return "";
+    const cellsOf = (row) => row.replace(/^\||\|$/g, "").split("|").map((c) => c.trim());
+    const [headerCells, ...bodyRows] = dataRows.map(cellsOf);
+    const thead = `<tr>${headerCells.map((c) => `<th>${inlineMd(c)}</th>`).join("")}</tr>`;
+    const tbody = bodyRows
+      .map((cells) => `<tr>${cells.map((c) => `<td>${inlineMd(c)}</td>`).join("")}</tr>`)
+      .join("");
+    return `<table><thead>${thead}</thead><tbody>${tbody}</tbody></table>`;
+  }
+
+  function markdownToHtml(md) {
+    const lines = escapeHtml(md).split("\n");
+    let html = "";
+    let listType = null;
+    let tableRows = [];
+
+    const closeList = () => { if (listType) { html += `</${listType}>`; listType = null; } };
+    const flushTable = () => { if (tableRows.length) { html += tableToHtml(tableRows); tableRows = []; } };
+
+    for (const raw of lines) {
+      const line = raw.trim();
+
+      if (/^\|.*\|$/.test(line)) { tableRows.push(line); continue; }
+      flushTable();
+
+      if (line === "") { closeList(); continue; }
+
+      const h3 = line.match(/^###\s+(.+)/);
+      const h2 = line.match(/^##\s+(.+)/);
+      const h1 = line.match(/^#\s+(.+)/);
+      const ol = line.match(/^\d+\.\s+(.+)/);
+      const ul = line.match(/^[-*]\s+(.+)/);
+
+      if (h3 || h2 || h1) { closeList(); html += `<h4>${inlineMd((h3 || h2 || h1)[1])}</h4>`; continue; }
+      if (ol) { if (listType !== "ol") { closeList(); html += "<ol>"; listType = "ol"; } html += `<li>${inlineMd(ol[1])}</li>`; continue; }
+      if (ul) { if (listType !== "ul") { closeList(); html += "<ul>"; listType = "ul"; } html += `<li>${inlineMd(ul[1])}</li>`; continue; }
+
+      closeList();
+      html += `<p>${inlineMd(line)}</p>`;
+    }
+    closeList();
+    flushTable();
+    return html;
+  }
+
+  function renderLoading() {
+    result.innerHTML = `
+      <div class="state-loading">
+        <span class="spinner" aria-hidden="true"></span>
+        <span>Dispatching to specialists&hellip; this can take 10&ndash;30s (up to 60s if the server was asleep).</span>
+      </div>`;
+  }
+
+  function renderError(message) {
+    result.innerHTML = `
+      <div class="state-error">
+        <strong>Couldn't get an answer.</strong>
+        <p style="margin: 0.5rem 0 0;">${escapeHtml(message)}</p>
+      </div>`;
+  }
+
+  function renderAnswer(data) {
+    const dispatched = Array.isArray(data.dispatched) ? data.dispatched : [];
+    const badges = dispatched
+      .map((name) => `<span class="badge">${escapeHtml(name)}</span>`)
+      .join("");
+    const cost = data.usage && typeof data.usage.totalCostUsd === "number"
+      ? `$${data.usage.totalCostUsd.toFixed(3)}`
+      : null;
+    const metaParts = [];
+    if (typeof data.turns === "number") metaParts.push(`${data.turns} supervisor turn${data.turns === 1 ? "" : "s"}`);
+    if (cost) metaParts.push(cost);
+
+    result.innerHTML = `
+      <div class="answer-card">
+        ${badges ? `<div class="badges">${badges}</div>` : ""}
+        <div class="answer-text">${markdownToHtml(data.answer || "(no answer returned)")}</div>
+        ${metaParts.length ? `<p class="answer-meta">${escapeHtml(metaParts.join(" · "))}</p>` : ""}
+      </div>`;
+  }
+
+  async function ask(question) {
+    renderLoading();
+    submitBtn.disabled = true;
+    try {
+      const res = await fetch("/ask", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ question }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        renderError(data.error || `Request failed (${res.status}).`);
+        return;
+      }
+      renderAnswer(data);
+    } catch (err) {
+      renderError("Network error reaching the server. Try again in a moment.");
+    } finally {
+      submitBtn.disabled = false;
+    }
+  }
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const question = textarea.value.trim();
+    if (question.length < 2) return;
+    ask(question);
+  });
+
+  textarea.addEventListener("keydown", (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === "Enter") {
+      form.requestSubmit();
+    }
+  });
+</script>
+</body>
+</html>

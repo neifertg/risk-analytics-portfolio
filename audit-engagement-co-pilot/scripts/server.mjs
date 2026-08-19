@@ -1,12 +1,22 @@
 // Phase 5: minimal deployment surface. Deliberately no Express -- the
 // plan's "no-framework ethos" carries over from the RAG assistant's own
 // hand-rolled retrieval, and a single POST /ask endpoint plus a GET /
-// health check doesn't need a router.
+// demo page doesn't need a router.
 import http from "node:http";
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { runSupervisor } from "./supervisor.mjs";
 
 const PORT = process.env.PORT || 8080;
 const MAX_BODY_BYTES = 10_000;
+
+// Read once at startup, not per-request -- it's static and this process
+// only ever serves the one file. Render's healthCheckPath is "/" (see
+// ../../render.yaml) and only checks for a 200, so serving HTML here
+// instead of the old {"status":"ok"} JSON doesn't break the health check.
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const DEMO_HTML = fs.readFileSync(path.join(__dirname, "public", "index.html"));
 
 // A per-session cap doesn't have a natural equivalent without a session
 // framework, so this uses per-IP instead -- same cheap-deterrent ethos as
@@ -72,6 +82,12 @@ function readBody(req) {
 
 const server = http.createServer(async (req, res) => {
   if (req.method === "GET" && req.url === "/") {
+    res.writeHead(200, { "Content-Type": "text/html; charset=utf-8", "Content-Length": DEMO_HTML.length });
+    res.end(DEMO_HTML);
+    return;
+  }
+
+  if (req.method === "GET" && req.url === "/health") {
     sendJson(res, 200, { status: "ok", service: "audit-engagement-co-pilot" });
     return;
   }

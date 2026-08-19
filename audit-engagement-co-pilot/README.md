@@ -9,7 +9,10 @@ real MCP server. The point isn't any one tool; it's that this is the first
 project in this portfolio where the tools talk to each other, and where a
 supervisor has to reconcile two specialists that don't fully agree.
 
-[Live demo](https://audit-engagement-co-pilot.onrender.com)
+[Live demo](https://audit-engagement-co-pilot.onrender.com) — a small
+static page (`scripts/public/index.html`, no framework, same ethos as the
+rest of this project) with example question chips and a text box that
+calls `POST /ask` directly; or hit the API yourself:
 
 ```
 curl https://audit-engagement-co-pilot.onrender.com/ask -X POST \
@@ -158,8 +161,9 @@ portfolio.
 
 ## Deployment
 
-Docker + a minimal `node:http` server, no Express — a single `POST /ask`
-plus a health check, with a per-IP cost cap (5 questions/hour) matching the
+Docker + a minimal `node:http` server, no Express — a single `POST /ask`,
+a static HTML demo page at `GET /`, and a `GET /health` JSON check, with a
+per-IP cost cap (5 questions/hour) matching the
 RAG assistant's Streamlit demo's per-session cap. Live on Render; see
 `Dockerfile` for the build (portfolio-root context, since this project
 imports the RAG assistant's scripts in-process and reads static output

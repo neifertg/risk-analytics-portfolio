@@ -46,6 +46,8 @@ projects as they ship — nothing here is a mockup or a hypothetical.
 
 ### Audit Engagement Co-Pilot
 
+![A question goes to a Sonnet supervisor, which dispatches to three scoped Haiku sub-agents (sampling, fraud-risk, standards), each calling only its own tools on a shared MCP server wrapping five shipped projects; the supervisor reconciles the sub-agents' answers into one synthesized, cited response.](assets/audit-engagement-co-pilot-architecture.svg)
+
 A hierarchical multi-agent audit assistant: a Sonnet supervisor decomposes
 a plain-language question and dispatches it to three specialist sub-agents
 (sampling, fraud-risk, standards) over a real MCP server wrapping five

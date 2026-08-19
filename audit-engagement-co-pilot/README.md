@@ -32,6 +32,8 @@ gap takes 30-60s to wake up.
 
 ## Architecture
 
+![A question goes to a Sonnet supervisor, which dispatches to three scoped Haiku sub-agents (sampling, fraud-risk, standards), each calling only its own tools on a shared MCP server wrapping five shipped projects; the supervisor reconciles the sub-agents' answers into one synthesized, cited response.](../assets/audit-engagement-co-pilot-architecture.svg)
+
 ```
 Question
    │

@@ -51,12 +51,23 @@ jobs:
       # first file argument, so each script needs its own invocation
       # rather than one command with all of them listed.
       - run: for f in scripts/*.mjs; do node --check "$f"; done
+      # The backoff math is the part that failed CI without needing a live
+      # Voyage call. Run it here so pull requests check it too.
+      - run: node --test scripts/embed-backoff.test.mjs
 
   audit-rag-assistant-eval:
     runs-on: ubuntu-latest
     # push only, not pull_request: this job needs real Anthropic/Voyage
     # secrets, and pull_request-triggered runs would expose repo secrets
     # to whatever branch opened the PR (including forks).
+    # One live eval at a time. The free-tier Voyage key is 3 requests per
+    # minute and this suite already paces itself just under that. A second
+    # push (2026-08-21) started eval while the previous one was still
+    # running; every embed came back 429 and the 21s retry never cleared
+    # the window. Queue the new run instead of sharing the budget.
+    concurrency:
+      group: audit-rag-assistant-live-eval
+      cancel-in-progress: false
     if: github.event_name == 'push'
     defaults:
       run:

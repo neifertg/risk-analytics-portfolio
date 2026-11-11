@@ -9,7 +9,8 @@ real MCP server. The point isn't any one tool; it's that this is the first
 project in this portfolio where the tools talk to each other, and where a
 supervisor has to reconcile two specialists that don't fully agree.
 
-[Live demo](https://audit-engagement-co-pilot.onrender.com) — a small
+[Live demo](https://audit-engagement-co-pilot.onrender.com)
+(free-tier hosting; may take ~30–60s to wake up) — a small
 static page (`scripts/public/index.html`, no framework, same ethos as the
 rest of this project) with example question chips and a text box that
 calls `POST /ask` directly. Every answer shows its sources (real citations

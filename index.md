@@ -1,3 +1,9 @@
+---
+layout: default
+title: "Risk & Audit Analytics Portfolio"
+description: "Data-driven internal audit, risk analytics, and automation projects by G. Seth Neifert"
+---
+
 <button id="toggle-dark" style="position:fixed;top:1rem;right:1rem;z-index:1000;">🌙 Toggle Dark Mode</button>
 <style>
 body.dark-mode {
@@ -27,12 +33,6 @@ body.dark-mode hr { border-color: #333; }
   });
 </script>
 
----
-layout: home
-title: "Risk & Audit Analytics Portfolio"
-description: "Data-driven internal audit, risk analytics, and automation projects by G. Seth Neifert"
----
-
 # Welcome to My Risk & Audit Analytics Portfolio
 
 I work in internal audit data analytics and am building toward applying
@@ -45,6 +45,11 @@ projects as they ship — nothing here is a mockup or a hypothetical.
 ## 🔍 Projects
 
 ### Audit Engagement Co-Pilot
+
+An engagement question often needs a sampling answer, a fraud-risk answer,
+and a standards answer together, and those answers can disagree. This sends
+each part to the specialist that already owns it and leaves the disagreement
+in the final answer; the multi-agent eval is 6/6.
 
 ![A question goes to a Sonnet supervisor, which dispatches to three scoped Haiku sub-agents (sampling, fraud-risk, standards), each calling only its own tools on a shared MCP server wrapping five shipped projects; the supervisor reconciles the sub-agents' answers into one synthesized, cited response.](assets/audit-engagement-co-pilot-architecture.svg)
 
@@ -64,9 +69,13 @@ concurrency bugs found and fixed live while building it. Deployed via
 Docker on Render.
 
 [Source, architecture & a real trace example](https://github.com/neifertg/risk-analytics-portfolio/tree/main/audit-engagement-co-pilot)
-&middot; [Live demo](https://audit-engagement-co-pilot.onrender.com)
+&middot; [Live demo](https://audit-engagement-co-pilot.onrender.com) (free-tier hosting; may take ~30–60s to wake up)
 
 ### Audit Procedures RAG Assistant
+
+Someone asking a procedure question needs an answer tied to the procedure,
+or a clear decline. This cites the corpus it used and refuses when retrieval
+is too weak to support an answer; the eval suite is 28/28.
 
 ![Audit Procedures RAG Assistant answering a question with cited sources and per-session cost tracking](assets/audit-rag-assistant-demo.png)
 
@@ -80,9 +89,13 @@ section whose own opening sentence diluted its embedding), both
 root-caused and fixed — see the project README.
 
 [Source & write-up](https://github.com/neifertg/risk-analytics-portfolio/tree/main/audit-rag-assistant)
-&middot; [Live demo](https://84abkcnqvptyedbbssztx8.streamlit.app/)
+&middot; [Live demo](https://84abkcnqvptyedbbssztx8.streamlit.app/) (free-tier hosting; may take ~30–60s to wake up)
 
 ### Benford's Law Analyzer
+
+A Benford screen is a lead, and it only helps if you know what conforming
+data looks like. On ~6,400 real US public companies' total assets, the
+leading digits conform: chi-square p=0.20, Nigrini MAD=0.00324.
 
 ![Observed vs. Benford's-expected leading-digit distribution, chi-square p=0.201, MAD=0.00324](assets/benfords-chart.png)
 
@@ -98,6 +111,12 @@ single-entity population where a deviation would actually be meaningful.
 [Source, chart & real output](https://github.com/neifertg/risk-analytics-portfolio/tree/main/benfords-law-analyzer)
 
 ### Duplicate Vendor Payment Checker
+
+The problem is paying the same invoice twice, splitting it under an approval
+limit, or paying it through a lookalike vendor. On a seeded ledger of 919
+payments the four checks caught 51 of 52 planted cases (98% recall) at 100%
+precision; the miss was a vendor-name variant just under the fuzzy-match
+cutoff.
 
 ![Duplicate-payment flags by type: exact_duplicate 15, threshold_split 12, vendor_master_duplicate 9, review_candidate 16](assets/duplicate-vendor-chart.png)
 
@@ -115,6 +134,12 @@ a hidden flaw.
 
 ### Duplicate Payment Anomaly Detection (Unsupervised ML)
 
+The same ledger, with the hand-built rules removed, shows what a general
+anomaly model can actually recover. Isolation Forest reached 48% precision
+and 41% recall, about 4× better than chance against an 11.6% true anomaly
+rate, while the four named checks on this ledger sit at 100% precision and
+98% recall.
+
 ![Bar chart comparing rule-based heuristics (100% precision, 98% recall) against Isolation Forest (48% precision, 41% recall) and DBSCAN (41% precision, 20% recall)](assets/anomaly-detection-comparison-chart.png)
 
 A genuine trained-ML companion to the checker above, on the same seeded
@@ -129,6 +154,11 @@ an auditor can walk a reviewer through step by step.
 [Source, findings & real output](https://github.com/neifertg/risk-analytics-portfolio/tree/main/duplicate-payment-anomaly-detection)
 
 ### Presentation Deck Builder
+
+Internal training has to be presentable and consistent, and one-off slide
+files drift. This turns a structured outline into a self-contained 16-slide
+anomaly-detection deck — four techniques, one airport-checkpoint story, and
+a four-step pilot.
 
 ![An Isolation Forest slide from the Anomaly Detection for Internal Audit training deck: a dense crowd of travelers requiring many random partition lines to separate, next to one isolated traveler boxed off by just two random splits](deck-builder/decks/anomaly-detection-for-internal-audit/assets/isolation-forest.svg)
 
@@ -146,6 +176,12 @@ Isolation Forest first, investigate flags rather than conclude from them).
 &middot; [Live demo](deck-builder/decks/anomaly-detection-for-internal-audit/index.html)
 
 ### Journal Entry Testing Analyzer
+
+Journal-entry testing is a required fraud procedure, and a reviewer needs to
+see which risk criterion fired. Five criteria drawn from AU-C 240 / PCAOB AS
+2401 caught all 86 planted entries in a 2,586-entry ledger (100% recall);
+four were also 100% precise, and period-end cutoff was 9.6% precise because
+ordinary month-end posting sits in that window.
 
 ![Journal-entry red flags by type: unusual_preparer 15, weekend_or_holiday_posting 18, period_end_cutoff 282, round_dollar_weak_description 20, unusual_account_combination 15](assets/journal-entry-testing-chart.png)
 
@@ -165,6 +201,11 @@ actually used in practice.
 [Source, findings & real output](https://github.com/neifertg/risk-analytics-portfolio/tree/main/journal-entry-testing-analyzer)
 
 ### Segregation-of-Duties Conflict Checker
+
+The failure mode is a person who currently holds both sides of a conflict,
+including through an exception grant the role chart does not show. On 220
+users the checker caught all 24 active conflicts (100% recall and precision)
+and left all 10 revoked-access users unflagged.
 
 ![SoD conflicts by process: Financial Close 3, Order-to-Cash 3, Payroll 3, Procure-to-Pay 15](assets/sod-conflict-chart.png)
 
@@ -187,6 +228,12 @@ can under-communicate.
 
 ### Statistical Audit Sampling Calculator
 
+A sample plan has to reproduce the AICPA reliability factors auditors
+already look up, and this matches 10 published values within 0.0074. In the
+worked examples, a 156-item attribute sample came back at a 4.04% upper
+deviation rate (under a 5% tolerable rate), and a PPS sample of a $4.6M
+receivable balance correctly failed after one seeded overstatement.
+
 ![Reliability factor vs. errors found, computed via the chi-square relationship at 90/95/99% confidence, matching published AICPA/PPS reference values](assets/sampling-calculator-chart.png)
 
 Plans and evaluates attribute sampling (tests of controls) and monetary-unit/
@@ -208,6 +255,11 @@ expansion-factor sub-table, documented honestly rather than guessed at.
 
 ### Ames Housing Price Prediction
 
+Separate from the audit work, this is a sale-price comparison on a public
+dataset, where the better model depends on the metric. On 1,460 Ames home
+sales, Random Forest had the best holdout RMSE (0.148) and R² (0.883), and
+Lasso had the lowest dollar error ($16,754 MAE).
+
 ![Model comparison bar chart — Ridge 0.153, Lasso 0.156, Random Forest 0.148 holdout RMSE — and Random Forest top-10 feature importances led by OverallQual and GrLivArea](assets/ames-housing-chart.png)
 
 General applied-ML breadth, not audit-specific: predicts home sale prices
@@ -222,6 +274,11 @@ metric-choice nuance reported rather than smoothed into one "winner."
 [Source, findings & real output](https://github.com/neifertg/risk-analytics-portfolio/tree/main/ames-housing-price-prediction)
 
 ### IMDB Review Text Analytics
+
+Separate from the audit work, this is classical text analytics on real
+reviews, including a check the original coursework never ran: scoring a
+word-list sentiment rule against the labels. On 5,000 IMDB reviews, Naive
+Bayes reached 83.1% accuracy and the lexicon rule 71.9%.
 
 ![Comparative word clouds for positive and negative movie reviews](assets/text-analytics-wordcloud.png)
 

@@ -258,8 +258,9 @@ changes, then re-committing.
 ## Live demo
 
 **[84abkcnqvptyedbbssztx8.streamlit.app](https://84abkcnqvptyedbbssztx8.streamlit.app/)**
-— deployed on [Streamlit Community Cloud](https://streamlit.io/cloud)
-(free tier), verified working 2026-08-04 with a real cited, grounded
+(free-tier hosting; may take ~30–60s to wake up) — deployed on
+[Streamlit Community Cloud](https://streamlit.io/cloud) (free tier),
+verified working 2026-08-04 with a real cited, grounded
 answer (not just a smoke test): "what's tested in Phase 2 of the SOX 404
 walkthrough?" returned a correctly-sourced answer citing the SOX 404
 walkthrough document, confirming both the Voyage embedding call and the

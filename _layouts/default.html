@@ -23,7 +23,7 @@
             <li><a href="#contact">Contact</a></li>
           </ul>
         </nav>
-        <button id="toggle-dark" type="button" aria-label="Toggle light mode" aria-pressed="false">☀️ Light Mode</button>
+        <button id="toggle-dark" type="button" aria-label="Toggle light mode" aria-pressed="false">Light Mode</button>
       </div>
     </header>
     <main class="content" id="main-content">
@@ -35,7 +35,7 @@
       var btn = document.getElementById('toggle-dark');
       var setLight = function (on) {
         document.body.classList.toggle('light-mode', on);
-        btn.textContent = on ? '🌙 Dark Mode' : '☀️ Light Mode';
+        btn.textContent = on ? 'Dark Mode' : 'Light Mode';
         btn.setAttribute('aria-pressed', on ? 'true' : 'false');
         btn.setAttribute('aria-label', on ? 'Toggle dark mode' : 'Toggle light mode');
         localStorage.setItem('lightMode', on ? '1' : '');

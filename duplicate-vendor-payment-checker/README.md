@@ -85,7 +85,7 @@ also raise the false-positive risk on genuinely different, similarly-named
 vendors — a real precision/recall tradeoff, not a free fix.
 
 Zero false positives: every flag raised traces back to a seeded case.
-Notably, one `review_candidate` flag (`PMT-00855` / `PMT-00918`) wasn't a
+One `review_candidate` flag (`PMT-00855` / `PMT-00918`) wasn't a
 direct seed pair at all — it emerged because the two independent seeding
 passes (exact-duplicate and round-trip-near-duplicate) happened to draw
 the *same* underlying base payment as their source, producing a real

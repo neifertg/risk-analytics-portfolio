@@ -13,7 +13,7 @@ projects as they ship — nothing here is a mockup or a hypothetical.
 
 ---
 
-## 🔍 Projects {#projects}
+## Projects {#projects}
 
 ### Audit Engagement Co-Pilot
 
@@ -266,7 +266,7 @@ a trained model beats a fixed word list.
 
 ---
 
-## 📄 Contact {#contact}
+## Contact {#contact}
 
 - [GitHub](https://github.com/neifertg)
 - [LinkedIn](https://www.linkedin.com/in/g-seth-neifert-7668b6b6/)

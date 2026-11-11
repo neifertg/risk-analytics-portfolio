@@ -7,7 +7,7 @@ techniques, sampling and access analytics, an LLM assistant, a multi-agent
 co-pilot over those tools, and honest write-ups of what broke and how it
 was fixed. Nothing here is a mockup.
 
-**[View the live site →](https://neifertg.github.io/risk-analytics-portfolio/)**
+**[View the live site](https://neifertg.github.io/risk-analytics-portfolio/)**
 
 ## Projects
 

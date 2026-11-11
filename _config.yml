@@ -1,7 +1,14 @@
-title: Risk & Audit Analytics Portfolio
+title: G. Seth Neifert
 description: "Internal audit and risk analytics: engagement co-pilot, procedure search, forensic testing, and sampling. Real runs, honest write-ups, live demos."
-theme: jekyll-theme-minimal
+# Same custom layout as https://github.com/neifertg/neifertg.github.io
+# (dark "Heraldic Ground" palette). theme: null keeps GitHub Pages from
+# falling back to jekyll-theme-primer.
+theme: null
+url: "https://neifertg.github.io"
+baseurl: "/risk-analytics-portfolio"
 markdown: kramdown
+plugins:
+  - jekyll-seo-tag
 
 # audit-rag-assistant/ is a runnable Node/Python project living alongside
 # this Jekyll site, not site content — exclude its build artifacts so a

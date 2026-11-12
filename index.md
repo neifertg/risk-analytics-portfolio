@@ -4,304 +4,87 @@ title: "Risk & Audit Analytics Portfolio"
 description: "Data-driven internal audit, risk analytics, and automation projects by G. Seth Neifert"
 ---
 
-<button id="toggle-dark" style="position:fixed;top:1rem;right:1rem;z-index:1000;">🌙 Toggle Dark Mode</button>
-<style>
-body.dark-mode {
-  background: #181a1b !important;
-  color: #e8e6e3 !important;
-}
-body.dark-mode a { color: #8ab4f8 !important; }
-body.dark-mode h1, body.dark-mode h2, body.dark-mode h3,
-body.dark-mode h4, body.dark-mode h5, body.dark-mode h6 { color: #fff !important; }
-body.dark-mode blockquote {
-  border-left: 4px solid #444;
-  color: #b0b0b0;
-  background: #232526;
-}
-body.dark-mode hr { border-color: #333; }
-</style>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const btn = document.getElementById('toggle-dark');
-    const setMode = (on) => {
-      document.body.classList.toggle('dark-mode', on);
-      localStorage.setItem('darkMode', on ? '1' : '');
-    };
-    btn.onclick = () => setMode(!document.body.classList.contains('dark-mode'));
-    // On load
-    if (localStorage.getItem('darkMode')) setMode(true);
-  });
-</script>
+# Risk and audit analytics
 
-# Welcome to My Risk & Audit Analytics Portfolio
+Three projects are written out below. One splits an engagement question across the specialist that already owns each part. One answers from written procedures, or declines. One screens journal entries and labels which risk criterion fired. The rest of the work is a short list after that.
 
-I work in internal audit data analytics and am building toward applying
-advanced analytics, machine learning, and automation to internal audit,
-enterprise risk, and governance challenges. This site tracks real, working
-projects as they ship — nothing here is a mockup or a hypothetical.
-
----
-
-## 🔍 Projects
+## Projects {#projects}
 
 ### Audit Engagement Co-Pilot
 
-An engagement question often needs a sampling answer, a fraud-risk answer,
-and a standards answer together, and those answers can disagree. This sends
-each part to the specialist that already owns it and leaves the disagreement
-in the final answer; the multi-agent eval is 6/6.
+**The audit problem.** An engagement question often needs a sampling answer, a fraud-risk answer, and a standards answer together. Those answers can disagree.
 
-![A question goes to a Sonnet supervisor, which dispatches to three scoped Haiku sub-agents (sampling, fraud-risk, standards), each calling only its own tools on a shared MCP server wrapping five shipped projects; the supervisor reconciles the sub-agents' answers into one synthesized, cited response.](assets/audit-engagement-co-pilot-architecture.svg)
+**What I built.** A supervisor that sends each part of the question to the specialist that already owns it, then returns one answer. If the specialists do not say the same thing, the disagreement stays in the answer.
 
-A hierarchical multi-agent audit assistant: a Sonnet supervisor decomposes
-a plain-language question and dispatches it to three specialist sub-agents
-(sampling, fraud-risk, standards) over a real MCP server wrapping five
-other projects in this portfolio, rather than reimplementing them. The
-differentiator is genuine fan-out with reconciliation — a question that
-needs both fraud-risk data and standards guidance gets dispatched to both
-specialists in parallel and synthesized, with disagreement stated
-explicitly rather than blended into one confident-sounding answer. Backed
-by a 6/6 multi-agent eval suite (dispatch discipline, the static-tool
-"pre-computed on a seeded synthetic dataset" framing actually surfacing in
-final answers, fan-out reconciliation, a real induced sampling-methodology
-failure that degrades gracefully instead of crashing) and two real
-concurrency bugs found and fixed live while building it. Deployed via
-Docker on Render.
+**How it's used.** An auditor asks in plain language. The reply says which specialist handled which part. A figure from a practice dataset is labeled as such, rather than presented as a live-ledger result.
 
-[Source, architecture & a real trace example](https://github.com/neifertg/risk-analytics-portfolio/tree/main/audit-engagement-co-pilot)
-&middot; [Live demo](https://audit-engagement-co-pilot.onrender.com) (free-tier hosting; may take ~30–60s to wake up)
+![A question goes to a supervisor, which sends it to sampling, fraud-risk, and standards specialists. Each specialist calls only its own tools. The supervisor puts their answers into one reply.](assets/audit-engagement-co-pilot-architecture.svg)
+
+<details>
+<summary>Under the hood</summary>
+<p>A Claude Sonnet supervisor dispatches to three Claude Haiku specialists over a shared tool server. The specialists call the sampling, fraud-risk, and procedure-search tools in this repo. Fraud-risk results are precomputed on seeded data. Packaged with Docker.</p>
+</details>
+
+[Source, architecture, and a trace example](https://github.com/neifertg/risk-analytics-portfolio/tree/main/audit-engagement-co-pilot)
+· [Live demo](https://audit-engagement-co-pilot.onrender.com) (the free host sleeps when idle and can take a minute to wake)
 
 ### Audit Procedures RAG Assistant
 
-Someone asking a procedure question needs an answer tied to the procedure,
-or a clear decline. This cites the corpus it used and refuses when retrieval
-is too weak to support an answer; the eval suite is 28/28.
+**The audit problem.** A procedure question should be answered from the written procedures, or declined when those procedures do not support an answer.
 
-![Audit Procedures RAG Assistant answering a question with cited sources and per-session cost tracking](assets/audit-rag-assistant-demo.png)
+**What I built.** Search over a written audit library. The answer comes back with the passages it used. If the search is too weak to support an answer, the assistant stops and does not guess.
 
-A retrieval-augmented question-answering assistant grounded in a
-synthetic internal-audit procedures corpus — two-stage retrieval, a
-groundedness guardrail that declines to answer rather than guess, and
-full query logging. Includes a real debugging story: two retrieval bugs
-found live by actually running the eval suite against real embeddings
-(boilerplate cross-reference sections winning on title overlap, and a
-section whose own opening sentence diluted its embedding), both
-root-caused and fixed — see the project README.
+**How it's used.** The auditor reads the cited passages next to the answer. The same question can be run on the generic procedure library, on public audit records from the University of California, or on both.
 
-[Source & write-up](https://github.com/neifertg/risk-analytics-portfolio/tree/main/audit-rag-assistant)
-&middot; [Live demo](https://84abkcnqvptyedbbssztx8.streamlit.app/) (free-tier hosting; may take ~30–60s to wake up)
+![The procedure assistant answering a question, with the cited passages listed under the answer.](assets/audit-rag-assistant-demo.png)
 
-### Benford's Law Analyzer
+<details>
+<summary>Under the hood</summary>
+<p>Two-stage search over a local database of procedure chunks. Embeddings are Voyage voyage-3-lite. The answer model is Claude Haiku. Below a set match score, the app declines before calling the model. The demo is a Streamlit app.</p>
+</details>
 
-A Benford screen is a lead, and it only helps if you know what conforming
-data looks like. On ~6,400 real US public companies' total assets, the
-leading digits conform: chi-square p=0.20, Nigrini MAD=0.00324.
-
-![Observed vs. Benford's-expected leading-digit distribution, chi-square p=0.201, MAD=0.00324](assets/benfords-chart.png)
-
-Checks whether real, public financial-statement data conforms to
-Benford's Law's expected leading-digit distribution — a classic
-forensic-accounting screening technique. Run against ~6,400 real US
-public companies' reported total assets (SEC EDGAR XBRL Frames API, no
-synthetic data): chi-square p=0.20, Nigrini MAD=0.00324 (close
-conformity) — the expected result for a healthy market-wide aggregate,
-and a validated baseline for applying the same method to a narrower,
-single-entity population where a deviation would actually be meaningful.
-
-[Source, chart & real output](https://github.com/neifertg/risk-analytics-portfolio/tree/main/benfords-law-analyzer)
-
-### Duplicate Vendor Payment Checker
-
-The problem is paying the same invoice twice, splitting it under an approval
-limit, or paying it through a lookalike vendor. On a seeded ledger of 919
-payments the four checks caught 51 of 52 planted cases (98% recall) at 100%
-precision; the miss was a vendor-name variant just under the fuzzy-match
-cutoff.
-
-![Duplicate-payment flags by type: exact_duplicate 15, threshold_split 12, vendor_master_duplicate 9, review_candidate 16](assets/duplicate-vendor-chart.png)
-
-Flags potential duplicate AP payments using four named, real audit
-techniques (exact duplicates, threshold-avoidance "split" payments,
-fuzzy-matched vendor-master duplicates, and lower-confidence review
-candidates) rather than one opaque similarity score. Run against a
-seeded synthetic ledger (919 payments, ground truth kept separate from
-the detector's input): 98% recall, 100% precision — including one
-honestly-reported miss where a vendor-name variant fell just short of
-the fuzzy-match threshold, a real precision/recall tradeoff rather than
-a hidden flaw.
-
-[Source, findings & real output](https://github.com/neifertg/risk-analytics-portfolio/tree/main/duplicate-vendor-payment-checker)
-
-### Duplicate Payment Anomaly Detection (Unsupervised ML)
-
-The same ledger, with the hand-built rules removed, shows what a general
-anomaly model can actually recover. Isolation Forest reached 48% precision
-and 41% recall, about 4× better than chance against an 11.6% true anomaly
-rate, while the four named checks on this ledger sit at 100% precision and
-98% recall.
-
-![Bar chart comparing rule-based heuristics (100% precision, 98% recall) against Isolation Forest (48% precision, 41% recall) and DBSCAN (41% precision, 20% recall)](assets/anomaly-detection-comparison-chart.png)
-
-A genuine trained-ML companion to the checker above, on the same seeded
-ledger: Isolation Forest and DBSCAN, evaluated against the same ground
-truth, with no domain rules or hand-picked thresholds. Isolation Forest
-recovers real signal (48% precision, ~4x better than chance against an
-11.6% true anomaly rate) but comes nowhere near the four hand-built
-heuristics' 100%/98% — the honest, expected result, and a real
-transparency/defensibility trade-off between packaged detection and rules
-an auditor can walk a reviewer through step by step.
-
-[Source, findings & real output](https://github.com/neifertg/risk-analytics-portfolio/tree/main/duplicate-payment-anomaly-detection)
-
-### Presentation Deck Builder
-
-Internal training has to be presentable and consistent, and one-off slide
-files drift. This turns a structured outline into a self-contained 16-slide
-anomaly-detection deck — four techniques, one airport-checkpoint story, and
-a four-step pilot.
-
-![An Isolation Forest slide from the Anomaly Detection for Internal Audit training deck: a dense crowd of travelers requiring many random partition lines to separate, next to one isolated traveler boxed off by just two random splits](deck-builder/decks/anomaly-detection-for-internal-audit/assets/isolation-forest.svg)
-
-A generator for branded, self-contained reveal.js training decks — content
-authored as structured `deck.yaml`, rendered through a fixed set of layouts
-and design tokens so every deck stays visually consistent without hand-tuned
-CSS per talk. The example here, "Anomaly Detection for Internal Audit," is a
-real 16-slide internal-training deck walking through four techniques
-(Isolation Forest, Local Outlier Factor, One-Class SVM, autoencoders) via an
-airport-security-checkpoint framing, closing with a concrete four-step pilot
-plan (pick a population, choose features grounded in known red flags, run
-Isolation Forest first, investigate flags rather than conclude from them).
-
-[Source & write-up](https://github.com/neifertg/risk-analytics-portfolio/tree/main/deck-builder)
-&middot; [Live demo](deck-builder/decks/anomaly-detection-for-internal-audit/index.html)
+[Source and write-up](https://github.com/neifertg/risk-analytics-portfolio/tree/main/audit-rag-assistant)
+· [Live demo](https://84abkcnqvptyedbbssztx8.streamlit.app/) (the free host sleeps when idle and can take a minute to wake)
 
 ### Journal Entry Testing Analyzer
 
-Journal-entry testing is a required fraud procedure, and a reviewer needs to
-see which risk criterion fired. Five criteria drawn from AU-C 240 / PCAOB AS
-2401 caught all 86 planted entries in a 2,586-entry ledger (100% recall);
-four were also 100% precise, and period-end cutoff was 9.6% precise because
-ordinary month-end posting sits in that window.
+**The audit problem.** Journal-entry testing is a required fraud procedure under AU-C 240 and PCAOB AS 2401. A reviewer needs to see which risk criterion fired, not one combined score.
 
-![Journal-entry red flags by type: unusual_preparer 15, weekend_or_holiday_posting 18, period_end_cutoff 282, round_dollar_weak_description 20, unusual_account_combination 15](assets/journal-entry-testing-chart.png)
+**What I built.** Separate checks for an unusual preparer, a weekend or holiday posting, period-end cutoff, a round-dollar amount with a weak description, and an unusual account combination. Round-dollar and weak description have to occur together, because either one alone is common in ordinary entries.
 
-Flags potential fraud-risk journal entries using five risk criteria pulled
-directly from AU-C 240 / PCAOB AS 2401's journal-entry-testing requirement —
-unusual preparer, weekend/holiday posting, period-end cutoff timing,
-round-dollar amounts with weak descriptions, and unusual account
-combinations. Run against a seeded synthetic general ledger (2,586 entries,
-86 seeded red flags, ground truth kept separate from the detector's input):
-100% recall across all five criteria, with four running at 100% precision
-too. The fifth — period-end cutoff — hits only 9.6% precision, reported
-plainly rather than smoothed over: roughly 9% of any real ledger legitimately
-falls within 2 days of month-end, so that criterion is a deliberately broad
-population screen by nature, not a precise detector, matching how it's
-actually used in practice.
+**How it's used.** Each flagged entry is marked with the criterion that caught it, so the review starts from that criterion. Period-end cutoff is a wide net on purpose: ordinary month-end posting falls in that window, and the screen is there to hand the reviewer a population, not a conclusion.
 
-[Source, findings & real output](https://github.com/neifertg/risk-analytics-portfolio/tree/main/journal-entry-testing-analyzer)
+<details>
+<summary>Under the hood</summary>
+<p>Python checks on a seeded general ledger. The file of planted entries is kept separate, and the checker does not read it.</p>
+</details>
 
-### Segregation-of-Duties Conflict Checker
+[Source, findings, and output](https://github.com/neifertg/risk-analytics-portfolio/tree/main/journal-entry-testing-analyzer)
 
-The failure mode is a person who currently holds both sides of a conflict,
-including through an exception grant the role chart does not show. On 220
-users the checker caught all 24 active conflicts (100% recall and precision)
-and left all 10 revoked-access users unflagged.
+## How I build AI an auditor can trust
 
-![SoD conflicts by process: Financial Close 3, Order-to-Cash 3, Payroll 3, Procure-to-Pay 15](assets/sod-conflict-chart.png)
+- A person can check the work. The procedure assistant returns the passages it used. The engagement co-pilot names which specialist each part of the answer came from.
+- Weak support is a decline, not a guess. If the best procedure match is below the cutoff, the assistant stops before calling the model.
+- The procedure assistant's eval runs in CI on every push to main, in the job `audit-rag-assistant-eval`. It checks that the expected notes were retrieved, that the refusal fires only when it should, and that the answer contains the expected points. Pull requests do not run that live eval, so a fork cannot see the API keys. They run a syntax check and a test of the embedding retry instead. The co-pilot has its own eval script. That script is not in the CI workflow.
+- Some citation cases are printed for a person to read. A citation used to contrast a source looks the same, to an automated check, as a citation that mixed two sources up. That flag is a review note. It does not by itself pass or fail the eval.
+- This public repo has no client data. The procedure library is synthetic, plus public University of California audit documents. The ledgers, access lists, and sampling populations are seeded. The Benford screen uses public SEC filings. The two projects outside audit use public datasets.
+- The co-pilot is instructed to keep a caveat that fraud-risk figures came from a seeded dataset, and to say so when two specialists point different ways. Both the procedure assistant and the co-pilot write a local log of the question, what was retrieved or which specialists ran, and the answer.
 
-Flags users holding both sides of a defined segregation-of-duties conflict
-(e.g. creating a vendor master record and approving payments to it) based
-on *current* active access, not raw grant history — classic IT-audit/GRC
-analytics. Tests both failure modes a real SoD review has to catch: a
-legacy role that bundles conflicting rights by design, and clean roles
-where a person accumulated the other side through an active exception
-grant. Run against a synthetic 220-user access population: 100% recall and
-precision against 24 seeded active conflicts, plus a built-in true-negative
-test (10 users whose conflicting exception grant was later revoked, all
-correctly left unflagged). One real, unplanned finding the run surfaced:
-a single user ended up holding all three procure-to-pay rights at once
-(create, approve, *and* receive) through two independent seeded grants
-landing on the same person — a compounding risk a simple pairwise matrix
-can under-communicate.
+## Other work
 
-[Source, findings & real output](https://github.com/neifertg/risk-analytics-portfolio/tree/main/sod-conflict-checker)
+- [Benford's Law Analyzer](https://github.com/neifertg/risk-analytics-portfolio/tree/main/benfords-law-analyzer). Screens a set of financial figures for an unusual leading-digit pattern, using public company filings as the comparison.
+- [Duplicate Vendor Payment Checker](https://github.com/neifertg/risk-analytics-portfolio/tree/main/duplicate-vendor-payment-checker). Flags likely duplicate payments: exact repeats, invoices split under an approval limit, and lookalike vendor names.
+- [Duplicate Payment Anomaly Detection](https://github.com/neifertg/risk-analytics-portfolio/tree/main/duplicate-payment-anomaly-detection). Asks the same duplicate-payment question with the hand-built rules removed, to see what a general anomaly model recovers.
+- [Segregation-of-Duties Conflict Checker](https://github.com/neifertg/risk-analytics-portfolio/tree/main/sod-conflict-checker). Flags a person who currently holds both sides of a duty that should be split between two people.
+- [Statistical Audit Sampling Calculator](https://github.com/neifertg/risk-analytics-portfolio/tree/main/sampling-calculator). Plans an attribute or monetary-unit sample and checks the calculation against published audit tables.
+- [Presentation Deck Builder](https://github.com/neifertg/risk-analytics-portfolio/tree/main/deck-builder). Turns an outline into a consistent training deck. [Anomaly-detection deck](deck-builder/decks/anomaly-detection-for-internal-audit/index.html) · [Clustering deck](deck-builder/decks/clustering-for-audit/index.html)
+- [Ames Housing Price Prediction](https://github.com/neifertg/risk-analytics-portfolio/tree/main/ames-housing-price-prediction). Predicts home sale prices from a public housing dataset. Not an audit test.
+- [IMDB Review Text Analytics](https://github.com/neifertg/risk-analytics-portfolio/tree/main/imdb-review-text-analytics). Reads movie reviews for topics and sentiment. Not an audit test.
 
-### Statistical Audit Sampling Calculator
-
-A sample plan has to reproduce the AICPA reliability factors auditors
-already look up, and this matches 10 published values within 0.0074. In the
-worked examples, a 156-item attribute sample came back at a 4.04% upper
-deviation rate (under a 5% tolerable rate), and a PPS sample of a $4.6M
-receivable balance correctly failed after one seeded overstatement.
-
-![Reliability factor vs. errors found, computed via the chi-square relationship at 90/95/99% confidence, matching published AICPA/PPS reference values](assets/sampling-calculator-chart.png)
-
-Plans and evaluates attribute sampling (tests of controls) and monetary-unit/
-PPS sampling (substantive testing), using the exact statistical relationship
-behind the published AICPA reliability-factor tables that IIA and ISACA
-guidance both point auditors to for the underlying mechanics — verified
-against 10 real published table values (max diff 0.0074) before being used
-for anything else. Run against illustrative synthetic populations: an
-attribute-sampling plan for testing PO approvals (156-item sample, 2
-deviations found, 4.04% computed upper deviation rate — under the 5%
-tolerable rate) and a real PPS sample drawn against a $4.6M AR balance that
-happened to select one seeded overstatement, correctly concluding the
-balance is **not** supported at the stated confidence rather than smoothing
-it into a pass. One labeled scope limit: nonzero-expected-misstatement MUS
-planning uses a conservative approximation, not the AICPA guide's exact
-expansion-factor sub-table, documented honestly rather than guessed at.
-
-[Source, findings & real output](https://github.com/neifertg/risk-analytics-portfolio/tree/main/sampling-calculator)
-
-### Ames Housing Price Prediction
-
-Separate from the audit work, this is a sale-price comparison on a public
-dataset, where the better model depends on the metric. On 1,460 Ames home
-sales, Random Forest had the best holdout RMSE (0.148) and R² (0.883), and
-Lasso had the lowest dollar error ($16,754 MAE).
-
-![Model comparison bar chart — Ridge 0.153, Lasso 0.156, Random Forest 0.148 holdout RMSE — and Random Forest top-10 feature importances led by OverallQual and GrLivArea](assets/ames-housing-chart.png)
-
-General applied-ML breadth, not audit-specific: predicts home sale prices
-from structural/quality features using Ridge, Lasso, and Random Forest,
-compared head to head on the same held-out data. Rebuilt in Python from
-real 2021 grad-school coursework, re-verified rather than carried forward
-as fact. Run against the real, public Kaggle Ames Housing dataset (1,460
-homes): Random Forest wins on RMSE (0.148) and R² (0.883), though Lasso
-actually has the lowest dollar-denominated error ($16,754 MAE) — a real
-metric-choice nuance reported rather than smoothed into one "winner."
-
-[Source, findings & real output](https://github.com/neifertg/risk-analytics-portfolio/tree/main/ames-housing-price-prediction)
-
-### IMDB Review Text Analytics
-
-Separate from the audit work, this is classical text analytics on real
-reviews, including a check the original coursework never ran: scoring a
-word-list sentiment rule against the labels. On 5,000 IMDB reviews, Naive
-Bayes reached 83.1% accuracy and the lexicon rule 71.9%.
-
-![Comparative word clouds for positive and negative movie reviews](assets/text-analytics-wordcloud.png)
-
-General applied-ML breadth, not audit-specific: classical (pre-LLM) NLP —
-document-term matrices, LDA topic modeling, Bing Liu lexicon sentiment
-scoring, and a trained Naive Bayes classifier — rebuilt in Python from real
-2021 grad-school coursework. Run against 5,000 real IMDB movie reviews: a
-trained Naive Bayes classifier reaches 83.1% accuracy, well ahead of a
-naive lexicon-based sentiment rule's 71.9% (validated against real labels,
-which the original coursework never did) — a real, quantified case for why
-a trained model beats a fixed word list.
-
-[Source, findings & real output](https://github.com/neifertg/risk-analytics-portfolio/tree/main/imdb-review-text-analytics)
-
----
-
-## 📄 Contact
+## Contact {#contact}
 
 - [GitHub](https://github.com/neifertg)
 - [LinkedIn](https://www.linkedin.com/in/g-seth-neifert-7668b6b6/)
 - [Email](mailto:gsneifert@gmail.com)
 
----
-
 > "Better data leads to better questions. Better questions lead to better audits."
-

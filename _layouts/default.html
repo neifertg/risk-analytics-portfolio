@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="{{ site.lang | default: "en-US" }}">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/jpeg" href="{{ '/assets/profile.jpg' | relative_url }}">
+{% seo %}
+  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+</head>
+<body>
+  <div class="layout">
+    <header class="sidebar">
+      <div class="sidebar-inner">
+        <img class="profile-photo" src="{{ '/assets/profile.jpg' | relative_url }}" alt="Photo of G. Seth Neifert" width="88" height="88">
+        <h1 class="site-name"><a href="https://neifertg.github.io/">{{ site.title }}</a></h1>
+        <p class="tagline">Data Scientist for Internal Audit &amp; Risk</p>
+        <p class="sidebar-quote">"Good timber does not grow with ease: the stronger wind, the stronger trees."<br>— Douglas Malloch, "Good Timber"</p>
+        <nav class="site-nav" aria-label="Section navigation">
+          <ul>
+            <li><a class="nav-home" href="https://neifertg.github.io/">Personal site</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </nav>
+        <button id="toggle-dark" type="button" aria-label="Toggle light mode" aria-pressed="false">Light Mode</button>
+      </div>
+    </header>
+    <main class="content" id="main-content">
+      {{ content }}
+    </main>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var btn = document.getElementById('toggle-dark');
+      var setLight = function (on) {
+        document.body.classList.toggle('light-mode', on);
+        btn.textContent = on ? 'Dark Mode' : 'Light Mode';
+        btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+        btn.setAttribute('aria-label', on ? 'Toggle dark mode' : 'Toggle light mode');
+        localStorage.setItem('lightMode', on ? '1' : '');
+      };
+      btn.onclick = function () { setLight(!document.body.classList.contains('light-mode')); };
+      if (localStorage.getItem('lightMode')) setLight(true);
+
+      var links = Array.prototype.slice.call(document.querySelectorAll('.site-nav a[href^="#"]'));
+      var byId = {};
+      var sections = [];
+      links.forEach(function (a) {
+        var id = a.getAttribute('href').slice(1);
+        byId[id] = a;
+        var el = document.getElementById(id);
+        if (el) sections.push(el);
+      });
+      if ('IntersectionObserver' in window && sections.length) {
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              links.forEach(function (a) { a.classList.remove('active'); });
+              var link = byId[entry.target.id];
+              if (link) link.classList.add('active');
+            }
+          });
+        }, { rootMargin: '-40% 0px -50% 0px', threshold: 0 });
+        sections.forEach(function (s) { observer.observe(s); });
+      }
+    });
+  </script>
+</body>
+</html>

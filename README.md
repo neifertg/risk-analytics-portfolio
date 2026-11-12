@@ -10,6 +10,10 @@ Three projects are written out below. One splits an engagement question across t
 
 ### Audit Engagement Co-Pilot
 
+![Asking the Audit Engagement Co-Pilot which three documents a three-way match compares, then reading the cited answer.](assets/demos/audit-engagement-co-pilot.gif)
+
+**Planning and fieldwork.** One engagement question across sampling, fraud risk, and written procedures, the kind of question that comes up while an engagement is planned and performed (Domain V of the Global Internal Audit Standards). In the Three Lines Model this sits with the third line, and the auditor still owns the conclusion.
+
 **The audit problem.** An engagement question often needs a sampling answer, a fraud-risk answer, and a standards answer together. Those answers can disagree.
 
 **What I built.** A supervisor that sends each part of the question to the specialist that already owns it, then returns one answer. If the specialists do not say the same thing, the disagreement stays in the answer.
@@ -28,6 +32,10 @@ Three projects are written out below. One splits an engagement question across t
 
 ### Audit Procedures RAG Assistant
 
+![Asking the procedure assistant what Phase 2 of the SOX 404 walkthrough tests, then reading the answer beside the passages it cited.](assets/demos/audit-procedures-rag-assistant.gif)
+
+**Fieldwork.** A procedure question is answered from the written library, or declined. That library is not the Global Internal Audit Standards.
+
 **The audit problem.** A procedure question should be answered from the written procedures, or declined when those procedures do not support an answer.
 
 **What I built.** Search over a written audit library. The answer comes back with the passages it used. If the search is too weak to support an answer, the assistant stops and does not guess.
@@ -45,6 +53,10 @@ Three projects are written out below. One splits an engagement question across t
 · [Live demo](https://84abkcnqvptyedbbssztx8.streamlit.app/) (the free host sleeps when idle and can take a minute to wake)
 
 ### Journal Entry Testing Analyzer
+
+![Running the journal-entry checker on the seeded ledger, then reading one flagged entry for each criterion, including the wide period-end cutoff screen.](assets/demos/journal-entry-testing.gif)
+
+**Fieldwork: journal-entry testing.** In the IIA Three Lines Model, the third line screens entries the first line posted. The flag names the criterion; the reviewer decides whether it is a finding.
 
 **The audit problem.** Journal-entry testing is a required fraud procedure under AU-C 240 and PCAOB AS 2401. A reviewer needs to see which risk criterion fired, not one combined score.
 

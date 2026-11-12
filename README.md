@@ -1,5 +1,7 @@
 # Risk and audit analytics
 
+**Senior Risk Analyst in Internal Audit at Fannie Mae, building AI tools that audit, risk and compliance teams can trust.**
+
 [![CI](https://github.com/neifertg/risk-analytics-portfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/neifertg/risk-analytics-portfolio/actions/workflows/ci.yml)
 
 Three projects are written out below. One splits an engagement question across the specialist that already owns each part. One answers from written procedures, or declines. One screens journal entries and labels which risk criterion fired. The rest of the work is a short list after that.

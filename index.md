@@ -6,6 +6,8 @@ description: "Data-driven internal audit, risk analytics, and automation project
 
 # Risk and audit analytics
 
+<p class="intro">Senior Risk Analyst in Internal Audit at Fannie Mae, building AI tools that audit, risk and compliance teams can trust.</p>
+
 Three projects are written out below. One splits an engagement question across the specialist that already owns each part. One answers from written procedures, or declines. One screens journal entries and labels which risk criterion fired. The rest of the work is a short list after that.
 
 ## Projects {#projects}
@@ -98,5 +100,3 @@ Three projects are written out below. One splits an engagement question across t
 - [GitHub](https://github.com/neifertg)
 - [LinkedIn](https://www.linkedin.com/in/g-seth-neifert-7668b6b6/)
 - [Email](mailto:gsneifert@gmail.com)
-
-> "Better data leads to better questions. Better questions lead to better audits."

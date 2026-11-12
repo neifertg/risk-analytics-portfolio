@@ -208,6 +208,13 @@ details p {
   margin: 0 0 var(--space-3);
 }
 
+/* Demo recordings are already a full dark screen. The white card is for
+   charts drawn on a light ground. */
+.content img.demo-gif {
+  background: transparent;
+  padding: 0;
+}
+
 /* Mobile: sidebar collapses to a top bar */
 @media (max-width: 900px) {
   .layout { flex-direction: column; }

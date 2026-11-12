@@ -1,13 +1,12 @@
 # Journal Entry Testing Analyzer
 
-Flags potential fraud-risk journal entries in a general ledger using five
-concrete risk criteria — not one opaque score. Journal entry testing isn't
-optional best practice: AU-C 240 (US GAAS) and PCAOB AS 2401, both titled
-*Consideration of Fraud in a Financial Statement Audit*, specifically
-require auditors to design procedures that test journal entries for fraud
-risk, separate from normal substantive testing, because financial-statement
-fraud most often runs through manual entries that bypass routine
-transaction-processing controls.
+The checker screens a general ledger for journal entries that deserve a closer look. Each flag names the rule that caught it, rather than hiding every rule inside one score. The reviewer still decides whether a flag is a finding.
+
+![Running the journal-entry checker and reading one flagged entry for each rule.](../assets/demos/journal-entry-testing.gif)
+
+## Why these checks
+
+Journal-entry testing is not optional best practice. AU-C 240 and PCAOB AS 2401, both titled *Consideration of Fraud in a Financial Statement Audit*, require auditors to test journal entries for fraud risk, separate from normal substantive testing. Financial-statement fraud most often runs through manual entries that bypass routine transaction-processing controls.
 
 ## Data
 

@@ -182,6 +182,17 @@ code {
 
 .content > *:first-child { margin-top: 0; }
 
+.content p.intro {
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--heading);
+  margin: 0 0 var(--space-3);
+  padding-bottom: var(--space-2);
+  border-bottom: 2px solid var(--color-gold);
+}
+
 details {
   margin: 0 0 var(--space-3);
 }

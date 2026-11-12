@@ -6,7 +6,7 @@ description: "Data-driven internal audit, risk analytics, and automation project
 
 # Risk and audit analytics
 
-<p class="intro">Senior Risk Analyst in Internal Audit at Fannie Mae, building AI tools that audit, risk and compliance teams can trust.</p>
+<p class="intro">Data scientist in financial services, building trustworthy AI for audit, risk and compliance.</p>
 
 ## Projects {#projects}
 

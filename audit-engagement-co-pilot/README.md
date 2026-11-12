@@ -1,26 +1,16 @@
 # Audit Engagement Co-Pilot
 
-A hierarchical multi-agent audit assistant: a supervisor decomposes a
-plain-language audit question and dispatches it to specialist sub-agents,
-each wrapping a tool that already existed and already worked elsewhere in
-this portfolio — a RAG assistant, a Benford's Law analyzer, two
-duplicate-payment detectors, a statistical sampling calculator — behind a
-real MCP server. The point isn't any one tool; it's that this is the first
-project in this portfolio where the tools talk to each other, and where a
-supervisor has to reconcile two specialists that don't fully agree.
+An auditor asks one question in plain language. The tool sends each part to the specialist that already owns it, then returns one answer. If those specialists disagree, the disagreement stays in the answer.
 
-[Live demo](https://audit-engagement-co-pilot.onrender.com)
-(free-tier hosting; may take ~30–60s to wake up) — a small
-static page (`scripts/public/index.html`, no framework, same ethos as the
-rest of this project) with example question chips and a text box that
-calls `POST /ask` directly. Every answer shows its sources (real citations
-pulled out of the RAG tool calls, deduped and ranked by relevance) and an
-expandable trace of exactly what happened to produce it — which
-specialist(s) ran, on which model, which MCP tool(s) each one called with
-what input/output, per-call cost, and each specialist's own answer before
-the supervisor's synthesis (`scripts/trace-summary.mjs` builds this from
-the same trace `logs/queries.jsonl` already captured, nothing new is
-computed to support it). Or hit the API yourself:
+![Asking the co-pilot which three documents a three-way match compares.](../assets/demos/audit-engagement-co-pilot.gif)
+
+[Live demo](https://audit-engagement-co-pilot.onrender.com) (the free host may take a minute to wake).
+
+## How a question is handled
+
+A supervisor splits a plain-language audit question and sends each part to a specialist. Each specialist wraps a tool that already existed in this portfolio: a procedure assistant, a Benford screen, two duplicate-payment detectors, and a sampling calculator. This is the project where those tools talk to each other, and where a disagreement between specialists stays in the answer.
+
+The demo is a small static page (`scripts/public/index.html`) with example questions and a text box that calls `POST /ask`. Every answer shows its sources and a trace of which specialist ran, which tool it called, and what came back. `scripts/trace-summary.mjs` builds that trace from `logs/queries.jsonl`. Or call the API yourself:
 
 ```
 curl https://audit-engagement-co-pilot.onrender.com/ask -X POST \

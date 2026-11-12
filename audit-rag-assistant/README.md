@@ -2,17 +2,19 @@
 
 [![CI](https://github.com/neifertg/risk-analytics-portfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/neifertg/risk-analytics-portfolio/actions/workflows/ci.yml)
 
-![Audit Procedures RAG Assistant answering a question with cited sources and per-session cost tracking](../assets/audit-rag-assistant-demo.png)
+A procedure question is answered from the written library, or declined. The reply comes back with the passages it used. If the match is too weak to support an answer, the assistant stops and does not guess.
 
-A retrieval-augmented question-answering assistant grounded in a synthetic
-internal-audit procedures corpus — chunk → embed → retrieve → generate,
-with a groundedness guardrail and query logging. No orchestration
-framework, no agent loop: the mechanics stay visible on purpose.
+![Asking what Phase 2 of the SOX 404 walkthrough tests, beside the cited passages.](../assets/demos/audit-procedures-rag-assistant.gif)
+
+## What this is
+
+A question-answering assistant grounded in a written internal-audit library. It finds passages, then writes an answer from those passages, and it logs each question. There is no agent loop. The mechanics stay visible on purpose.
 
 This is a port of a personal-wiki project
 ([Seth_Wiki](https://github.com/neifertg/seth-wiki), private) onto a
-corpus that's actually safe to publish — the retrieval/generation
-pipeline is unchanged; only the content it runs against is new.
+library that is safe to publish. The retrieval and answer pipeline is unchanged. Only the content it runs against is new.
+
+![The procedure assistant answering a question, with the cited passages under the answer.](../assets/audit-rag-assistant-demo.png)
 
 ## Why a synthetic corpus
 

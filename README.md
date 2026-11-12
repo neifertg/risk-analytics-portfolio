@@ -1,6 +1,6 @@
 # Risk and audit analytics
 
-**Senior Risk Analyst in Internal Audit at Fannie Mae, building AI tools that audit, risk and compliance teams can trust.**
+**Data scientist in financial services, building trustworthy AI for audit, risk and compliance.**
 
 [![CI](https://github.com/neifertg/risk-analytics-portfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/neifertg/risk-analytics-portfolio/actions/workflows/ci.yml)
 

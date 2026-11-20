@@ -1,45 +1,62 @@
-<svg font-family="Inter, Segoe UI, Arial, sans-serif" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260">
-  <rect x="1" y="1" width="398" height="258" rx="14" fill="#ffffff" stroke="#e3e6eb" stroke-width="2"/>
+<svg font-family="Inter, Segoe UI, Arial, sans-serif" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-label="An ordinary traveler and an unusual traveler carrying a case are each compressed to a summary and rebuilt. The ordinary traveler is rebuilt faithfully and gets a low error score, cleared. The unusual traveler is rebuilt as an ordinary traveler, the case lost, so its error score is high, past the flag threshold, and it is flagged for review.">
+  <rect x="1" y="1" width="638" height="358" rx="14" fill="#ffffff" stroke="#e3e6eb" stroke-width="2"/>
 
   <defs>
     <g id="traveler">
-      <circle cx="0" cy="-9" r="4"/>
-      <path d="M -6 7 Q 0 -3 6 7 Z"/>
+      <circle cx="0" cy="-14" r="7"/>
+      <path d="M -11 14 Q 0 -6 11 14 Z"/>
+    </g>
+    <g id="case">
+      <rect x="10" y="-1" width="13" height="15" rx="2"/>
+      <path d="M 13 -1 v -3 h 7 v 3" fill="none" stroke-width="2"/>
+    </g>
+    <g id="squeeze">
+      <polygon points="0,-26 52,-8 52,8 0,26" fill="#e9eff7" stroke="#9aa3b0" stroke-width="1.5"/>
+      <rect x="57" y="-9" width="40" height="18" rx="9" fill="#5b6270"/>
+      <polygon points="102,-8 154,-26 154,26 102,8" fill="#e9eff7" stroke="#9aa3b0" stroke-width="1.5"/>
     </g>
   </defs>
 
-  <!-- The learned officer: compress to a gut read, then check it reconstructs -->
-  <text x="200" y="20" font-size="13" fill="#5b6270" text-anchor="middle">trained on ordinary travelers only</text>
+  <!-- The premise, in one line -->
+  <text x="24" y="32" font-size="13" fill="#5b6270">The model learned from ordinary travelers only, so it can only rebuild what "ordinary" looks like.</text>
 
-  <!-- Row 1: a normal traveler reconstructs cleanly -->
-  <g fill="#1e3a5f">
-    <use href="#traveler" x="35" y="75"/>
+  <!-- Column headers -->
+  <g font-size="11" font-weight="600" fill="#5b6270" letter-spacing="0.8">
+    <text x="70" y="70" text-anchor="middle">TRAVELER</text>
+    <text x="227" y="70" text-anchor="middle">COMPRESS, THEN REBUILD</text>
+    <text x="370" y="70" text-anchor="middle">REBUILT</text>
+    <text x="440" y="70">ERROR SCORE</text>
   </g>
-  <line x1="48" y1="70" x2="90" y2="70" stroke="#9aa0a8" stroke-width="1.5"/>
-  <polygon points="90,55 130,63 130,77 90,85" fill="none" stroke="#5b6270" stroke-width="1.5"/>
-  <line x1="130" y1="70" x2="152" y2="70" stroke="#9aa0a8" stroke-width="1.5"/>
-  <circle cx="165" cy="70" r="8" fill="#5b6270"/>
-  <line x1="178" y1="70" x2="200" y2="70" stroke="#9aa0a8" stroke-width="1.5"/>
-  <polygon points="200,63 240,55 240,85 200,77" fill="none" stroke="#5b6270" stroke-width="1.5"/>
-  <line x1="240" y1="70" x2="262" y2="70" stroke="#9aa0a8" stroke-width="1.5"/>
-  <g fill="#1e3a5f">
-    <use href="#traveler" x="278" y="75"/>
-  </g>
-  <text x="330" y="79" font-size="13" fill="#1e3a5f" text-anchor="middle">small error</text>
 
-  <!-- Row 2: an anomaly the network never learned to compress -->
-  <g fill="#b4532a">
-    <use href="#traveler" x="35" y="195"/>
-  </g>
-  <line x1="48" y1="190" x2="90" y2="190" stroke="#9aa0a8" stroke-width="1.5"/>
-  <polygon points="90,175 130,183 130,197 90,205" fill="none" stroke="#5b6270" stroke-width="1.5"/>
-  <line x1="130" y1="190" x2="152" y2="190" stroke="#9aa0a8" stroke-width="1.5"/>
-  <circle cx="165" cy="190" r="8" fill="#5b6270"/>
-  <line x1="178" y1="190" x2="200" y2="190" stroke="#9aa0a8" stroke-width="1.5"/>
-  <polygon points="200,183 240,175 240,205 200,197" fill="none" stroke="#5b6270" stroke-width="1.5"/>
-  <line x1="240" y1="190" x2="262" y2="190" stroke="#9aa0a8" stroke-width="1.5"/>
-  <g fill="none" stroke="#b4532a" stroke-width="2" stroke-dasharray="2 2">
-    <use href="#traveler" x="278" y="195"/>
-  </g>
-  <text x="330" y="199" font-size="13" fill="#b4532a" text-anchor="middle">large error</text>
+  <!-- Flag threshold, shared by both rows -->
+  <line x1="572" y1="96" x2="572" y2="262" stroke="#5b6270" stroke-width="1.5" stroke-dasharray="4 4"/>
+  <text x="572" y="90" font-size="11" fill="#5b6270" text-anchor="middle">flag threshold</text>
+  <!-- Bar baseline -->
+  <line x1="440" y1="104" x2="440" y2="296" stroke="#9aa3b0" stroke-width="1.5"/>
+
+  <!-- Row 1: an ordinary traveler is rebuilt faithfully -->
+  <g fill="#3a6ea5"><use href="#traveler" x="70" y="140"/></g>
+  <text x="70" y="180" font-size="12" fill="#5b6270" text-anchor="middle">ordinary traveler</text>
+  <line x1="92" y1="140" x2="146" y2="140" stroke="#9aa3b0" stroke-width="1.5"/>
+  <use href="#squeeze" x="150" y="140"/>
+  <text x="227" y="117" font-size="11" fill="#5b6270" text-anchor="middle">summary</text>
+  <line x1="304" y1="140" x2="348" y2="140" stroke="#9aa3b0" stroke-width="1.5"/>
+  <g fill="#3a6ea5"><use href="#traveler" x="370" y="140"/></g>
+  <text x="370" y="180" font-size="12" fill="#5b6270" text-anchor="middle">matches the input</text>
+  <path d="M 440 132 h 22 a 4 4 0 0 1 4 4 v 8 a 4 4 0 0 1 -4 4 h -22 z" fill="#3a6ea5"/>
+  <path d="M 478 140 l 5 5 l 9 -10" fill="none" stroke="#16191d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="498" y="145" font-size="13" font-weight="600" fill="#16191d">Cleared</text>
+
+  <!-- Row 2: an unusual traveler comes back looking ordinary: that gap is the signal -->
+  <g fill="#b4532a" stroke="#b4532a"><use href="#traveler" x="64" y="255"/><use href="#case" x="64" y="255"/></g>
+  <text x="70" y="295" font-size="12" fill="#5b6270" text-anchor="middle">unusual traveler</text>
+  <line x1="98" y1="255" x2="146" y2="255" stroke="#9aa3b0" stroke-width="1.5"/>
+  <use href="#squeeze" x="150" y="255"/>
+  <line x1="304" y1="255" x2="348" y2="255" stroke="#9aa3b0" stroke-width="1.5"/>
+  <g fill="#3a6ea5"><use href="#traveler" x="370" y="255"/></g>
+  <text x="370" y="295" font-size="12" fill="#5b6270" text-anchor="middle">rebuilt as ordinary</text>
+  <path d="M 440 247 h 168 a 4 4 0 0 1 4 4 v 8 a 4 4 0 0 1 -4 4 h -168 z" fill="#b4532a"/>
+  <path d="M 450 290 l 7 -12 l 7 12 z" fill="none" stroke="#16191d" stroke-width="1.8" stroke-linejoin="round"/>
+  <line x1="457" y1="283" x2="457" y2="286" stroke="#16191d" stroke-width="1.8" stroke-linecap="round"/>
+  <text x="470" y="290" font-size="13" font-weight="600" fill="#16191d">Flagged for review</text>
 </svg>

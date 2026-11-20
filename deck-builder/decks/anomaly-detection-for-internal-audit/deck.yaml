@@ -91,7 +91,7 @@ slides:
     evidence:
       type: diagram
       src: "assets/autoencoders.svg"
-      alt: "A normal traveler passing cleanly through a compress-and-rebuild pipeline with a small error, next to an anomalous traveler whose reconstruction comes out badly wrong with a large error"
+      alt: "An ordinary traveler and an unusual traveler carrying a case are each compressed to a summary and rebuilt; the ordinary one is rebuilt faithfully and cleared with a low error score, while the unusual one comes back rebuilt as ordinary, so its error score crosses the flag threshold and it is flagged for review"
     caption: "Reconstruction error through a compressed bottleneck — the veteran officer's eye for 'that's not how a normal traveler acts.'"
     notes: "Delivery: this is the veteran officer who's seen thousands of ordinary travelers and now just knows, in the gut, when someone doesn't reconstruct as 'normal' — even without a rule that names why. Audit use: high-dimensional or unstructured data — sensor streams, images, complex multivariate logs — where the normal pattern is genuinely nonlinear. Limit: needs more data and tuning than the other three; a reconstruction-error flag is the hardest of the four to explain to a stakeholder ('this took only two splits to isolate' is an easier story than 'the reconstruction error was high'). Source: wiki resources/autoencoders.md. Good fit: high-dimensional/complex data, enough normal-only training data to fit a network properly. Poor fit: small datasets, or simple tabular data a cheaper method already handles well."
 

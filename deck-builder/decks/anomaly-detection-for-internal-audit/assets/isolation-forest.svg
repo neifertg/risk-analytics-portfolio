@@ -9,14 +9,14 @@
   </defs>
 
   <!-- Dense crowd — takes many random splits to isolate any one traveler -->
-  <g fill="#1e3a5f" opacity="0.5" stroke="#1e3a5f" stroke-width="1" stroke-dasharray="2 3">
+  <g fill="#3a6ea5" opacity="0.5" stroke="#3a6ea5" stroke-width="1" stroke-dasharray="2 3">
     <line x1="30" y1="150" x2="185" y2="150"/>
     <line x1="30" y1="180" x2="185" y2="180"/>
     <line x1="70" y1="130" x2="70" y2="235"/>
     <line x1="110" y1="130" x2="110" y2="235"/>
     <line x1="145" y1="130" x2="145" y2="235"/>
   </g>
-  <g fill="#1e3a5f">
+  <g fill="#3a6ea5">
     <use href="#traveler" x="55" y="205"/>
     <use href="#traveler" x="80" y="220"/>
     <use href="#traveler" x="100" y="195"/>

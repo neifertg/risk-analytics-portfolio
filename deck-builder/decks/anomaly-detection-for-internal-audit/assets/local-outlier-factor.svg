@@ -9,7 +9,7 @@
   </defs>
 
   <!-- Dense line — a busy checkpoint, tightly packed, high local density -->
-  <g fill="#1e3a5f">
+  <g fill="#3a6ea5">
     <use href="#traveler" x="55" y="210"/>
     <use href="#traveler" x="72" y="222"/>
     <use href="#traveler" x="88" y="205"/>
@@ -22,7 +22,7 @@
   <text x="72" y="248" font-size="13" fill="#5b6270" text-anchor="middle">dense neighborhood</text>
 
   <!-- Quiet line — a slow checkpoint, travelers naturally more spread out -->
-  <g fill="#1e3a5f">
+  <g fill="#3a6ea5">
     <use href="#traveler" x="250" y="55"/>
     <use href="#traveler" x="300" y="45"/>
     <use href="#traveler" x="280" y="90"/>

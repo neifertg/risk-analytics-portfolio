@@ -16,6 +16,14 @@ checks structural rules before rendering — headline length, one assertion
 per slide, evidence-image aspect ratio, a slide-count guardrail — so a
 malformed deck fails fast instead of rendering something broken.
 
+The design follows consulting-deck conventions: every headline is a
+full-sentence action title, every content slide sits in the same frame (a
+tracker naming the current part, the deck title and page number in the
+footer), each exhibit ends in a "Key takeaway" callout, and tables are
+styled as exhibits. Title and section slides are full-bleed navy. Type is
+Newsreader for titles and Inter for text, the same pairing as
+[neifertg.github.io](https://neifertg.github.io/).
+
 Day to day, this is driven by a Claude Code skill (`make-deck`) that authors
 the `deck.yaml` from a rough outline or a set of source notes. It also works
 by hand: write a `deck.yaml`, run `validate`, run `render`.
@@ -52,7 +60,7 @@ npm run check-contrast
 `render` writes `decks/anomaly-detection-for-internal-audit/index.html`
 (already committed here, so the live link above works without a build
 step) and prints a reminder that pressing "T" while presenting cycles
-between three WCAG-checked color themes (slate/forest/copper), and "N"
+between three WCAG-checked color themes (navy/teal/copper), and "N"
 toggles inline speaker notes for solo review.
 
 `npm run new-deck -- --title "My Deck" --slug my-deck` scaffolds a new

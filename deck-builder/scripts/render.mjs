@@ -12,7 +12,12 @@ const REVEAL_VERSION = '5.1.0';
 // Keep in sync with brand/tokens.css's [data-theme="..."] blocks and
 // scripts/check-contrast.mjs's THEMES list — this is the presenter-facing
 // runtime toggle (press "T" to cycle), not a deck.yaml-authored choice.
-const THEMES = ['slate', 'forest', 'copper'];
+const THEMES = ['navy', 'teal', 'copper'];
+
+// Layouts that get the slide frame (tracker + footer, PATTERN.md "Slide
+// frame"). Title, section-divider and closing are full-bleed dark surfaces
+// that stand on their own and stay unframed.
+const UNFRAMED = new Set(['title', 'section-divider', 'closing']);
 
 const REQUIRED_FIELDS = {
   title: ['title'],
@@ -206,7 +211,8 @@ function renderSlide(slide, index, ctx) {
       ).join(', ')}`
     );
   }
-  const html = renderer(slide, ctx);
+  let html = renderer(slide, ctx);
+  html = withFrame(html, slide, index, ctx);
   if (!slide.icon) return html;
   // Works across every layout without touching each template file: a
   // positioned, negative-z-index div painted right after <section ...>
@@ -214,6 +220,33 @@ function renderSlide(slide, index, ctx) {
   // regardless of which layout template produced the rest of the markup.
   const iconMarkup = resolveIconMarkup(slide.icon, ctx.deckDir);
   return html.replace(/(<section[^>]*>)/, `$1\n  <div class="slide-icon">${iconMarkup}</div>`);
+}
+
+// The slide frame (PATTERN.md "Slide frame"): on every content slide, a
+// tracker naming the part it belongs to (from the most recent
+// section-divider, e.g. "Part 2 · Four Ways to Catch the Outlier") and a
+// footer with the deck title and page number. Injected here, like the
+// per-slide icon, so no layout template has to know about it.
+function withFrame(html, slide, index, ctx) {
+  if (UNFRAMED.has(slide.layout)) return html;
+  const part = ctx.partBySlide[index];
+  const tracker = part ? `\n  <div class="slide-tracker">${esc(part)}</div>` : '';
+  const footer = `\n  <footer class="slide-footer"><span>${esc(ctx.deckTitle)}</span><span class="page">${index + 1}</span></footer>\n`;
+  const withTracker = html.replace(/(<section[^>]*>)/, `$1${tracker}`);
+  const at = withTracker.lastIndexOf('</section>');
+  return withTracker.slice(0, at) + footer + withTracker.slice(at);
+}
+
+// Which part each slide belongs to: the label and title of the most recent
+// section-divider before it (none before the first divider).
+function partsBySlide(slides) {
+  let current = '';
+  return slides.map((slide) => {
+    if (slide.layout === 'section-divider') {
+      current = [slide.label, slide.title].filter(Boolean).join(' · ');
+    }
+    return current;
+  });
 }
 
 function main() {
@@ -232,7 +265,12 @@ function main() {
   // see the host page's CSS custom properties.
   const logoSvgMarkup = fs.readFileSync(path.join(REPO_ROOT, 'brand', 'logo-placeholder.svg'), 'utf8').trim();
 
-  const ctx = { logoSvgMarkup, deckTitle: deck.title, deckDir: path.dirname(resolvedDeckPath) };
+  const ctx = {
+    logoSvgMarkup,
+    deckTitle: deck.title,
+    deckDir: path.dirname(resolvedDeckPath),
+    partBySlide: partsBySlide(deck.slides),
+  };
   const sectionsHtml = deck.slides.map((slide, i) => renderSlide(slide, i, ctx)).join('\n');
 
   const html = `<!doctype html>
@@ -242,6 +280,9 @@ function main() {
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>${esc(deck.title)}</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@${REVEAL_VERSION}/dist/reveal.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap" />
 <style>
 ${tokensCss}
 </style>

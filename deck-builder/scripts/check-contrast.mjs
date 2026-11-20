@@ -15,7 +15,7 @@ const NORMAL_TEXT_MIN = 4.5; // WCAG AA, normal text
 
 // Keep in sync with brand/tokens.css's [data-theme="..."] blocks and
 // render.mjs's THEMES list.
-const THEMES = ['slate', 'forest', 'copper'];
+const THEMES = ['navy', 'teal', 'copper'];
 
 // Every foreground/background combination actually used by layouts/*, read
 // off brand/tokens.css by custom-property name. Keep this list in sync with
@@ -29,6 +29,12 @@ const PAIRS = [
   ['--color-accent', '--color-accent-soft', 'large', 'comparison column headings'],
   ['--color-accent-on-dark', '--color-bg-inverse', 'normal', 'section-divider label'],
   ['--color-accent-on-dark', '--color-bg-inverse', 'large', 'closing CTA'],
+  ['--color-accent-on-dark', '--color-bg-inverse', 'normal', 'title-slide subtitle'],
+  ['--color-on-accent', '--color-accent', 'normal', 'table header row'],
+  ['--color-ink', '--color-accent-soft', 'normal', 'key-takeaway text, timeline step detail'],
+  ['--color-accent', '--color-accent-soft', 'normal', 'key-takeaway label, timeline step label'],
+  ['--color-accent', '--color-bg', 'normal', 'slide-frame tracker'],
+  ['--color-muted', '--color-bg', 'normal', 'slide-frame footer'],
 ];
 
 function parseThemeBlock(css, themeName) {

@@ -276,7 +276,8 @@ every other icon/evidence field.
 
 ### Timeline connector
 
-`timeline` steps render with a small chevron (`›`) in the gap after every
+`timeline` steps render as equal-width tinted cards (step label in the display
+serif, detail below) with a small chevron (`›`) centered in the gap after every
 step but the last — a pure-CSS border arrow in `brand/tokens.css`
 (`.layout-timeline .step::after`), not a separate icon or asset. This is
 the layout's own default, not a per-deck opt-in: a timeline's whole reason
@@ -284,6 +285,34 @@ for existing is that order matters (see the layout's classification rule),
 so the path between steps is drawn rather than left implied by a bare
 numbered row. No `deck.yaml` field controls this — it always renders when
 a `timeline` slide has more than one step.
+
+### Slide frame (tracker, footer, key takeaway)
+
+Every content slide (every layout except `title`, `section-divider` and
+`closing`, which are full-bleed dark surfaces that stand alone) renders inside
+the same frame, the convention a consulting deck uses so a reader always knows
+where they are:
+
+- **Tracker** (top): the label and title of the most recent `section-divider`
+  ("Part 2 · Four Ways to Catch the Outlier"). Slides before the first divider
+  have none.
+- **Footer** (bottom): the deck `title` on the left, the page number on the
+  right.
+- **Key takeaway**: an `assertion-evidence` slide's `caption` renders as a
+  tinted "Key takeaway" callout under the evidence, the slide's "so what".
+  Write captions accordingly: one sentence a reviewer should remember.
+
+The tracker and footer are injected by `scripts/render.mjs` (`withFrame`),
+the same way the per-slide icon is, so no layout template knows about them and
+no `deck.yaml` field controls them. They are plain text: wayfinding, not
+decoration, so §7's no-stripes/no-bars rule is kept (no rules under titles, no
+left-border callouts).
+
+Every slide is exactly 1080px tall (`.reveal .slides section { height:
+1080px }`). Without it, reveal.js vertically centers a shorter slide and paints
+only its content box. reveal.js also forces `display: block` on every slide
+section, so flex alignment on a section itself is ignored: full-bleed layouts
+(`title`, `section-divider`, `closing`) are placed with top padding instead.
 
 **Do not set `position` on `.reveal .slides section` in `tokens.css`.**
 reveal.js's own stylesheet already sets `position: absolute` there — that
@@ -377,13 +406,20 @@ to check evidence against without them.
 `brand/tokens.css` defines (as CSS custom properties, consumed by every
 file in `layouts/`):
 - `--color-bg`, `--color-ink`, `--color-accent`, `--color-accent-on-dark`,
-  `--color-muted`
-- `--font-family` (system stack; swap for a real brand font later)
+  `--color-accent-soft`, `--color-on-accent` (text on an accent fill, e.g. the
+  table header row), `--color-muted`, `--color-border`
+- `--font-family` (body: Inter) and `--font-display` (action titles, display
+  type: Newsreader), the same pairing as neifertg.github.io. Both load from
+  Google Fonts in the rendered deck's `<head>`; the fallback stacks keep a deck
+  presentable offline.
 - `--font-scale-headline`, `--font-scale-body`, `--font-scale-stat`
 - `--space-unit` (base spacing unit; all layout padding/margins are
   multiples of it)
 - `--logo-url` (points at `brand/logo-placeholder.svg`; swap the file, not
-  the layouts, when real branding arrives)
+  the layouts, when real branding arrives). While the placeholder is in place
+  it is hidden (`.brand-corner-mark, .layout-title .logo { display: none }` in
+  `tokens.css`): a generic mark reads as a template. Delete that rule when a
+  real logo arrives.
 
 `--color-accent` is calibrated against the light background; on the dark
 sections (`section-divider`, `closing`) use `--color-accent-on-dark`
@@ -424,7 +460,9 @@ specificity plus one class — provides it. Don't declare `background` or
 ### Color themes (presenter-facing runtime toggle)
 
 `brand/tokens.css` ships three named accent themes as `[data-theme="..."]`
-blocks (`slate` default, `forest`, `copper`). Every rendered deck embeds all
+blocks (`navy` default, `teal`, `copper`; renamed from slate/forest/copper in
+the 2026-11-19 restyle, which also moved slides to pure white and the dark
+surface to a deep navy-ink). Every rendered deck embeds all
 three plus a small script (`render.mjs`) that cycles
 `document.documentElement.dataset.theme` when the presenter presses "T" — no
 on-screen control, per the anti-slop no-decorative-chrome rule below. This
@@ -441,7 +479,7 @@ Rules for adding or changing a theme:
   name to the `THEMES` list in both `scripts/check-contrast.mjs` and
   `scripts/render.mjs`, alongside its `[data-theme="..."]` block in
   `tokens.css`). Don't hand-pick an accent hue and skip the check — the
-  slate/forest/copper values were chosen by testing candidates against the
+  navy/teal/copper values were chosen by testing candidates against the
   formula, not by eye.
 
 ### Inline notes toggle (solo-review, off by default)

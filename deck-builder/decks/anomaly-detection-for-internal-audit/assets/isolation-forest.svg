@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260">
-  <rect x="1" y="1" width="398" height="258" rx="14" fill="#fbfaf8" stroke="#e4e2dc" stroke-width="2"/>
+<svg font-family="Inter, Segoe UI, Arial, sans-serif" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260">
+  <rect x="1" y="1" width="398" height="258" rx="14" fill="#ffffff" stroke="#e3e6eb" stroke-width="2"/>
 
   <defs>
     <g id="traveler">
@@ -9,14 +9,14 @@
   </defs>
 
   <!-- Dense crowd — takes many random splits to isolate any one traveler -->
-  <g fill="#2a6fdb" opacity="0.5" stroke="#2a6fdb" stroke-width="1" stroke-dasharray="2 3">
+  <g fill="#1e3a5f" opacity="0.5" stroke="#1e3a5f" stroke-width="1" stroke-dasharray="2 3">
     <line x1="30" y1="150" x2="185" y2="150"/>
     <line x1="30" y1="180" x2="185" y2="180"/>
     <line x1="70" y1="130" x2="70" y2="235"/>
     <line x1="110" y1="130" x2="110" y2="235"/>
     <line x1="145" y1="130" x2="145" y2="235"/>
   </g>
-  <g fill="#2a6fdb">
+  <g fill="#1e3a5f">
     <use href="#traveler" x="55" y="205"/>
     <use href="#traveler" x="80" y="220"/>
     <use href="#traveler" x="100" y="195"/>
@@ -28,15 +28,15 @@
     <use href="#traveler" x="160" y="215"/>
     <use href="#traveler" x="130" y="165"/>
   </g>
-  <text x="107" y="122" font-size="13" fill="#6b7280" text-anchor="middle">many splits</text>
+  <text x="107" y="122" font-size="13" fill="#5b6270" text-anchor="middle">many splits</text>
 
   <!-- The isolated traveler — two random splits box it off from the crowd -->
-  <g stroke="#c0611f" stroke-width="2" stroke-dasharray="6 4" fill="none">
+  <g stroke="#b4532a" stroke-width="2" stroke-dasharray="6 4" fill="none">
     <line x1="300" y1="20" x2="300" y2="240"/>
     <line x1="300" y1="70" x2="392" y2="70"/>
   </g>
-  <g fill="#c0611f">
+  <g fill="#b4532a">
     <use href="#traveler" x="345" y="45"/>
   </g>
-  <text x="345" y="20" font-size="13" fill="#c0611f" text-anchor="middle">2 splits</text>
+  <text x="345" y="20" font-size="13" fill="#b4532a" text-anchor="middle">2 splits</text>
 </svg>

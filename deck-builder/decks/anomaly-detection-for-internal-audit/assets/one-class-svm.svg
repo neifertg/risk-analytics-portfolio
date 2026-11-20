@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260">
-  <rect x="1" y="1" width="398" height="258" rx="14" fill="#fbfaf8" stroke="#e4e2dc" stroke-width="2"/>
+<svg font-family="Inter, Segoe UI, Arial, sans-serif" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260">
+  <rect x="1" y="1" width="398" height="258" rx="14" fill="#ffffff" stroke="#e3e6eb" stroke-width="2"/>
 
   <defs>
     <g id="traveler">
@@ -11,11 +11,11 @@
   <!-- The trusted-traveler boundary — learned tightly around normal behavior -->
   <path d="M 90 80 C 140 55, 200 60, 230 95 C 260 125, 250 185, 205 215
            C 165 245, 100 232, 72 192 C 50 158, 58 108, 90 80 Z"
-        fill="#2a6fdb" fill-opacity="0.08" stroke="#2a6fdb" stroke-width="2.5"/>
-  <text x="150" y="45" font-size="13" fill="#2a6fdb" text-anchor="middle">cleared / normal</text>
+        fill="#1e3a5f" fill-opacity="0.08" stroke="#1e3a5f" stroke-width="2.5"/>
+  <text x="150" y="45" font-size="13" fill="#1e3a5f" text-anchor="middle">cleared / normal</text>
 
   <!-- Travelers inside the boundary — cleared -->
-  <g fill="#2a6fdb">
+  <g fill="#1e3a5f">
     <use href="#traveler" x="120" y="140"/>
     <use href="#traveler" x="150" y="110"/>
     <use href="#traveler" x="170" y="160"/>
@@ -26,8 +26,8 @@
   </g>
 
   <!-- Flagged traveler — falls outside the learned boundary -->
-  <g fill="#c0611f">
+  <g fill="#b4532a">
     <use href="#traveler" x="335" y="70"/>
   </g>
-  <text x="335" y="100" font-size="13" fill="#c0611f" text-anchor="middle">pulled aside</text>
+  <text x="335" y="100" font-size="13" fill="#b4532a" text-anchor="middle">pulled aside</text>
 </svg>

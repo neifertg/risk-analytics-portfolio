@@ -1,46 +1,59 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260">
-  <rect x="1" y="1" width="398" height="258" rx="14" fill="#fbfaf8" stroke="#e4e2dc" stroke-width="2"/>
+<svg font-family="Inter, Segoe UI, Arial, sans-serif" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-label="With the number of tables set to three up front, every guest is seated at the nearest table. Tables A and B each seat six guests; table C seats only three, so the small, odd segment is flagged for review.">
+  <rect x="1" y="1" width="638" height="358" rx="14" fill="#ffffff" stroke="#e3e6eb" stroke-width="2"/>
 
-  <!-- Partition boundaries — every point in the space belongs to its nearest centroid -->
-  <g stroke="#9aa0a8" stroke-width="1.5" stroke-dasharray="4 3">
-    <line x1="150" y1="8" x2="205" y2="252"/>
-    <line x1="300" y1="8" x2="332" y2="252"/>
+  <defs>
+    <g id="t">
+      <circle cx="0" cy="-9" r="5"/>
+      <path d="M -8 10 Q 0 -5 8 10 Z"/>
+    </g>
+  </defs>
+
+  <text x="24" y="32" font-size="13" fill="#5b6270">You pick the number of tables first (k = 3); each guest sits at the nearest one.</text>
+
+  <rect x="24" y="56" width="376" height="274" rx="8" fill="#ffffff" stroke="#e3e6eb" stroke-width="1.5"/>
+
+  <!-- Where one table's territory ends and the next begins -->
+  <g stroke="#9aa3b0" stroke-width="1.5" stroke-dasharray="5 4">
+    <line x1="220" y1="230" x2="80" y2="57"/>
+    <line x1="220" y1="230" x2="214" y2="329"/>
+    <line x1="220" y1="230" x2="399" y2="121"/>
   </g>
 
-  <!-- Cluster 1 (blue) -->
-  <g fill="#2a6fdb">
-    <circle cx="55" cy="190" r="7"/>
-    <circle cx="75" cy="205" r="7"/>
-    <circle cx="90" cy="180" r="7"/>
-    <circle cx="65" cy="165" r="7"/>
-    <circle cx="45" cy="175" r="7"/>
-    <circle cx="80" cy="155" r="7"/>
-    <circle cx="58" cy="155" r="7"/>
-    <circle cx="95" cy="200" r="7"/>
-    <circle cx="40" cy="195" r="7"/>
+  <!-- Table A -->
+  <g fill="#3a6ea5">
+    <use href="#t" x="84" y="226"/><use href="#t" x="108" y="208"/><use href="#t" x="134" y="220"/>
+    <use href="#t" x="86" y="258"/><use href="#t" x="110" y="264"/><use href="#t" x="134" y="252"/>
   </g>
-  <path d="M60 178 L76 178 M68 170 L68 186" stroke="#2a6fdb" stroke-width="3"/>
+  <circle cx="109" cy="238" r="8" fill="#ffffff" stroke="#3a6ea5" stroke-width="2.5"/>
+  <text x="110" y="300" font-size="12" font-weight="600" fill="#16191d" text-anchor="middle">Table A</text>
 
-  <!-- Cluster 2 (orange) -->
-  <g fill="#c0611f">
-    <circle cx="270" cy="60" r="7"/>
-    <circle cx="290" cy="75" r="7"/>
-    <circle cx="310" cy="55" r="7"/>
-    <circle cx="285" cy="90" r="7"/>
-    <circle cx="255" cy="80" r="7"/>
-    <circle cx="300" cy="95" r="7"/>
-    <circle cx="265" cy="100" r="7"/>
-    <circle cx="305" cy="65" r="7"/>
-    <circle cx="245" cy="65" r="7"/>
+  <!-- Table B -->
+  <g fill="#3a6ea5">
+    <use href="#t" x="224" y="110"/><use href="#t" x="250" y="92"/><use href="#t" x="276" y="106"/>
+    <use href="#t" x="228" y="142"/><use href="#t" x="254" y="150"/><use href="#t" x="278" y="136"/>
   </g>
-  <path d="M277 76 L293 76 M285 68 L285 84" stroke="#c0611f" stroke-width="3"/>
+  <circle cx="252" cy="123" r="8" fill="#ffffff" stroke="#3a6ea5" stroke-width="2.5"/>
+  <text x="252" y="182" font-size="12" font-weight="600" fill="#16191d" text-anchor="middle">Table B</text>
 
-  <!-- Cluster 3 (green) — the small, odd segment that stands out -->
-  <g fill="#2f9e6e">
-    <circle cx="355" cy="170" r="7"/>
-    <circle cx="370" cy="190" r="7"/>
-    <circle cx="345" cy="195" r="7"/>
-    <circle cx="365" cy="150" r="7"/>
+  <!-- Table C: the small, odd segment -->
+  <g fill="#b4532a">
+    <use href="#t" x="304" y="238"/><use href="#t" x="356" y="238"/><use href="#t" x="330" y="282"/>
   </g>
-  <path d="M352 172 L368 172 M360 164 L360 180" stroke="#2f9e6e" stroke-width="3"/>
+  <circle cx="330" cy="251" r="8" fill="#ffffff" stroke="#b4532a" stroke-width="2.5"/>
+  <text x="330" y="314" font-size="12" font-weight="600" fill="#16191d" text-anchor="middle">Table C</text>
+
+  <!-- Result -->
+  <text x="424" y="76" font-size="11" font-weight="600" fill="#5b6270" letter-spacing="0.8">RESULT, k = 3</text>
+  <circle cx="430" cy="108" r="5" fill="#3a6ea5"/>
+  <text x="444" y="112" font-size="13" fill="#16191d">Table A: 6 guests</text>
+  <circle cx="430" cy="136" r="5" fill="#3a6ea5"/>
+  <text x="444" y="140" font-size="13" fill="#16191d">Table B: 6 guests</text>
+  <circle cx="430" cy="164" r="5" fill="#b4532a"/>
+  <text x="444" y="168" font-size="13" fill="#16191d">Table C: 3 guests</text>
+  <line x1="424" y1="194" x2="616" y2="194" stroke="#e3e6eb" stroke-width="1.5"/>
+  <path d="M 424 226 l 7 -12 l 7 12 z" fill="none" stroke="#16191d" stroke-width="1.8" stroke-linejoin="round"/>
+  <line x1="431" y1="219" x2="431" y2="222" stroke="#16191d" stroke-width="1.8" stroke-linecap="round"/>
+  <text x="446" y="226" font-size="13" font-weight="600" fill="#16191d">Flagged for review</text>
+  <text x="424" y="248" font-size="12" fill="#5b6270">The small, odd table is</text>
+  <text x="424" y="265" font-size="12" fill="#5b6270">the segment to look at.</text>
 </svg>

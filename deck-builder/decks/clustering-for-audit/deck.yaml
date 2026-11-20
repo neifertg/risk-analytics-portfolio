@@ -1,5 +1,5 @@
 title: "Clustering for Audit Analytics"
-objective: "Give internal audit staff enough working knowledge of four clustering techniques to run a first pilot on real audit data this quarter."
+objective: "Give internal audit staff enough working knowledge of three clustering techniques, and what to actually run them with, to launch a first pilot on real audit data this quarter."
 audience: "Internal/IT audit staff with some analytics exposure but not a data-scientist background; an internal training session."
 slides:
   - layout: title
@@ -7,18 +7,40 @@ slides:
     subtitle: "Finding patterns in audit data you haven't named yet"
     author: "Internal Audit — Analytics Training"
     date: "2026-07-30"
+    notes: "Delivery: plant the frame you'll use the whole way through, lightly — 'I'm going to explain three techniques the same way you'd explain how a good host reads a room at a party.' Don't over-explain it yet, just tease it. Let the title sit a beat before advancing."
 
   - layout: agenda
     title: "Agenda"
     items:
       - "Why clustering fits audit work"
-      - "Four techniques, four audit questions"
+      - "Three techniques, three audit questions"
       - "Applying it: business and IT audit examples"
-      - "Where to start"
+      - "Where to start, and what you'll actually run it with"
+    notes: "Delivery: don't read the list verbatim — one clause per line as you point at it. Bridge: 'Before any of that, here's the one picture that makes all three techniques click at once.'"
+
+  - layout: comparison
+    columns:
+      - heading: "K-Means: the seating chart"
+        points:
+          - "Pick the number of tables before any guest arrives"
+          - "Seat each guest at the nearest table"
+          - "Keep reshuffling until every table's guests actually fit together"
+      - heading: "Hierarchical: circles merge as the night goes on"
+        points:
+          - "Two people talking become four, become a whole circle"
+          - "Circles keep merging — no table count decided yet"
+          - "Only after watching the night play out do you decide how many groups to call"
+      - heading: "DBSCAN: the host's midnight lap"
+        points:
+          - "Any dense knot of guests reads as a group, no head count needed"
+          - "Groups form wherever people naturally packed in"
+          - "The one guest alone by the punch bowl gets flagged, not seated anywhere"
+    notes: "Delivery: this is the mental model for the whole middle section — spend real time here before Part 2's technical slides, since every one of those is just naming this host's mechanics. Try: 'Before I show you the algorithms, here's what they're actually doing — think of a host working a party.' Bridge into Part 1: 'Now let's talk about why that host's instinct is useful in audit work.' Domain fit: a party/reception was chosen because it's a well-documented teaching analogy for all three mechanics specifically, not just clustering in general — k-means-as-seating-chart and DBSCAN-as-a-host-spotting-friend-circles-at-a-party are both real, independently published explainer analogies (see wiki: resources/clustering-teaching-metaphors.md for sources), which is worth more than an internally-consistent but invented domain. Considered and rejected: a library/shelving metaphor (swapped out — didn't click) and a kindergarten-blocks metaphor (well-attested for 'no one hands you the categories' generally, but redundant with the population/no-label slide earlier in this deck, and doesn't differentiate the three techniques' actual mechanics)."
 
   - layout: section-divider
     label: "Part 1"
     title: "Why clustering fits audit work"
+    notes: "Delivery: bridge from the party comparison slide — 'That host never got a guest list with everyone's group written on it. Neither do you.'"
 
   - layout: assertion-evidence
     headline: "Most audit populations have no label marking which record is the problem."
@@ -30,47 +52,39 @@ slides:
         - ["Learn to repeat a pattern you've already seen", "Group records by similarity, then let the odd ones stand out"]
         - ["Only as good as your past examples", "Can surface a pattern you've never seen before"]
     caption: "Most audit testing starts from a population with no 'bad' column to learn from."
-    notes: "This is the core motivation for using clustering in audit: fraud/error labels are rare, expensive, or don't exist yet for a new risk area. Clustering doesn't need them."
+    notes: "Delivery: no one hands the host a seating chart before the party starts, either — they read the room as guests actually arrive. This is the core motivation for using clustering in audit: fraud/error labels are rare, expensive, or don't exist yet for a new risk area. Clustering doesn't need them. Two things to set expectations on now, not later: the population still has to be reconciled to a control total before any flag is defensible as audit evidence (wiki: Data Quality for Analytics), and a clustering-based finding has to clear the same sufficient-and-appropriate-evidence bar as any other (wiki: IIA Standards). This isn't shadow IT — treat it that way from slide 1."
 
   - layout: section-divider
     label: "Part 2"
-    title: "Four techniques, four audit questions"
+    title: "Three techniques, three audit questions"
+    notes: "Delivery: 'Now let's put a name on the host's three moves.'"
 
   - layout: assertion-evidence
     headline: "K-Means sorts records into a fixed number of segments so the odd segment stands out."
     evidence:
       type: diagram
       src: "assets/kmeans.svg"
-      alt: "Scatter plot of records grouped into two large clusters and one small, isolated cluster"
-    caption: "Nearest-centroid assignment, recomputed until stable — you choose k up front."
-    notes: "Audit use: segment vendors or transactions to find the outlier segment. Limit: requires choosing k upfront; assumes round, evenly sized groups. Source: wiki resources/k-means-clustering.md. Good fit: exploratory grouping of numeric data, e.g. customer/vendor segmentation. Poor fit: unknown k, non-round clusters, categorical-only data."
+      alt: "With the number of tables set to three up front, every guest sits at the nearest table; tables A and B seat six guests each, and table C seats only three, so that small, odd segment is flagged for review"
+    caption: "Nearest-centroid assignment, recomputed until stable — the host's 'nearest table,' reshuffled until it settles."
+    notes: "Delivery: this is the host's seating chart, formalized — decide the table count, seat everyone at their nearest table, keep reshuffling until it's stable. Audit use: segment vendors or transactions to find the outlier segment. Limit: requires choosing k upfront; assumes round, evenly sized groups. Source: wiki resources/k-means-clustering.md. Good fit: exploratory grouping of numeric data, e.g. customer/vendor segmentation. Poor fit: unknown k, non-round clusters, categorical-only data."
 
   - layout: assertion-evidence
     headline: "Hierarchical clustering builds a tree of groupings, so you decide the count last."
     evidence:
       type: diagram
       src: "assets/hierarchical.svg"
-      alt: "Dendrogram of five records merging into a tree, with a cut line producing three groups"
-    caption: "Repeatedly merges the two closest clusters — you decide the count after seeing the tree."
-    notes: "Audit use: explore population structure before setting a testing plan. Limit: O(n²) cost — doesn't scale to a full population; an early bad merge can't be undone. Source: wiki resources/hierarchical-clustering.md. Good fit: don't know k in advance, want to see nested structure, need deterministic results (no random init unlike K-Means). Poor fit: large datasets, noisy data with single linkage."
+      alt: "Six guests merge into a tree, closest pairs first; cutting the tree low gives three groups and cutting it higher gives two, so the number of groups is chosen after seeing the tree"
+    caption: "Repeatedly merges the two closest clusters — the party's circles, merging until you cut the tree."
+    notes: "Delivery: this is the party's conversation circles, formalized — small groups keep merging into bigger ones all night, and you only decide how many to call out after watching the whole thing play out. Audit use: explore population structure before setting a testing plan. Limit: O(n²) cost — doesn't scale to a full population; an early bad merge can't be undone. Source: wiki resources/hierarchical-clustering.md. Good fit: don't know k in advance, want to see nested structure, need deterministic results (no random init unlike K-Means). Poor fit: large datasets, noisy data with single linkage."
 
   - layout: assertion-evidence
     headline: "DBSCAN separates dense, ordinary activity from outliers automatically."
     evidence:
       type: diagram
       src: "assets/dbscan.svg"
-      alt: "Scatter plot with two dense clusters and three sparse points marked as noise"
-    caption: "Dense regions become clusters; sparse points are flagged as noise automatically."
-    notes: "Audit use: auto-flag transactions or log entries that fit no normal pattern. Limit: struggles with mixed-density populations; radius/threshold settings are fiddly. Source: wiki resources/dbscan.md. Good fit: arbitrary-shaped clusters, automatic outlier detection, unknown cluster count. Poor fit: high-dimensional data, mixed-density clusters."
-
-  - layout: assertion-evidence
-    headline: "Gaussian Mixture Models assign each record a probability of risk instead of a hard yes/no."
-    evidence:
-      type: diagram
-      src: "assets/gmm.svg"
-      alt: "Scatter plot with two overlapping probability regions and one point with split membership"
-    caption: "Each record gets a probability of belonging to each group, not a hard label."
-    notes: "Audit use: risk-score records instead of a hard flag. Limit: needs more data than K-Means; easy to overfit the wrong number of components. Source: wiki resources/gaussian-mixture-models.md. Good fit: overlapping/elliptical clusters, soft assignments, varying cluster sizes. Poor fit: small datasets, no good guess for component count, very high feature counts."
+      alt: "A long chain of guests and a compact knot each form a group because their members have others within reach, while a guest alone by the punch bowl has no one within reach and is flagged as noise; two groups are found without setting a count in advance"
+    caption: "Dense regions become clusters automatically — the host's midnight lap, flagging whoever's standing alone by the punch bowl."
+    notes: "Delivery: this is the host's midnight lap of the room, formalized — dense knots of guests read as a group with no head count decided in advance, and whoever's standing alone by the punch bowl gets flagged instead of seated anywhere. Audit use: auto-flag transactions or log entries that fit no normal pattern. Limit: struggles with mixed-density populations; radius/threshold settings are fiddly. Source: wiki resources/dbscan.md. Good fit: arbitrary-shaped clusters, automatic outlier detection, unknown cluster count. Poor fit: high-dimensional data, mixed-density clusters."
 
   - layout: comparison
     columns:
@@ -89,53 +103,74 @@ slides:
           - "The technique finds the number of groups itself"
           - "Flags outliers automatically as noise"
           - "Struggles with mixed-density populations"
-    notes: "Choosing among the three is mostly about whether you already know how many groups you're looking for, and whether automatic outlier-flagging matters more than speed."
+    notes: "Delivery: last call-back to the party before we get practical — the seating chart, the merging circles, the midnight lap, now with their real names side by side. Choosing among the three is mostly about whether you already know how many groups you're looking for, and whether automatic outlier-flagging matters more than speed. A fourth technique, Gaussian Mixture Models, gives each record a soft probability instead of a hard group — mention only if asked; it needs more data and tuning than a first pilot has, so it's deliberately not covered today (wiki: Gaussian Mixture Models). Whichever of these three you pick, expect real false-positive fatigue if the flagging rule isn't tuned — that's normal, not a sign the pilot failed (wiki: Continuous Auditing and Monitoring)."
 
   - layout: big-stat
     stat: "O(n²)"
     context: "the memory and compute cost of hierarchical clustering — a real limit when testing a full transaction population rather than a sample."
-    notes: "From wiki resources/hierarchical-clustering.md. Practical implication for audit: hierarchical clustering is well suited to exploring a sample or a narrowed-down population, not a full year of transactional detail. K-Means or DBSCAN scale further."
+    notes: "Delivery: this is why the merging-circles approach falls apart at a stadium-sized party — comparing every guest to every other guest gets expensive fast, long before you'd ever finish merging. From wiki resources/hierarchical-clustering.md. Practical implication for audit: hierarchical clustering is well suited to exploring a sample or a narrowed-down population, not a full year of transactional detail. K-Means or DBSCAN scale further."
 
   - layout: section-divider
     label: "Part 3"
     title: "Applying it: business and IT audit examples"
+    notes: "Delivery: 'Let's leave the party and look at real data — the two examples coming up are actual audit populations, not more guests.'"
 
   - layout: assertion-evidence
     headline: "Clustering vendor payments can surface the one vendor that doesn't look like the rest."
     evidence:
       type: diagram
       src: "assets/vendor-payments.svg"
-      alt: "Scatter plot of vendor payment records with one vendor isolated from the normal cluster"
+      alt: "Illustrative scatter plot of vendors by payments per year and average payment size; most form one ordinary cluster, and one vendor with few, very large payments sits far outside it and is flagged for review"
     caption: "Illustrative example — not a specific finding."
-    notes: "Population: vendor payment records for a business cycle. Features: amount, frequency, approval path, vendor age, payment timing. This is a generic teaching example, not drawn from a real audit or organization. Adapt the population and features to whatever business-cycle data the department actually has. A flagged vendor is a lead to investigate, e.g. for duplicate payments or a shell-vendor risk — not a conclusion on its own."
+    notes: "Delivery: same host's instinct, pointed at real vendor data instead of a room full of guests. Population: vendor payment records for a business cycle, tied out to a GL control total first (wiki: Data Quality for Analytics) — a flawless analysis of an unreconciled population is a confidently wrong one. Features grounded in known fraud red flags rather than generic behavior fields (wiki: Fraud Analytics and Red Flags): round-dollar concentration, just-under-threshold splitting, same requestor/approver pairs, weekend/period-end timing, vendor tenure/dormancy, and fuzzy-matched name or shared bank-account/tax-ID signals for ghost-vendor risk. This is a generic teaching example, not drawn from a real audit or organization. A flagged vendor is a lead to investigate, e.g. for duplicate payments or a shell-vendor risk — not a conclusion on its own."
 
   - layout: assertion-evidence
     headline: "Clustering access logs can flag the one account that doesn't match its peers."
     evidence:
       type: diagram
       src: "assets/access-logs.svg"
-      alt: "Scatter plot of access-log records with one account isolated from its peer group"
+      alt: "Illustrative scatter plot of accounts by systems accessed and average session length; same-role peers cluster together among other roles, and one account in that role reaches far more systems for longer and is flagged for review"
     caption: "Illustrative example — not a specific finding."
-    notes: "Population: access logs or privileged-account activity, IT general controls. Features: login times, systems accessed, transaction types, peer role. This is a generic teaching example, not drawn from a real audit or organization. Peer-group definition (e.g. by role or department) matters a lot here — cluster within a peer group, not across the whole population. A flagged account is a lead, e.g. excessive access or a compromised credential — not a conclusion on its own."
+    notes: "Delivery: the same instinct again, one more time on real data — the account that doesn't belong at its peer group's table. Population: access logs or privileged-account activity, IT general controls. Features: login times, systems accessed, transaction types, peer role. Complements the structural view in wiki: Segregation of Duties Analysis, which catches the conflict-matrix opportunity before it's exploited — this behavioral view catches unusual activity after the fact. This is a generic teaching example, not drawn from a real audit or organization. Peer-group definition (e.g. by role or department) matters a lot here — cluster within a peer group, not across the whole population. A flagged account is a lead, e.g. excessive access or a compromised credential — not a conclusion on its own."
 
   - layout: section-divider
     label: "Part 4"
     title: "Where to start"
+    notes: "Delivery: the metaphor's done its job by now — shift the room's attention from 'how it works' to 'what you'll actually click.'"
+
+  - layout: comparison
+    columns:
+      - heading: "Vendor black-box"
+        points:
+          - "Packaged risk score — no analytics skill to run it"
+          - "Fastest to a first result"
+          - "Hardest to explain why a record was flagged"
+      - heading: "Point-and-click"
+        points:
+          - "IDEA, ACL/Diligent, Alteryx, Power BI — no code"
+          - "Most departments' actual entry point"
+          - "You can see and explain every step"
+      - heading: "Code"
+        points:
+          - "Python/scikit-learn — what this deck's techniques use"
+          - "Most flexible and most transparent"
+          - "Needs someone who's built that skill"
+    notes: "Source: wiki resources/audit-analytics-tooling-landscape.md. This choice matters more to a first pilot's success than which algorithm from Part 2 you pick — a technically better algorithm nobody in the room can run loses to a worse one someone can actually operate. This usually isn't your call alone: it's a department licensing decision. What you can do today without waiting on that: prototype in whatever's already licensed to build the business case for more."
 
   - layout: timeline
     headline: "A first clustering pilot, end to end"
     steps:
       - label: "1. Pick a population"
-        detail: "One with no existing 'bad' label — a vendor master, an access log, an expense population"
+        detail: "One with no existing 'bad' label, tied out to a control total first"
       - label: "2. Choose features"
-        detail: "A handful of numeric fields that describe behavior, not identity"
+        detail: "A handful of fields grounded in known fraud red flags, not identity"
       - label: "3. Run and review"
-        detail: "Try K-Means or DBSCAN first; read the outlier group, not just the average"
+        detail: "K-Means or DBSCAN, in whatever tool you already have — expect mostly false positives"
       - label: "4. Fold into testing"
         detail: "Treat flagged records as leads for existing substantive procedures, not a final conclusion"
-    notes: "This mirrors the make-deck render pipeline's own philosophy: start from the simplest version of each piece, and only add complexity (hierarchical, GMM) once the first pass earns it."
+    notes: "Delivery: one last echo, then let it go — this is planning the party itself. Decide who's coming (population), what you'll ask each guest (features), throw the party and see who clusters (run and review), then actually act on what you noticed (fold into testing). This mirrors the make-deck render pipeline's own philosophy: start from the simplest version of each piece, and only add complexity (hierarchical, GMM) once the first pass earns it. Expect real false-positive fatigue if the flagging rule isn't tuned (wiki: Continuous Auditing and Monitoring) — that's the normal cost of a first pass, not a sign it failed. Set that expectation with the room before anyone runs anything."
 
   - layout: closing
     headline: "Clustering turns 'we don't know what we're looking for' into a testable question."
     cta: "Pick one dataset without a fraud label and run a first K-Means or DBSCAN pass this quarter."
-    notes: "Start small: one population, one technique, one review of the outlier group. The four techniques and PATTERN.md-style layout choices in this deck are illustrative — expect to adapt features and thresholds to the actual data in hand."
+    notes: "Delivery: close on the host image one last time — you don't need the guest list in advance to notice who doesn't fit. Start small: one population, one technique, run in whatever tool you already have, one review of the outlier group. The three techniques in this deck are illustrative — expect to adapt features and thresholds to the actual data in hand. Worth naming if the room is skeptical: IIA's current data-analytics guidance (successor to the 2011 GTAG) and ISACA's new AAIA credential both treat this as standards-sanctioned skill-building, not shadow IT."

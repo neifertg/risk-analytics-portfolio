@@ -1,30 +1,56 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260">
-  <rect x="1" y="1" width="398" height="258" rx="14" fill="#fbfaf8" stroke="#e4e2dc" stroke-width="2"/>
+<svg font-family="Inter, Segoe UI, Arial, sans-serif" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-label="Guests count how many others stand within reach. A long chain of guests and a compact knot each form a group because their members have several others within reach. A guest alone by the punch bowl has no one within reach, so it is flagged as noise. The number of groups is found, not set in advance.">
+  <rect x="1" y="1" width="638" height="358" rx="14" fill="#ffffff" stroke="#e3e6eb" stroke-width="2"/>
 
-  <!-- Dense region 1 (blue) -->
-  <g fill="#2a6fdb">
-    <circle cx="55" cy="190" r="7"/>
-    <circle cx="75" cy="205" r="7"/>
-    <circle cx="90" cy="180" r="7"/>
-    <circle cx="65" cy="165" r="7"/>
-    <circle cx="45" cy="175" r="7"/>
-    <circle cx="80" cy="155" r="7"/>
-  </g>
+  <defs>
+    <g id="t">
+      <circle cx="0" cy="-9" r="5"/>
+      <path d="M -8 10 Q 0 -5 8 10 Z"/>
+    </g>
+  </defs>
 
-  <!-- Dense region 2 (orange) -->
-  <g fill="#c0611f">
-    <circle cx="270" cy="60" r="7"/>
-    <circle cx="290" cy="75" r="7"/>
-    <circle cx="310" cy="55" r="7"/>
-    <circle cx="285" cy="90" r="7"/>
-    <circle cx="255" cy="80" r="7"/>
-    <circle cx="300" cy="95" r="7"/>
-  </g>
+  <text x="24" y="32" font-size="13" fill="#5b6270">A guest joins a group only if enough others stand within reach. No one sets a head count.</text>
 
-  <!-- Noise points — sparse, unassigned, automatically flagged -->
-  <g fill="none" stroke="#6b7280" stroke-width="2" stroke-dasharray="3 2">
-    <circle cx="180" cy="150" r="8"/>
-    <circle cx="225" cy="195" r="8"/>
-    <circle cx="140" cy="70" r="8"/>
+  <rect x="24" y="56" width="376" height="274" rx="8" fill="#ffffff" stroke="#e3e6eb" stroke-width="1.5"/>
+
+  <!-- Group 1: a long chain, any shape is fine -->
+  <g fill="#3a6ea5">
+    <use href="#t" x="64" y="262"/><use href="#t" x="86" y="244"/><use href="#t" x="110" y="232"/>
+    <use href="#t" x="136" y="226"/><use href="#t" x="162" y="228"/><use href="#t" x="186" y="238"/>
+    <use href="#t" x="208" y="254"/>
   </g>
+  <text x="136" y="300" font-size="12" font-weight="600" fill="#16191d" text-anchor="middle">Group 1</text>
+
+  <!-- Group 2: a compact knot, with one member's reach drawn -->
+  <circle cx="306" cy="131" r="31" fill="none" stroke="#3a6ea5" stroke-width="1.5" stroke-dasharray="3 3"/>
+  <g fill="#3a6ea5">
+    <use href="#t" x="270" y="110"/><use href="#t" x="296" y="96"/><use href="#t" x="322" y="110"/>
+    <use href="#t" x="280" y="140"/><use href="#t" x="306" y="134"/><use href="#t" x="330" y="146"/>
+  </g>
+  <text x="296" y="74" font-size="12" font-weight="600" fill="#16191d" text-anchor="middle">Group 2</text>
+  <text x="306" y="184" font-size="11" fill="#5b6270" text-anchor="middle">3 others within reach</text>
+
+  <!-- The punch bowl, and the guest standing alone beside it -->
+  <g fill="#9aa3b0" stroke="#9aa3b0">
+    <ellipse cx="108" cy="124" rx="11" ry="4"/>
+    <path d="M 99 124 L 103 136 L 113 136 L 117 124 Z"/>
+    <line x1="108" y1="136" x2="108" y2="142" stroke-width="2"/>
+  </g>
+  <circle cx="170" cy="126" r="34" fill="none" stroke="#b4532a" stroke-width="1.5" stroke-dasharray="3 3"/>
+  <g fill="#b4532a"><use href="#t" x="170" y="130"/></g>
+  <text x="170" y="180" font-size="11" fill="#5b6270" text-anchor="middle">no one within reach</text>
+
+  <!-- Result -->
+  <text x="424" y="76" font-size="11" font-weight="600" fill="#5b6270" letter-spacing="0.8">RESULT</text>
+  <circle cx="430" cy="108" r="5" fill="#3a6ea5"/>
+  <text x="444" y="112" font-size="13" fill="#16191d">Group 1: 7 guests</text>
+  <circle cx="430" cy="136" r="5" fill="#3a6ea5"/>
+  <text x="444" y="140" font-size="13" fill="#16191d">Group 2: 6 guests</text>
+  <text x="424" y="166" font-size="12" fill="#5b6270">2 groups found, not set</text>
+  <text x="424" y="183" font-size="12" fill="#5b6270">in advance.</text>
+  <line x1="424" y1="204" x2="616" y2="204" stroke="#e3e6eb" stroke-width="1.5"/>
+  <path d="M 424 236 l 7 -12 l 7 12 z" fill="none" stroke="#16191d" stroke-width="1.8" stroke-linejoin="round"/>
+  <line x1="431" y1="229" x2="431" y2="232" stroke="#16191d" stroke-width="1.8" stroke-linecap="round"/>
+  <text x="446" y="236" font-size="13" font-weight="600" fill="#16191d">Flagged as noise</text>
+  <text x="424" y="258" font-size="12" fill="#5b6270">The guest alone by the</text>
+  <text x="424" y="275" font-size="12" fill="#5b6270">punch bowl fits no group.</text>
 </svg>

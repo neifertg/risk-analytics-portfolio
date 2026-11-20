@@ -39,11 +39,11 @@ deck instead of resetting per slide, and closing on a concrete first pilot
 staff can actually run this quarter. Built from the anomaly-detection
 resource notes in my personal AI/ML learning wiki.
 
-A second real deck, `decks/clustering-for-audit/` (17 slides on K-Means,
-Hierarchical Clustering, DBSCAN, and Gaussian Mixture Models), is also
-committed here and builds/renders the same way — not currently the
-featured example, but worth a look for a second data point on the same
-layout set.
+A second real deck, `decks/clustering-for-audit/` (18 slides on K-Means,
+Hierarchical Clustering, and DBSCAN, framed as a host reading a party),
+is also committed here and builds/renders the same way. It isn't the
+featured example, but it shows the same layout set on a second topic:
+**[open the clustering deck](decks/clustering-for-audit/index.html)**.
 
 **[Open the live deck](decks/anomaly-detection-for-internal-audit/index.html)**
 — click through with arrow keys or on-screen controls.

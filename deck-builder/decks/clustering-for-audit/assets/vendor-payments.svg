@@ -1,36 +1,40 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260">
-  <rect x="1" y="1" width="398" height="258" rx="14" fill="#fbfaf8" stroke="#e4e2dc" stroke-width="2"/>
+<svg font-family="Inter, Segoe UI, Arial, sans-serif" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-label="Illustrative scatter plot of vendors by payments per year and average payment size. Most vendors form one ordinary cluster. One vendor sits far outside it, with few payments that are each very large, and is flagged for review.">
+  <rect x="1" y="1" width="638" height="358" rx="14" fill="#ffffff" stroke="#e3e6eb" stroke-width="2"/>
+
+  <text x="24" y="32" font-size="13" fill="#5b6270">Each dot is one vendor. Most fall into one ordinary pattern; one sits far outside it.</text>
 
   <!-- Axes -->
-  <path d="M50 30 L50 210 L370 210" fill="none" stroke="#9aa0a8" stroke-width="1.5"/>
-  <text x="210" y="232" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" fill="#6b7280">Payment frequency &#8594;</text>
-  <text x="24" y="120" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" fill="#6b7280" transform="rotate(-90 24 120)">Payment amount &#8594;</text>
+  <path d="M 64 60 V 300 H 400" fill="none" stroke="#9aa3b0" stroke-width="1.5"/>
+  <text x="232" y="328" font-size="12" fill="#5b6270" text-anchor="middle">Payments per year &#8594;</text>
+  <text x="40" y="180" font-size="12" fill="#5b6270" text-anchor="middle" transform="rotate(-90 40 180)">Average payment size &#8594;</text>
 
-  <!-- Wider vendor population -->
-  <g fill="#c7cbd1">
-    <circle cx="90" cy="90" r="5"/>
-    <circle cx="240" cy="180" r="5"/>
-    <circle cx="280" cy="130" r="5"/>
-    <circle cx="220" cy="55" r="5"/>
-    <circle cx="100" cy="140" r="5"/>
-    <circle cx="310" cy="170" r="5"/>
-    <circle cx="70" cy="190" r="5"/>
-    <circle cx="255" cy="95" r="5"/>
+  <!-- Ordinary vendors -->
+  <g fill="#3a6ea5">
+    <circle cx="210" cy="230" r="5"/><circle cx="228" cy="212" r="5"/><circle cx="246" cy="236" r="5"/>
+    <circle cx="262" cy="206" r="5"/><circle cx="280" cy="226" r="5"/><circle cx="298" cy="214" r="5"/>
+    <circle cx="236" cy="256" r="5"/><circle cx="270" cy="248" r="5"/><circle cx="304" cy="240" r="5"/>
+    <circle cx="320" cy="222" r="5"/><circle cx="250" cy="190" r="5"/><circle cx="286" cy="192" r="5"/>
+    <circle cx="222" cy="196" r="5"/><circle cx="316" cy="258" r="5"/><circle cx="340" cy="238" r="5"/>
+    <circle cx="192" cy="250" r="5"/>
   </g>
+  <text x="266" y="284" font-size="12" fill="#5b6270" text-anchor="middle">ordinary vendors</text>
 
-  <!-- Normal vendors -->
-  <g fill="#2a6fdb">
-    <circle cx="130" cy="170" r="7"/>
-    <circle cx="150" cy="150" r="7"/>
-    <circle cx="140" cy="190" r="7"/>
-    <circle cx="170" cy="160" r="7"/>
-    <circle cx="190" cy="140" r="7"/>
-    <circle cx="160" cy="120" r="7"/>
-    <circle cx="200" cy="175" r="7"/>
-    <circle cx="180" cy="105" r="7"/>
-  </g>
+  <!-- The vendor that doesn't fit -->
+  <circle cx="110" cy="96" r="7" fill="#b4532a"/>
+  <circle cx="110" cy="96" r="16" fill="none" stroke="#b4532a" stroke-width="1.5" stroke-dasharray="3 3"/>
+  <text x="134" y="92" font-size="12" fill="#5b6270">few payments,</text>
+  <text x="134" y="108" font-size="12" fill="#5b6270">each very large</text>
 
-  <!-- Flagged vendor -->
-  <circle cx="325" cy="60" r="8" fill="#c0392b"/>
-  <circle cx="325" cy="60" r="17" fill="none" stroke="#c0392b" stroke-width="1.5" stroke-dasharray="3 2"/>
+  <!-- Result -->
+  <text x="424" y="76" font-size="11" font-weight="600" fill="#5b6270" letter-spacing="0.8">RESULT</text>
+  <circle cx="430" cy="108" r="5" fill="#3a6ea5"/>
+  <text x="444" y="112" font-size="13" fill="#16191d">Ordinary vendors</text>
+  <circle cx="430" cy="136" r="5" fill="#b4532a"/>
+  <text x="444" y="140" font-size="13" fill="#16191d">Outside every cluster</text>
+  <line x1="424" y1="166" x2="616" y2="166" stroke="#e3e6eb" stroke-width="1.5"/>
+  <path d="M 424 198 l 7 -12 l 7 12 z" fill="none" stroke="#16191d" stroke-width="1.8" stroke-linejoin="round"/>
+  <line x1="431" y1="191" x2="431" y2="194" stroke="#16191d" stroke-width="1.8" stroke-linecap="round"/>
+  <text x="446" y="198" font-size="13" font-weight="600" fill="#16191d">Flagged for review</text>
+  <text x="424" y="220" font-size="12" fill="#5b6270">A lead to test, not a finding.</text>
+  <text x="424" y="300" font-size="11" fill="#5b6270">Illustrative data</text>
 </svg>

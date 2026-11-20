@@ -64,7 +64,7 @@ slides:
     evidence:
       type: diagram
       src: "assets/isolation-forest.svg"
-      alt: "A dense crowd of travelers requiring many random partition lines to separate, next to one isolated traveler boxed off by just two random splits"
+      alt: "The same crowd is cut at random until one traveler stands alone; isolating an ordinary traveler inside the crowd takes six cuts and is cleared, while isolating the unusual traveler off to the side takes two cuts and is flagged for review"
     caption: "Average split count across many random trees — the checkpoint's quick random pull, formalized."
     notes: "Delivery: this is the checkpoint's fast, random bag-pull line, formalized — pick a random feature, pick a random cutoff, split the data in two, repeat; an anomaly gets isolated in just a couple of splits because it doesn't sit buried in the crowd. Audit use: fast first pass on a large tabular population, e.g. transaction amounts, with no labeled fraud to train on. Limit: isolates on global structure, so it misses outliers that are only unusual relative to a nearby cluster or peer group — that's Local Outlier Factor's job, next. Source: wiki resources/isolation-forest.md. Good fit: large datasets, higher-dimensional data, minimal tuning (contamination is usually the only knob worth setting). Poor fit: very small datasets, or when the anomaly is only locally strange."
 
@@ -73,7 +73,7 @@ slides:
     evidence:
       type: diagram
       src: "assets/local-outlier-factor.svg"
-      alt: "A tightly packed dense checkpoint line, a naturally quieter line, and one traveler flagged because their local neighborhood is sparser than their neighbors' neighborhoods"
+      alt: "Two travelers each stand the same gap from their nearest neighbor; in a naturally spread-out line that gap is normal and the traveler is cleared, but next to a tightly packed line the same gap stands out and the traveler is flagged for review"
     caption: "Local density ratio vs. nearby points — screening relative to who's in this line right now, not everyone who's ever flown."
     notes: "Delivery: this is screening relative to who's actually standing in this line right now, not the airport's entire population for the year — the checkpoint's context-aware read. Audit use: catches anomalies that are normal for the population overall but off for a specific peer group — a transaction that's ordinary for one merchant but wildly off for a given customer's usual pattern. Limit: needs a real distance metric, so it degrades in high-dimensional data and scales poorly to very large populations — Isolation Forest is the cheaper first pass. Source: wiki resources/local-outlier-factor.md. Good fit: density varies naturally across the dataset, peer-group-relative anomalies. Poor fit: very large or high-dimensional populations."
 
@@ -82,7 +82,7 @@ slides:
     evidence:
       type: diagram
       src: "assets/one-class-svm.svg"
-      alt: "A tight boundary curve enclosing a cluster of cleared travelers, with one traveler outside the boundary pulled aside"
+      alt: "A boundary is learned tightly around cleared travelers; a new traveler who lands inside it is cleared, and a new traveler who lands outside it is flagged for review"
     caption: "Maximum-margin boundary around normal data — the trusted-traveler lane's boundary, drawn in feature space."
     notes: "Delivery: this is the PreCheck trusted-traveler lane — decide what 'cleared normal' looks like from clean training data, then anyone whose profile falls outside that boundary gets pulled for a second look. Audit use: cases needing an explicit, defensible boundary rather than a ranked score — a hard novelty gate. Limit: assumes the training population is already mostly clean; sensitive to kernel and hyperparameter choices; doesn't scale well to large populations. Source: wiki resources/one-class-svm.md. Good fit: mostly-clean training data, nonlinear normal behavior, medium-sized populations. Poor fit: large populations, training data already contaminated with anomalies, limited time to tune."
 

@@ -1,33 +1,48 @@
-<svg font-family="Inter, Segoe UI, Arial, sans-serif" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260">
-  <rect x="1" y="1" width="398" height="258" rx="14" fill="#ffffff" stroke="#e3e6eb" stroke-width="2"/>
+<svg font-family="Inter, Segoe UI, Arial, sans-serif" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-label="A boundary is learned tightly around a group of cleared travelers. A new traveler who lands inside the boundary is cleared. A new traveler who lands outside it is flagged for review.">
+  <rect x="1" y="1" width="638" height="358" rx="14" fill="#ffffff" stroke="#e3e6eb" stroke-width="2"/>
 
   <defs>
-    <g id="traveler">
-      <circle cx="0" cy="-9" r="4"/>
-      <path d="M -6 7 Q 0 -3 6 7 Z"/>
+    <g id="t">
+      <circle cx="0" cy="-9" r="5"/>
+      <path d="M -8 10 Q 0 -5 8 10 Z"/>
     </g>
   </defs>
 
-  <!-- The trusted-traveler boundary — learned tightly around normal behavior -->
-  <path d="M 90 80 C 140 55, 200 60, 230 95 C 260 125, 250 185, 205 215
-           C 165 245, 100 232, 72 192 C 50 158, 58 108, 90 80 Z"
-        fill="#3a6ea5" fill-opacity="0.08" stroke="#3a6ea5" stroke-width="2.5"/>
-  <text x="150" y="45" font-size="13" fill="#3a6ea5" text-anchor="middle">cleared / normal</text>
+  <text x="24" y="32" font-size="13" fill="#5b6270">Trained on cleared travelers only, the model draws the tightest boundary that fits them.</text>
 
-  <!-- Travelers inside the boundary — cleared -->
+  <g transform="translate(0 16)">
+  <!-- The learned boundary around normal -->
+  <path d="M 110 118 C 170 78, 290 82, 336 128 C 380 172, 352 256, 274 280
+           C 204 300, 116 278, 94 222 C 76 176, 82 138, 110 118 Z"
+        fill="#e9eff7" stroke="#3a6ea5" stroke-width="2.5"/>
+  <text x="80" y="80" font-size="11" font-weight="600" fill="#5b6270" letter-spacing="0.8">LEARNED BOUNDARY OF "NORMAL"</text>
+
+  <!-- Training data: cleared travelers -->
   <g fill="#3a6ea5">
-    <use href="#traveler" x="120" y="140"/>
-    <use href="#traveler" x="150" y="110"/>
-    <use href="#traveler" x="170" y="160"/>
-    <use href="#traveler" x="130" y="185"/>
-    <use href="#traveler" x="185" y="130"/>
-    <use href="#traveler" x="100" y="165"/>
-    <use href="#traveler" x="160" y="195"/>
+    <use href="#t" x="140" y="160"/>
+    <use href="#t" x="192" y="132"/>
+    <use href="#t" x="248" y="140"/>
+    <use href="#t" x="292" y="168"/>
+    <use href="#t" x="168" y="212"/>
+    <use href="#t" x="222" y="196"/>
+    <use href="#t" x="270" y="232"/>
+    <use href="#t" x="210" y="254"/>
   </g>
 
-  <!-- Flagged traveler — falls outside the learned boundary -->
-  <g fill="#b4532a">
-    <use href="#traveler" x="335" y="70"/>
+  <!-- New traveler inside the boundary -->
+  <circle cx="318" cy="210" r="20" fill="none" stroke="#5b6270" stroke-width="1.5" stroke-dasharray="3 3"/>
+  <g fill="#3a6ea5"><use href="#t" x="318" y="212"/></g>
+  <line x1="340" y1="204" x2="410" y2="150" stroke="#9aa3b0" stroke-width="1.5"/>
+  <text x="418" y="140" font-size="13" fill="#5b6270">A new traveler lands inside</text>
+  <path d="M 418 159 l 5 5 l 9 -10" fill="none" stroke="#16191d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="438" y="164" font-size="13" font-weight="600" fill="#16191d">Cleared</text>
+
+  <!-- New traveler outside the boundary -->
+  <circle cx="420" cy="262" r="20" fill="none" stroke="#b4532a" stroke-width="1.5" stroke-dasharray="3 3"/>
+  <g fill="#b4532a"><use href="#t" x="420" y="264"/></g>
+  <text x="452" y="252" font-size="13" fill="#5b6270">A new traveler lands outside</text>
+  <path d="M 452 282 l 7 -12 l 7 12 z" fill="none" stroke="#16191d" stroke-width="1.8" stroke-linejoin="round"/>
+  <line x1="459" y1="275" x2="459" y2="278" stroke="#16191d" stroke-width="1.8" stroke-linecap="round"/>
+  <text x="472" y="282" font-size="13" font-weight="600" fill="#16191d">Flagged for review</text>
   </g>
-  <text x="335" y="100" font-size="13" fill="#b4532a" text-anchor="middle">pulled aside</text>
 </svg>

@@ -1,38 +1,69 @@
-<svg font-family="Inter, Segoe UI, Arial, sans-serif" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260">
-  <rect x="1" y="1" width="398" height="258" rx="14" fill="#ffffff" stroke="#e3e6eb" stroke-width="2"/>
+<svg font-family="Inter, Segoe UI, Arial, sans-serif" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-label="Two travelers each stand the same distance from their nearest neighbor. One is in a naturally spread-out line where everyone is that far apart, so it is cleared. The other stands that far from a tightly packed line, so it is flagged for review.">
+  <rect x="1" y="1" width="638" height="358" rx="14" fill="#ffffff" stroke="#e3e6eb" stroke-width="2"/>
 
   <defs>
-    <g id="traveler">
-      <circle cx="0" cy="-9" r="4"/>
-      <path d="M -6 7 Q 0 -3 6 7 Z"/>
+    <g id="t">
+      <circle cx="0" cy="-9" r="5"/>
+      <path d="M -8 10 Q 0 -5 8 10 Z"/>
     </g>
   </defs>
 
-  <!-- Dense line — a busy checkpoint, tightly packed, high local density -->
-  <g fill="#3a6ea5">
-    <use href="#traveler" x="55" y="210"/>
-    <use href="#traveler" x="72" y="222"/>
-    <use href="#traveler" x="88" y="205"/>
-    <use href="#traveler" x="63" y="190"/>
-    <use href="#traveler" x="82" y="188"/>
-    <use href="#traveler" x="100" y="220"/>
-    <use href="#traveler" x="45" y="222"/>
-  </g>
-  <circle cx="72" cy="205" r="34" fill="none" stroke="#5b6270" stroke-width="1.5" stroke-dasharray="3 3"/>
-  <text x="72" y="248" font-size="13" fill="#5b6270" text-anchor="middle">dense neighborhood</text>
+  <text x="24" y="32" font-size="13" fill="#5b6270">Each traveler is compared with the spacing of their own neighbors, not with the whole terminal.</text>
 
-  <!-- Quiet line — a slow checkpoint, travelers naturally more spread out -->
-  <g fill="#3a6ea5">
-    <use href="#traveler" x="250" y="55"/>
-    <use href="#traveler" x="300" y="45"/>
-    <use href="#traveler" x="280" y="90"/>
-    <use href="#traveler" x="330" y="75"/>
+  <g font-size="11" font-weight="600" fill="#5b6270" letter-spacing="0.8">
+    <text x="24" y="66">A PACKED LINE</text>
+    <text x="400" y="66">A SPREAD-OUT LINE</text>
   </g>
 
-  <!-- The flagged traveler — its nearest neighbor is much farther than any gap inside the quiet line itself -->
-  <g fill="#b4532a">
-    <use href="#traveler" x="320" y="160"/>
+  <!-- A packed line: travelers stand close together -->
+  <g fill="#3a6ea5">
+    <use href="#t" x="72" y="140"/>
+    <use href="#t" x="98" y="134"/>
+    <use href="#t" x="124" y="140"/>
+    <use href="#t" x="150" y="134"/>
+    <use href="#t" x="62" y="172"/>
+    <use href="#t" x="88" y="168"/>
+    <use href="#t" x="114" y="174"/>
+    <use href="#t" x="140" y="168"/>
+    <use href="#t" x="166" y="176"/>
+    <use href="#t" x="78" y="206"/>
+    <use href="#t" x="104" y="202"/>
+    <use href="#t" x="130" y="208"/>
+    <use href="#t" x="156" y="204"/>
   </g>
-  <circle cx="320" cy="160" r="50" fill="none" stroke="#b4532a" stroke-width="1.5" stroke-dasharray="3 3"/>
-  <text x="320" y="222" font-size="13" fill="#b4532a" text-anchor="middle">sparser than neighbors</text>
+
+  <!-- The flagged traveler: one normal-sized gap, but next to a packed line -->
+  <g fill="#b4532a"><use href="#t" x="256" y="176"/></g>
+  <line x1="178" y1="186" x2="244" y2="186" stroke="#b4532a" stroke-width="1.5"/>
+  <line x1="178" y1="181" x2="178" y2="191" stroke="#b4532a" stroke-width="1.5"/>
+  <line x1="244" y1="181" x2="244" y2="191" stroke="#b4532a" stroke-width="1.5"/>
+  <text x="211" y="206" font-size="11" fill="#5b6270" text-anchor="middle">same gap</text>
+
+  <!-- A spread-out line: everyone stands about that far apart -->
+  <g fill="#3a6ea5">
+    <use href="#t" x="430" y="114"/>
+    <use href="#t" x="508" y="104"/>
+    <use href="#t" x="586" y="122"/>
+    <use href="#t" x="446" y="176"/>
+    <use href="#t" x="536" y="176"/>
+    <use href="#t" x="470" y="236"/>
+    <use href="#t" x="560" y="232"/>
+  </g>
+  <line x1="458" y1="186" x2="524" y2="186" stroke="#5b6270" stroke-width="1.5"/>
+  <line x1="458" y1="181" x2="458" y2="191" stroke="#5b6270" stroke-width="1.5"/>
+  <line x1="524" y1="181" x2="524" y2="191" stroke="#5b6270" stroke-width="1.5"/>
+  <text x="491" y="206" font-size="11" fill="#5b6270" text-anchor="middle">same gap</text>
+
+  <!-- Divider between the two lines -->
+  <line x1="340" y1="84" x2="340" y2="266" stroke="#e3e6eb" stroke-width="1.5"/>
+
+  <!-- Outcomes -->
+  <text x="24" y="296" font-size="13" fill="#5b6270">Its neighbors are packed tight, so the gap stands out</text>
+  <path d="M 24 330 l 7 -12 l 7 12 z" fill="none" stroke="#16191d" stroke-width="1.8" stroke-linejoin="round"/>
+  <line x1="31" y1="323" x2="31" y2="326" stroke="#16191d" stroke-width="1.8" stroke-linecap="round"/>
+  <text x="44" y="330" font-size="13" font-weight="600" fill="#16191d">Flagged for review</text>
+
+  <text x="400" y="296" font-size="13" fill="#5b6270">Its neighbors are spread out too</text>
+  <path d="M 400 325 l 5 5 l 9 -10" fill="none" stroke="#16191d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="420" y="330" font-size="13" font-weight="600" fill="#16191d">Cleared</text>
 </svg>

@@ -1,6 +1,8 @@
-# Risk and audit analytics
+# Risk, controls, and analytics
 
-**Data scientist in financial services, building trustworthy AI for audit, risk and compliance.**
+**More than eight years turning messy data into insights and efficiencies.**
+
+Working audit-analytics tools and source-citing assistants, with live demos and write-ups that state their limits. This is the tools hub linked from [my personal site](https://neifertg.github.io/).
 
 [![CI](https://github.com/neifertg/risk-analytics-portfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/neifertg/risk-analytics-portfolio/actions/workflows/ci.yml)
 
@@ -69,7 +71,7 @@
 
 [Source](journal-entry-testing-analyzer/)
 
-## How I build AI an auditor can trust
+## How I build tools an auditor can trust
 
 - A person can check the work: cited passages, or which specialist answered which part.
 - A weak match is a decline, not a guess.
